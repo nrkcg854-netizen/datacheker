@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>通信量チェッカー｜このペースでギガ足りる？</title>
+
+<meta name="description" content="スマホの通信量が月末まで足りるか簡単に確認できる無料ツール。">
+
+<style>
+
+body{
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+background: linear-gradient(135deg,#74c0fc,#a5d8ff);
+margin:0;
+padding:0;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.container{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+max-width:400px;
+width:90%;
+text-align:center;
+}
+
+h1{
+margin-top:0;
+font-size:22px;
+}
+
+p{
+color:#555;
+}
+
+select,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:16px;
+}
+
+button{
+width:100%;
+margin-top:15px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#4dabf7;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#339af0;
+}
+
+.result{
+margin-top:20px;
+padding:15px;
+border-radius:12px;
+background:#f1f3f5;
+font-size:16px;
+}
+
+.tip{
+margin-top:20px;
+padding:15px;
+border-radius:12px;
+background:#e7f5ff;
+font-size:14px;
+}
+
+a{
+color:#1971c2;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 通信量チェッカー</h1>
+
+<p>このペースでギガ足りる？</p>
+
+<label>月のデータ容量</label>
+
+<select id="plan">
+<option value="1">1GB</option>
+<option value="3">3GB</option>
+<option value="5">5GB</option>
+<option value="10">10GB</option>
+<option value="20">20GB</option>
+<option value="50">50GB</option>
+</select>
+
+<label>現在使用量（GB）</label>
+
+<input id="used" type="number" step="0.01" placeholder="例: 1.8">
+
+<button onclick="checkData()">判定する</button>
+
+<div class="result" id="result">
+ここに結果が表示されます
+</div>
+
+<div class="tip" id="tip"></div>
+
+</div>
+
+<script>
+
+function checkData(){
+
+const plan=parseFloat(document.getElementById("plan").value);
+const used=parseFloat(document.getElementById("used").value);
+
+if(isNaN(used)){
+document.getElementById("result").innerText="使用量を入力してください";
+return;
+}
+
+const today=new Date().getDate();
+
+const days=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
+
+const progress=today/days;
+
+const usage=used/plan;
+
+let message="";
+
+if(usage<progress){
+message="👍 このペースなら足りそうです";
+}else{
+message="⚠ このままだと足りない可能性があります";
+}
+
+document.getElementById("result").innerText=message;
+
+showTip();
+
+}
+
+function showTip(){
+
+const tips=[
+"動画はWiFi環境で視聴すると通信量を節約できます",
+"SNSの自動動画再生をオフにすると通信量を減らせます",
+"アプリのバックグラウンド通信を制限しましょう",
+"WiFiがある場所ではモバイル通信をオフにすると安心です",
+"音楽ストリーミングはダウンロード再生がおすすめです"
+];
+
+const random=tips[Math.floor(Math.random()*tips.length)];
+
+document.getElementById("tip").innerText="節約Tip: "+random;
+
+}
+
+</script>
+
+</body>
+</html>
