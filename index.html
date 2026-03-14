@@ -1,539 +1,200 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>通信量チェッカー</title>
-    <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --blue: #3498db;
-            --green: #2ecc71;
-            --orange: #f39c12;
-            --red: #e74c3c;
-            --text-main: #1a1a1a;
-            --text-sub: #666666;
-            --section-title: #4a5568;
-        }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Status Display Area */
-        .status-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 20px;
-            transition: background-color 0.4s ease;
-            position: relative;
-        }
+<title>スマホ通信量チェッカー｜3GB・5GBで足りるか確認</title>
 
-        /* Illustration Container */
-        .illustration-container {
-            margin-bottom: 10px;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<meta name="description" content="スマホ通信量が月末まで足りるか確認できる無料ツール。3GB・5GB・10GBプランの目安や通信量節約方法も解説。">
 
-        .status-badge {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: white;
-            padding: 10px 40px;
-            border-radius: 100px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            display: inline-block;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+<link rel="canonical" href="https://example.com/">
 
-        .result-main {
-            text-align: center;
-        }
+<style>
 
-        .result-label {
-            font-size: 0.9rem;
-            color: var(--text-sub);
-            margin-bottom: 2px;
-            font-weight: 600;
-        }
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#fafafa;
+line-height:1.7;
+}
 
-        .result-value {
-            font-size: 3.2rem;
-            font-weight: 900;
-            line-height: 1;
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-        }
+header{
+background:#222;
+color:white;
+padding:20px;
+}
 
-        .result-unit {
-            font-size: 1.2rem;
-            margin-left: 6px;
-            font-weight: 700;
-        }
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+background:white;
+}
 
-        .forecast-box {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-sub);
-            background: rgba(255,255,255,0.7);
-            padding: 6px 18px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+h1{
+margin-top:0;
+}
 
-        /* Control Panel Area */
-        .control-panel {
-            background: var(--card-bg);
-            border-radius: 35px 35px 0 0;
-            padding: 15px 20px calc(15px + env(safe-area-inset-bottom));
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
+.tool-box{
+background:#f3f7ff;
+padding:20px;
+border-radius:8px;
+margin:30px 0;
+}
 
-        .section-title {
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: var(--section-title);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            letter-spacing: 0.05em;
-        }
+.article-list a{
+display:block;
+padding:10px 0;
+border-bottom:1px solid #eee;
+text-decoration:none;
+color:#333;
+}
 
-        .section-title span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+.article-list a:hover{
+color:#0077ff;
+}
 
-        .section-title span::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 12px;
-            background: var(--blue);
-            border-radius: 2px;
-        }
+footer{
+text-align:center;
+padding:30px;
+color:#666;
+font-size:14px;
+}
 
-        /* Plan Selection */
-        .plan-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            background: #f8fafc;
-            padding: 8px 12px;
-            border-radius: 12px;
-        }
+.button{
+display:inline-block;
+padding:12px 20px;
+background:#0077ff;
+color:white;
+text-decoration:none;
+border-radius:6px;
+margin-top:10px;
+}
 
-        .plan-input-wrap {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 2px 8px;
-        }
+</style>
 
-        .plan-input-wrap input {
-            border: none;
-            width: 45px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            text-align: center;
-            outline: none;
-        }
-
-        .plan-tabs {
-            display: flex;
-            gap: 5px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            flex: 1;
-        }
-        .plan-tabs::-webkit-scrollbar { display: none; }
-
-        .plan-tab {
-            padding: 6px 10px;
-            border: 2px solid #edf2f7;
-            background: #fff;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: var(--text-sub);
-            white-space: nowrap;
-        }
-
-        .plan-tab.active {
-            border-color: var(--blue);
-            color: var(--blue);
-            background: #ebf8ff;
-        }
-
-        /* Input Cards */
-        .dual-input-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .input-card {
-            background: #f8fafc;
-            padding: 12px 6px;
-            border-radius: 20px;
-            text-align: center;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .input-card.focus {
-            border-color: var(--blue);
-            background: #fff;
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .input-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-sub);
-            margin-bottom: 8px;
-        }
-
-        .input-value-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .btn-adj {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            border: none;
-            background: #e2e8f0;
-            font-size: 1.3rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-        }
-
-        .val-text {
-            font-size: 1.6rem;
-            font-weight: 900;
-            min-width: 55px;
-        }
-
-        .slider-box {
-            padding: 0 5px;
-            margin-bottom: 10px;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 10px;
-            border-radius: 5px;
-            background: #edf2f7;
-            outline: none;
-            accent-color: var(--blue);
-        }
-
-        .tips-banner {
-            padding: 10px;
-            background: #f8fafc;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            text-align: center;
-            border-left: 4px solid var(--blue);
-            min-height: 2.8em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.4;
-        }
-
-        /* Signal Animation */
-        .signal-wave {
-            fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-            opacity: 0;
-        }
-        .anim-wave1 { animation: wave 1.5s infinite 0s; }
-        .anim-wave2 { animation: wave 1.5s infinite 0.3s; }
-        .anim-wave3 { animation: wave 1.5s infinite 0.6s; }
-
-        @keyframes wave {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-    </style>
 </head>
+
 <body>
 
-    <div class="status-panel" id="panel">
-        <!-- SVG Illustration of Smartphone with Data Waves -->
-        <div class="illustration-container">
-            <svg id="phoneSvg" viewBox="0 0 100 100" width="80" height="80">
-                <!-- Phone Body -->
-                <rect x="35" y="20" width="30" height="55" rx="5" fill="#333" />
-                <rect x="38" y="24" width="24" height="42" rx="2" fill="#fff" opacity="0.9" />
-                <circle cx="50" cy="70" r="2" fill="#fff" />
-                
-                <!-- Waves Right -->
-                <path class="signal-wave anim-wave1" d="M72 40 Q 78 47.5 72 55" stroke="#3498db" />
-                <path class="signal-wave anim-wave2" d="M78 35 Q 88 47.5 78 60" stroke="#3498db" />
-                <path class="signal-wave anim-wave3" d="M84 30 Q 98 47.5 84 65" stroke="#3498db" />
+<header>
+<h1>スマホ通信量チェッカー</h1>
+<p>スマホのギガが月末まで足りるか簡単に確認できるツール</p>
+</header>
 
-                <!-- Waves Left -->
-                <path class="signal-wave anim-wave1" d="M28 40 Q 22 47.5 28 55" stroke="#3498db" />
-                <path class="signal-wave anim-wave2" d="M22 35 Q 12 47.5 22 60" stroke="#3498db" />
-                <path class="signal-wave anim-wave3" d="M16 30 Q 2 47.5 16 65" stroke="#3498db" />
-            </svg>
-        </div>
+<div class="container">
 
-        <div id="badge" class="status-badge">判定中...</div>
-        
-        <div class="result-main">
-            <div class="result-label">今日使える目安</div>
-            <div class="result-value">
-                <span id="dailyLimit">0.00</span>
-                <span class="result-unit">GB</span>
-            </div>
-            <div class="forecast-box" id="forecastText">月末予測: -- GB / -- GB</div>
-        </div>
-    </div>
+<h2>通信量が月末まで足りるか確認</h2>
 
-    <div class="control-panel">
-        <div class="section-title">
-            <span>月間使用可能量 (繰り越し込み)</span>
-        </div>
-        
-        <div class="plan-display">
-            <div class="plan-tabs" id="planTabs">
-                <button class="plan-tab" data-gb="1">1GB</button>
-                <button class="plan-tab" data-gb="3">3GB</button>
-                <button class="plan-tab" data-gb="10">10GB</button>
-                <button class="plan-tab" data-gb="30">30GB</button>
-            </div>
-            <div style="font-size: 0.65rem; color: var(--text-sub); font-weight: bold;">自由入力→</div>
-            <div class="plan-input-wrap">
-                <input type="number" id="planInput" step="0.1" value="3.0">
-                <span style="font-weight: bold; font-size: 0.8rem;">GB</span>
-            </div>
-        </div>
+<p>
+スマートフォンのデータ通信量が
+月末まで足りるかどうかは
+<strong>使用ペース</strong>で判断できます。
+</p>
 
-        <div class="section-title">
-            <span>現在の状況を入力</span>
-        </div>
-        
-        <div class="dual-input-container">
-            <div class="input-card" id="cardUsed">
-                <div class="input-title">使った量 (Used)</div>
-                <div class="input-value-row">
-                    <button class="btn-adj" onclick="adjust('used', -0.1)">-</button>
-                    <div class="val-text" id="textUsed">0.0</div>
-                    <button class="btn-adj" onclick="adjust('used', 0.1)">+</button>
-                </div>
-            </div>
-            <div class="input-card" id="cardRem">
-                <div class="input-title">残り (Remaining)</div>
-                <div class="input-value-row">
-                    <button class="btn-adj" onclick="adjust('rem', -0.1)">-</button>
-                    <div class="val-text" id="textRem">3.0</div>
-                    <button class="btn-adj" onclick="adjust('rem', 0.1)">+</button>
-                </div>
-            </div>
-        </div>
+<div class="tool-box">
 
-        <div class="slider-box">
-            <input type="range" id="mainSlider" min="0" max="3" step="0.05" value="0">
-        </div>
+<h3>無料ツール</h3>
 
-        <div class="tips-banner" id="tips">
-            読み込み中...
-        </div>
-    </div>
+<p>
+現在の通信量と日付を入力すると  
+月末まで足りるか自動で判定します。
+</p>
 
-    <script>
-        const state = {
-            plan: 3.0,
-            used: 0.0,
-            lastEdit: 'used'
-        };
+<a class="button" href="/tools/data-checker/">
+通信量チェッカーを使う
+</a>
 
-        const elements = {
-            panel: document.getElementById('panel'),
-            badge: document.getElementById('badge'),
-            dailyLimit: document.getElementById('dailyLimit'),
-            forecastText: document.getElementById('forecastText'),
-            textUsed: document.getElementById('textUsed'),
-            textRem: document.getElementById('textRem'),
-            mainSlider: document.getElementById('mainSlider'),
-            planTabs: document.querySelectorAll('.plan-tab'),
-            planInput: document.getElementById('planInput'),
-            tips: document.getElementById('tips'),
-            waves: document.querySelectorAll('.signal-wave')
-        };
+</div>
 
-        const tipsList = [
-            "動画の画質を少し下げるだけで、ギガを大きく節約できます",
-            "キャリアのマイページにある「残り」をそのまま入力してください",
-            "SNSの画像・動画の「高画質アップロード」をオフにするのがお勧めです",
-            "外出前にWi-Fi環境でコンテンツをダウンロードしておくと安心です",
-            "判定がオレンジの時は、少しだけネット利用を控えめに",
-            "スマホの「データセーバー」をオンにすると、通信量を自動で抑えられます",
-            "上限間近（例: 2.8GB）で通知が来るようにスマホを設定すると安心です",
-            "契約上限（例: 3GB）で通信を自動制限する設定をスマホで行うのが確実です"
-        ];
+<h2>こんな人におすすめ</h2>
 
-        function saveData() {
-            localStorage.setItem('traffic_checker_v3', JSON.stringify(state));
-        }
+<ul>
+<li>3GBプランで足りるか知りたい</li>
+<li>5GBプランに変更するべきか迷っている</li>
+<li>月末に通信制限がかかる</li>
+<li>通信量の使いすぎを防ぎたい</li>
+</ul>
 
-        function loadData() {
-            const saved = localStorage.getItem('traffic_checker_v3');
-            if (saved) {
-                const data = JSON.parse(saved);
-                state.plan = data.plan || 3.0;
-                state.used = data.used || 0.0;
-                state.lastEdit = data.lastEdit || 'used';
-                elements.planInput.value = state.plan;
-                updatePlanTabs();
-            }
-        }
+<h2>通信量の目安</h2>
 
-        function updatePlanTabs() {
-            elements.planTabs.forEach(tab => {
-                if (parseFloat(tab.dataset.gb) === state.plan) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-            elements.mainSlider.max = state.plan;
-        }
+<p>
+スマホ通信量の目安は次の通りです。
+</p>
 
-        function init() {
-            loadData();
+<ul>
+<li>ライトユーザー：1〜3GB</li>
+<li>一般ユーザー：5〜10GB</li>
+<li>動画中心：20GB以上</li>
+</ul>
 
-            elements.planTabs.forEach(tab => {
-                tab.onclick = () => {
-                    const val = parseFloat(tab.dataset.gb);
-                    state.plan = val;
-                    elements.planInput.value = val;
-                    updatePlanTabs();
-                    sync('rem', state.plan - state.used);
-                };
-            });
+<p>
+自分の通信量が適切かどうかは
+次の解説記事でも詳しく説明しています。
+</p>
 
-            elements.planInput.onchange = (e) => {
-                let val = parseFloat(e.target.value);
-                if (isNaN(val) || val <= 0) val = 3.0;
-                state.plan = val;
-                updatePlanTabs();
-                sync('rem', state.plan - state.used);
-            };
+<h2>通信量の解説記事</h2>
 
-            elements.mainSlider.oninput = (e) => {
-                sync('used', parseFloat(e.target.value));
-            };
+<div class="article-list">
 
-            updateTips();
-            calculate();
-        }
+<a href="/blog/3gb-mobile-data.html">
+3GBでスマホ通信量は足りる？目安を解説
+</a>
 
-        function sync(type, value) {
-            value = Math.max(0, Math.min(state.plan, Math.round(value * 100) / 100));
-            if (type === 'used') {
-                state.used = value;
-                state.lastEdit = 'used';
-            } else {
-                state.used = Math.round((state.plan - value) * 100) / 100;
-                state.lastEdit = 'rem';
-            }
-            saveData();
-            calculate();
-        }
+<a href="/blog/5gb-mobile-data.html">
+5GBで出来ること｜通信量の目安
+</a>
 
-        function adjust(type, delta) {
-            const base = type === 'used' ? state.used : (state.plan - state.used);
-            sync(type, base + delta);
-        }
+<a href="/blog/10gb-mobile-data.html">
+10GBはどれくらい使える？通信量の目安
+</a>
 
-        function calculate() {
-            const now = new Date();
-            const day = now.getDate();
-            const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-            const remDays = lastDay - day + 1;
+<a href="/blog/mobile-data-average.html">
+スマホ通信量の平均はどれくらい？
+</a>
 
-            const used = state.used;
-            const remaining = Math.round((state.plan - used) * 100) / 100;
-            
-            elements.textUsed.innerText = used.toFixed(1);
-            elements.textRem.innerText = remaining.toFixed(1);
-            elements.mainSlider.value = used;
+<a href="/blog/mobile-data-save.html">
+スマホ通信量を節約する方法
+</a>
 
-            const daily = Math.max(0, remaining / remDays).toFixed(2);
-            const forecast = ((used / day) * lastDay).toFixed(1);
-            
-            elements.dailyLimit.innerText = daily;
-            elements.forecastText.innerText = `月末予測: ${forecast} GB / ${state.plan} GB`;
+</div>
 
-            const daysRate = (day / lastDay) * 100;
-            const usageRate = (used / state.plan) * 100;
-            const gap = usageRate - daysRate;
+<h2>このサイトについて</h2>
 
-            let label, color;
-            if (gap < -5) { label = "余裕"; color = "var(--blue)"; }
-            else if (gap < 5) { label = "適正"; color = "var(--green)"; }
-            else if (gap < 10) { label = "ちょい超"; color = "var(--orange)"; }
-            else { label = "使いすぎ"; color = "var(--red)"; }
+<p>
+このサイトではスマートフォンの通信量について
+次の情報を提供しています。
+</p>
 
-            elements.badge.innerText = label;
-            elements.badge.style.backgroundColor = color;
-            elements.panel.style.backgroundColor = color + "15";
-            
-            // Update Illustration color
-            elements.waves.forEach(w => w.setAttribute('stroke', color));
-            
-            document.getElementById('cardUsed').classList.toggle('focus', state.lastEdit === 'used');
-            document.getElementById('cardRem').classList.toggle('focus', state.lastEdit === 'rem');
-        }
+<ul>
+<li>通信量の目安</li>
+<li>ギガが足りるかの確認ツール</li>
+<li>通信量節約方法</li>
+</ul>
 
-        function updateTips() {
-            elements.tips.innerText = "Tips: " + tipsList[Math.floor(Math.random() * tipsList.length)];
-        }
+<p>
+通信量が足りるか迷ったときは
+通信量チェッカーを利用してください。
+</p>
 
-        init();
-    </script>
+<a class="button" href="/tools/data-checker/">
+通信量チェッカーを開く
+</a>
+
+</div>
+
+<footer>
+
+<p>© スマホ通信量チェッカー</p>
+
+<p>
+<a href="/about/">運営者情報</a> |
+<a href="/contact/">お問い合わせ</a>
+</p>
+
+</footer>
+
 </body>
 </html>
-
