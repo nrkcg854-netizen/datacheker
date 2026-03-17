@@ -1,181 +1,990 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ギガペースチェッカー｜今日使えるデータ量をすぐ確認</title>
 
-<title>通信量チェッカー｜このペースでギガ足りる？</title>
+<!-- OGP -->
+<meta property="og:title" content="ギガペースチェッカー｜今日使えるデータ量をすぐ確認">
+<meta property="og:description" content="月間プランと使用量を入力するだけ。今日使えるギガ数とペース診断を瞬時に表示。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/checker">
+<meta property="og:image" content="https://example.com/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ギガペースチェッカー">
+<meta name="twitter:description" content="今日使えるギガ数とペース診断を瞬時に表示。">
 
-<meta name="description" content="スマホの通信量が月末まで足りるか簡単に確認できる無料ツール。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
+/* ─── Reset & Variables ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-background: linear-gradient(135deg,#74c0fc,#a5d8ff);
-margin:0;
-padding:0;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
+:root {
+  --bg:       #f0f4ff;
+  --surface:  #ffffff;
+  --surface2: #f5f8ff;
+  --border:   #dde6ff;
+  --text:     #0d1b3e;
+  --sub:      #7384a8;
+  --accent:   #3b6cff;
+  --safe:     #00c896;
+  --ok:       #3b6cff;
+  --warn:     #ffaa00;
+  --danger:   #ff4455;
+  --radius:   18px;
+  --shadow:   0 4px 24px rgba(59,108,255,.10);
 }
 
-.container{
-background:white;
-padding:25px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-max-width:400px;
-width:90%;
-text-align:center;
+body.dark {
+  --bg:       #080f1e;
+  --surface:  #101828;
+  --surface2: #162035;
+  --border:   #1e2e50;
+  --text:     #e8eeff;
+  --sub:      #5a6e96;
+  --accent:   #5585ff;
 }
 
-h1{
-margin-top:0;
-font-size:22px;
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100svh;
+  transition: background .3s, color .3s;
 }
 
-p{
-color:#555;
+/* ─── Header ─── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
 }
 
-select,input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ddd;
-font-size:16px;
+.hdr-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: .04em;
+  color: var(--accent);
 }
 
-button{
-width:100%;
-margin-top:15px;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#4dabf7;
-color:white;
-font-size:16px;
-cursor:pointer;
-transition:0.2s;
+.hdr-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .1s;
+  color: var(--text);
+}
+.icon-btn:active { transform: scale(.93); }
+
+/* ─── Hero Section ─── */
+.hero {
+  padding: 10px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-button:hover{
-background:#339af0;
+/* Signal dots */
+.signal {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  height: 18px;
+}
+.signal i {
+  display: block;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--accent);
+  opacity: .25;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.signal i:nth-child(1) { height: 7px;  animation-delay: 0s; }
+.signal i:nth-child(2) { height: 11px; animation-delay: .2s; }
+.signal i:nth-child(3) { height: 15px; animation-delay: .4s; }
+.signal i:nth-child(4) { height: 18px; animation-delay: .6s; }
+.signal i.active { opacity: 1; }
+
+@keyframes pulse {
+  0%, 100% { opacity: .25; }
+  50%       { opacity: 1;   }
 }
 
-.result{
-margin-top:20px;
-padding:15px;
-border-radius:12px;
-background:#f1f3f5;
-font-size:16px;
+/* ─── Donut Chart ─── */
+.donut-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.donut-wrap svg { transform: rotate(-90deg); }
+.donut-bg   { fill: none; stroke: var(--border); stroke-width: 14; }
+.donut-bar  {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 502;
+  stroke-dashoffset: 502;
+  transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1), stroke .3s;
+}
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.donut-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  transition: color .3s;
+}
+.donut-label {
+  font-size: 13px;
+  color: var(--sub);
+  font-weight: 700;
+  letter-spacing: .06em;
 }
 
-.tip{
-margin-top:20px;
-padding:15px;
-border-radius:12px;
-background:#e7f5ff;
-font-size:14px;
+/* ─── Badge ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 22px;
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: .04em;
+  transition: background .3s;
+}
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.7);
 }
 
-a{
-color:#1971c2;
-text-decoration:none;
+/* ─── Today Allowance ─── */
+.today-block {
+  text-align: center;
+}
+.today-label {
+  font-size: 14px;
+  color: var(--sub);
+  font-weight: 700;
+  letter-spacing: .06em;
+  margin-bottom: 4px;
+}
+.today-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  transition: color .3s;
+}
+.today-unit { font-size: 28px; margin-left: 4px; }
+
+/* ─── Forecast + Countdown ─── */
+.meta-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+.meta-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  text-align: center;
+}
+.meta-title {
+  font-size: 13px;
+  color: var(--sub);
+  font-weight: 700;
+  letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+.meta-val {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
 }
 
+/* ─── Progress Bar ─── */
+.prog-wrap {
+  width: 100%;
+  padding: 0 4px;
+}
+.prog-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  border-radius: 99px;
+  width: 0%;
+  transition: width .5s cubic-bezier(.4,0,.2,1), background .3s;
+}
+
+/* ─── Panel ─── */
+.panel {
+  background: var(--surface);
+  margin-top: 20px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-top: 1.5px solid var(--border);
+  padding: 22px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panel-section-title {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  color: var(--sub);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* Plan tabs */
+.plan-tabs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.plan-tab {
+  padding: 8px 4px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--text);
+  transition: all .15s;
+  text-align: center;
+}
+.plan-tab:hover { border-color: var(--accent); color: var(--accent); }
+.plan-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Custom input row */
+.custom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.custom-row label {
+  font-size: 13px;
+  color: var(--sub);
+  white-space: nowrap;
+}
+.custom-input {
+  width: 90px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  transition: border-color .2s;
+}
+.custom-input:focus { border-color: var(--accent); }
+
+/* Usage cards */
+.usage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.usage-card {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+}
+.usage-card-title {
+  font-size: 11px;
+  color: var(--sub);
+  font-weight: 700;
+  letter-spacing: .05em;
+  margin-bottom: 6px;
+}
+.usage-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+}
+.usage-unit { font-size: 14px; margin-left: 1px; }
+.adj-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.adj-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: var(--border);
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s, transform .1s;
+}
+.adj-btn:active { transform: scale(.88); }
+.adj-btn:hover  { background: var(--accent); color: #fff; }
+
+/* Direct input for used */
+.used-direct {
+  width: 70px;
+  border: none;
+  background: transparent;
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text);
+  text-align: center;
+  outline: none;
+  border-bottom: 2px solid var(--border);
+  transition: border-color .2s;
+}
+.used-direct:focus { border-color: var(--accent); }
+
+/* Slider */
+.slider-wrap { padding: 0 2px; }
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 2px 8px rgba(59,108,255,.4);
+  transition: transform .1s;
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.2); }
+
+/* Tips */
+.tips-card {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  user-select: none;
+  text-decoration: none;
+  color: inherit;
+}
+.tips-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 12px rgba(59,108,255,.12);
+}
+.tips-icon { font-size: 22px; flex-shrink: 0; }
+.tips-body { flex: 1; min-width: 0; }
+.tips-title { font-size: 14px; font-weight: 700; line-height: 1.4; margin-bottom: 2px; }
+.tips-desc  { font-size: 12px; color: var(--sub); line-height: 1.4; }
+.tips-arrow {
+  font-size: 16px;
+  color: var(--accent);
+  flex-shrink: 0;
+  font-weight: 900;
+}
+
+/* ─── Guide Section ─── */
+.guide {
+  padding: 28px 20px 40px;
+  border-top: 1.5px solid var(--border);
+  background: var(--surface);
+}
+.guide h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 900;
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+.guide-desc {
+  font-size: 13px;
+  color: var(--sub);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.guide-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, box-shadow .2s;
+  margin-bottom: 10px;
+}
+.guide-link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 12px rgba(59,108,255,.12);
+}
+.guide-link-icon { font-size: 22px; flex-shrink: 0; }
+.guide-link-body { flex: 1; }
+.guide-link-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.guide-link-sub   { font-size: 12px; color: var(--sub); }
+.guide-link-arrow { font-size: 16px; color: var(--accent); font-weight: 900; flex-shrink: 0; }
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap;
+  z-index: 999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<!-- Header -->
+<header class="hdr">
+  <span class="hdr-logo">📶 GIGA CHECK</span>
+  <div class="hdr-actions">
+    <button class="icon-btn" onclick="shareTool()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
+  </div>
+</header>
 
-<h1>📊 通信量チェッカー</h1>
+<!-- Hero -->
+<section class="hero">
 
-<p>このペースでギガ足りる？</p>
+  <div class="signal">
+    <i class="active"></i><i class="active"></i><i class="active"></i><i class="active"></i>
+  </div>
 
-<label>月のデータ容量</label>
+  <!-- Donut -->
+  <div class="donut-wrap">
+    <svg width="180" height="180" viewBox="0 0 180 180">
+      <circle class="donut-bg"  cx="90" cy="90" r="80"/>
+      <circle id="donutBar" class="donut-bar" cx="90" cy="90" r="80"/>
+    </svg>
+    <div class="donut-center">
+      <span id="pctText" class="donut-pct">0%</span>
+      <span class="donut-label">使用率</span>
+    </div>
+  </div>
 
-<select id="plan">
-<option value="1">1GB</option>
-<option value="3">3GB</option>
-<option value="5">5GB</option>
-<option value="10">10GB</option>
-<option value="20">20GB</option>
-<option value="50">50GB</option>
-</select>
+  <!-- Badge -->
+  <div id="badge" class="badge">
+    <span class="badge-dot"></span>
+    <span id="badgeText">判定中</span>
+  </div>
 
-<label>現在使用量（GB）</label>
+  <!-- Today allowance -->
+  <div class="today-block">
+    <div class="today-label">TODAY'S ALLOWANCE</div>
+    <div class="today-val">
+      <span id="todayNum">—</span><span class="today-unit" id="todayUnit">GB</span>
+    </div>
+  </div>
 
-<input id="used" type="number" step="0.01" placeholder="例: 1.8">
+  <!-- Forecast + Countdown -->
+  <div class="meta-row">
+    <div class="meta-card">
+      <div class="meta-title">月末予測</div>
+      <div class="meta-val" id="forecast">—</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">月末まで</div>
+      <div class="meta-val" id="countdown">— 日</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">残り容量</div>
+      <div class="meta-val" id="remainMeta">—</div>
+    </div>
+  </div>
 
-<button onclick="checkData()">判定する</button>
+  <!-- Progress bar -->
+  <div class="prog-wrap">
+    <div class="prog-track">
+      <div id="progFill" class="prog-fill"></div>
+    </div>
+  </div>
 
-<div class="result" id="result">
-ここに結果が表示されます
+</section>
+
+<!-- Panel -->
+<div class="panel">
+
+  <!-- Plan section -->
+  <div>
+    <div class="panel-section-title">月間プラン</div>
+    <div class="plan-tabs" id="planTabs">
+      <button class="plan-tab" data-gb="1">1GB</button>
+      <button class="plan-tab active" data-gb="3">3GB</button>
+      <button class="plan-tab" data-gb="5">5GB</button>
+      <button class="plan-tab" data-gb="10">10GB</button>
+      <button class="plan-tab" data-gb="20">20GB</button>
+      <button class="plan-tab" data-gb="unlimited">∞</button>
+    </div>
+    <div class="custom-row" style="margin-top:10px">
+      <label>カスタム</label>
+      <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
+      <span style="font-size:13px;color:var(--sub)">GB</span>
+    </div>
+  </div>
+
+  <!-- Usage section -->
+  <div>
+    <div class="panel-section-title">今月の使用量</div>
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-card-title">使用量</div>
+        <div class="adj-row">
+          <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+          <div>
+            <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
+            <span class="usage-unit">GB</span>
+          </div>
+          <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-card-title">残り</div>
+        <div style="margin-top:10px">
+          <span id="remainVal" class="usage-val">—</span>
+          <span class="usage-unit" id="remainUnit">GB</span>
+        </div>
+      </div>
+    </div>
+    <div class="slider-wrap" style="margin-top:12px">
+      <input id="slider" type="range" min="0" max="3" step="0.1" value="0">
+    </div>
+  </div>
+
+  <!-- Tips section -->
+  <div>
+    <div class="panel-section-title">節約 Tips</div>
+    <div id="tipsContainer"></div>
+  </div>
+
 </div>
 
-<div class="tip" id="tip"></div>
+<!-- Guide -->
+<section class="guide">
+  <h2>📚 関連記事</h2>
+  <p class="guide-desc">通信量の節約方法や設定手順を詳しく解説しています。</p>
 
-</div>
+  <a href="/articles/how-to-check-data-android" class="guide-link">
+    <span class="guide-link-icon">📱</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidで通信量を確認する方法</div>
+      <div class="guide-link-sub">設定アプリからの手順を画像つきで解説</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+
+  <a href="/articles/save-data-youtube" class="guide-link">
+    <span class="guide-link-icon">▶️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">YouTubeの通信量を減らす設定方法</div>
+      <div class="guide-link-sub">画質変更・自動再生OFFの手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+
+  <a href="/articles/save-data-sns" class="guide-link">
+    <span class="guide-link-icon">📲</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">SNSアプリの通信量を抑える設定</div>
+      <div class="guide-link-sub">Instagram・X・TikTokの自動再生を止める</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+
+  <a href="/articles/android-data-saver" class="guide-link">
+    <span class="guide-link-icon">🛡️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidのデータセーバー機能とは</div>
+      <div class="guide-link-sub">バックグラウンド通信をまとめて制限する方法</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+
+  <a href="/articles/wifi-priority-setting" class="guide-link">
+    <span class="guide-link-icon">📶</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Wi-Fiを優先接続にする設定方法</div>
+      <div class="guide-link-sub">外出先でも自動でWi-Fiに切り替える手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+</section>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
+// ─── State ───────────────────────────────────────────────
+const STORAGE_KEY = 'gigacheck_v2';
 
-function checkData(){
+const state = {
+  plan: 3,          // GB (Infinity = unlimited)
+  used: 0,          // GB
+  savedMonth: null  // "YYYY-MM"
+};
 
-const plan=parseFloat(document.getElementById("plan").value);
-const used=parseFloat(document.getElementById("used").value);
+// ─── DOM refs ────────────────────────────────────────────
+const donutBar   = document.getElementById('donutBar');
+const pctText    = document.getElementById('pctText');
+const badge      = document.getElementById('badge');
+const badgeText  = document.getElementById('badgeText');
+const todayNum   = document.getElementById('todayNum');
+const todayUnit  = document.getElementById('todayUnit');
+const forecastEl = document.getElementById('forecast');
+const countdownEl= document.getElementById('countdown');
+const remainMeta = document.getElementById('remainMeta');
+const progFill   = document.getElementById('progFill');
+const remainVal  = document.getElementById('remainVal');
+const remainUnit = document.getElementById('remainUnit');
+const slider     = document.getElementById('slider');
+const usedInput  = document.getElementById('usedInput');
+const customPlan = document.getElementById('customPlan');
+const tipsText   = document.getElementById('tipsText');
 
-if(isNaN(used)){
-document.getElementById("result").innerText="使用量を入力してください";
-return;
+// ─── Date helpers ────────────────────────────────────────
+function getDateInfo() {
+  const now   = new Date();
+  const year  = now.getFullYear();
+  const month = now.getMonth();
+  const day   = now.getDate();
+  const lastDay = new Date(year, month + 1, 0).getDate();
+  const remaining = Math.max(1, lastDay - day + 1); // ゼロ除算ガード
+  const monthKey  = `${year}-${String(month+1).padStart(2,'0')}`;
+  return { day, lastDay, remaining, monthKey };
 }
 
-const today=new Date().getDate();
-
-const days=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
-
-const progress=today/days;
-
-const usage=used/plan;
-
-let message="";
-
-if(usage<progress){
-message="👍 このペースなら足りそうです";
-}else{
-message="⚠ このままだと足りない可能性があります";
+// ─── Storage ─────────────────────────────────────────────
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) { /* プライベートブラウジング等で失敗しても続行 */ }
 }
 
-document.getElementById("result").innerText=message;
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
 
-showTip();
-
+    // 月が変わっていたら使用量をリセット
+    const { monthKey } = getDateInfo();
+    if (saved.savedMonth && saved.savedMonth !== monthKey) {
+      saved.used = 0;
+    }
+    saved.savedMonth = monthKey;
+    Object.assign(state, saved);
+  } catch(e) { /* 読み込み失敗時はデフォルト値のまま */ }
 }
 
-function showTip(){
+// ─── Format helper ───────────────────────────────────────
+function fmtGB(gb) {
+  if (gb === Infinity) return { num: '∞', unit: '' };
+  if (gb >= 1)   return { num: gb.toFixed(1), unit: 'GB' };
+  return { num: Math.round(gb * 1024), unit: 'MB' };
+}
 
-const tips=[
-"動画はWiFi環境で視聴すると通信量を節約できます",
-"SNSの自動動画再生をオフにすると通信量を減らせます",
-"アプリのバックグラウンド通信を制限しましょう",
-"WiFiがある場所ではモバイル通信をオフにすると安心です",
-"音楽ストリーミングはダウンロード再生がおすすめです"
+// ─── Core Update ─────────────────────────────────────────
+function update() {
+  const { day, lastDay, remaining, monthKey } = getDateInfo();
+  state.savedMonth = monthKey;
+
+  const plan    = state.plan;  // Infinity or number
+  const used    = Math.max(0, state.used);
+  const rem     = plan === Infinity ? Infinity : Math.max(0, plan - used);
+
+  // ── Sync UI inputs ──
+  usedInput.value = used.toFixed(1);
+  slider.value    = used;
+
+  // ── Percentage ──
+  const pct = plan === Infinity ? 0 : Math.min(100, Math.round(used / plan * 100));
+
+  // Donut (circumference = 2π×80 ≈ 502.65)
+  const CIRC = 502.65;
+  donutBar.style.strokeDashoffset = CIRC - (CIRC * pct / 100);
+  pctText.textContent = plan === Infinity ? '∞' : `${pct}%`;
+
+  // Progress bar
+  progFill.style.width = `${pct}%`;
+
+  // ── Pace judgment ──
+  const dayRate   = day / lastDay;
+  const usageRate = plan === Infinity ? 0 : used / plan;
+  const gap       = usageRate - dayRate;
+
+  let label, color;
+  if (plan === Infinity)   { label = '無制限';    color = 'var(--ok)';   }
+  else if (gap < -0.05)    { label = '余裕あり';  color = 'var(--safe)'; }
+  else if (gap <  0.05)    { label = '適正ペース'; color = 'var(--ok)';  }
+  else if (gap <  0.15)    { label = '注意';      color = 'var(--warn)'; }
+  else                     { label = '使いすぎ';  color = 'var(--danger)';}
+
+  badge.style.background = color;
+  badgeText.textContent  = label;
+  pctText.style.color    = color;
+  progFill.style.background = color;
+  donutBar.style.stroke  = color;
+
+  // ── Today allowance ──
+  if (plan === Infinity) {
+    todayNum.textContent  = '∞';
+    todayUnit.textContent = '';
+  } else {
+    const todayGB = rem / remaining;
+    const f = fmtGB(todayGB);
+    todayNum.textContent  = f.num;
+    todayUnit.textContent = f.unit;
+  }
+
+  // ── Forecast ──
+  if (plan === Infinity) {
+    forecastEl.textContent = '無制限';
+  } else if (day === 0) {
+    forecastEl.textContent = '—';
+  } else {
+    const pred = (used / day) * lastDay;
+    forecastEl.textContent = `${pred.toFixed(1)} GB`;
+  }
+
+  // ── Countdown ──
+  countdownEl.textContent = `${lastDay - day} 日`;
+
+  // ── Remain meta + cards ──
+  if (plan === Infinity) {
+    remainMeta.textContent = '∞';
+    remainVal.textContent  = '∞';
+    remainUnit.textContent = '';
+  } else {
+    const rf = fmtGB(rem);
+    remainMeta.textContent = `${rf.num}${rf.unit}`;
+    remainVal.textContent  = rf.num;
+    remainUnit.textContent = rf.unit;
+  }
+
+  // ── Signal strength ──
+  const bars = document.querySelectorAll('.signal i');
+  const activeBars = plan === Infinity ? 4 : Math.max(0, 4 - Math.floor(pct / 26));
+  bars.forEach((b, i) => b.classList.toggle('active', i < activeBars));
+
+  saveState();
+}
+
+// ─── Adjust used ──────────────────────────────────────────
+function adjust(delta) {
+  const max = state.plan === Infinity ? 9999 : state.plan;
+  state.used = Math.round(Math.max(0, Math.min(max, state.used + delta)) * 10) / 10;
+  update();
+}
+
+// ─── Slider ──────────────────────────────────────────────
+slider.addEventListener('input', () => {
+  state.used = parseFloat(slider.value);
+  update();
+});
+
+// ─── Direct input ─────────────────────────────────────────
+usedInput.addEventListener('change', () => {
+  const v = parseFloat(usedInput.value);
+  if (isNaN(v) || v < 0) { usedInput.value = state.used.toFixed(1); return; }
+  const max = state.plan === Infinity ? 9999 : state.plan;
+  state.used = Math.min(v, max);
+  update();
+});
+
+// ─── Plan tabs ────────────────────────────────────────────
+document.getElementById('planTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.plan-tab');
+  if (!btn) return;
+  const gb = btn.dataset.gb;
+  state.plan = gb === 'unlimited' ? Infinity : parseFloat(gb);
+  customPlan.value = '';
+  setActivePlanTab(btn);
+  slider.max = state.plan === Infinity ? 100 : state.plan;
+  update();
+});
+
+function setActivePlanTab(activeBtn) {
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+// ─── Custom plan input ────────────────────────────────────
+customPlan.addEventListener('change', () => {
+  const v = parseFloat(customPlan.value);
+  if (isNaN(v) || v <= 0) { customPlan.value = ''; return; }
+  state.plan = v;
+  setActivePlanTab(null); // タブ選択解除
+  slider.max = v;
+  update();
+});
+
+// ─── Tips ─────────────────────────────────────────────────
+const tipsList = [
+  { icon: '▶️', title: 'YouTube画質を下げて節約',        desc: '具体的な設定手順を確認する', url: '/articles/save-data-youtube' },
+  { icon: '📲', title: 'SNS動画の自動再生をOFF',         desc: 'Instagram・X・TikTokの設定方法', url: '/articles/save-data-sns' },
+  { icon: '🗺️', title: 'Googleマップをオフライン化',     desc: '事前ダウンロードの手順を見る', url: '/articles/offline-maps' },
+  { icon: '🔄', title: 'アプリ更新をWi-Fiのみに制限',   desc: 'Play Storeの設定を変更する', url: '/articles/wifi-only-update' },
+  { icon: '🛡️', title: 'データセーバーをONにする',       desc: 'Androidの節約機能を使う', url: '/articles/android-data-saver' },
 ];
 
-const random=tips[Math.floor(Math.random()*tips.length)];
-
-document.getElementById("tip").innerText="節約Tip: "+random;
-
+function renderTips() {
+  const container = document.getElementById('tipsContainer');
+  // ランダムに2件だけ表示して記事への興味を引く
+  const shuffled = [...tipsList].sort(() => Math.random() - 0.5).slice(0, 2);
+  container.innerHTML = shuffled.map(t => `
+    <a href="${t.url}" class="tips-card">
+      <span class="tips-icon">${t.icon}</span>
+      <div class="tips-body">
+        <div class="tips-title">${t.title}</div>
+        <div class="tips-desc">${t.desc}</div>
+      </div>
+      <span class="tips-arrow">›</span>
+    </a>
+  `).join('');
 }
 
-</script>
+// ─── Share ────────────────────────────────────────────────
+function shareTool() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({
+      title: 'ギガペースチェッカー',
+      text: 'スマホの通信量ペースをすぐ確認！',
+      url
+    }).catch(() => {});
+  } else {
+    try {
+      navigator.clipboard.writeText(url);
+      showToast('URLをコピーしました 📋');
+    } catch(e) {
+      showToast('URLをコピーできませんでした');
+    }
+  }
+}
 
+// ─── Dark mode ────────────────────────────────────────────
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+// ─── Toast ────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── Restore plan tab from state ─────────────────────────
+function restorePlanTab() {
+  const tabs = document.querySelectorAll('.plan-tab');
+  let matched = null;
+  tabs.forEach(b => {
+    const gb = b.dataset.gb === 'unlimited' ? Infinity : parseFloat(b.dataset.gb);
+    if (gb === state.plan) matched = b;
+  });
+  setActivePlanTab(matched);
+  slider.max = state.plan === Infinity ? 100 : state.plan;
+  slider.value = state.used;
+}
+
+// ─── Init ─────────────────────────────────────────────────
+loadDark();
+loadState();
+restorePlanTab();
+renderTips();
+update();
+</script>
 </body>
 </html>
