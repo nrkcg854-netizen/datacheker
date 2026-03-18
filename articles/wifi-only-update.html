@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アプリ更新をWi-Fiのみに制限する方法｜ギガチェッカー</title>
+<meta property="og:title" content="アプリ更新をWi-Fiのみに制限する方法">
+<meta property="og:description" content="Google Playの自動更新設定をWi-Fiのみにする手順。知らないうちにギガを消費するのを防ぐ。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://example.com/articles/wifi-only-update">
+<meta property="og:image" content="https://example.com/ogp-article.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:  #ffe600;
+  --yellow2: #ffd000;
+  --ink:     #1a1a1a;
+  --ink2:    #2e2e2e;
+  --safe:    #00e096;
+  --warn:    #ff9500;
+  --danger:  #ff3b5c;
+  --bg:      #f5f5f0;
+  --surface: #ffffff;
+  --border:  #1a1a1a;
+  --sub:     #777770;
+  --radius:  16px;
+}
+
+body.dark {
+  --bg:      #111110;
+  --surface: #1e1e1c;
+  --border:  #ffe600;
+  --sub:     #888880;
+  --ink:     #f0f0e8;
+  --ink2:    #d0d0c8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: var(--bg);
+  color: var(--ink);
+  min-height: 100svh;
+  transition: background .3s, color .3s;
+}
+body.dark {
+  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
+}
+
+/* ─── Header ─── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: var(--yellow);
+  border-bottom: 3px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.hdr-logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: var(--ink); text-decoration: none;
+  letter-spacing: -.01em;
+}
+.hdr-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 38px; height: 38px;
+  border: 2.5px solid var(--ink);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .1s, box-shadow .1s;
+}
+.icon-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+
+/* ─── Article wrapper ─── */
+.article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+/* ─── Breadcrumb ─── */
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--sub);
+  font-weight: 700; margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--sub); text-decoration: none; }
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb-sep { color: var(--sub); }
+
+/* ─── Hero card ─── */
+.article-hero {
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 24px 20px 20px;
+  margin-bottom: 24px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.article-category {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--yellow);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px;
+  margin-bottom: 12px;
+}
+.article-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 26px; font-weight: 900;
+  line-height: 1.3; letter-spacing: -.02em;
+  color: var(--ink); margin-bottom: 10px;
+}
+.article-meta {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-size: 12px; color: var(--ink2);
+  font-weight: 700;
+}
+
+/* ─── Summary box ─── */
+.summary-box {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 28px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.summary-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 12px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sub); margin-bottom: 10px;
+}
+.summary-list {
+  list-style: none; display: flex;
+  flex-direction: column; gap: 8px;
+}
+.summary-list li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 14px; line-height: 1.5; font-weight: 500;
+}
+.summary-list li::before {
+  content: '✦';
+  color: var(--yellow);
+  background: var(--ink);
+  font-size: 10px;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+/* ─── Body typography ─── */
+.article-body { display: flex; flex-direction: column; gap: 28px; }
+
+h2.section-heading {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px; font-weight: 900;
+  letter-spacing: -.01em;
+  border-left: 5px solid var(--yellow);
+  padding-left: 12px;
+  margin-bottom: 14px;
+}
+
+h3.sub-heading {
+  font-size: 16px; font-weight: 900;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+h3.sub-heading::before {
+  content: '';
+  display: inline-block;
+  width: 10px; height: 10px;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+p.body-text {
+  font-size: 15px; line-height: 1.85;
+  color: var(--ink2);
+}
+body.dark p.body-text { color: var(--ink); }
+
+/* ─── Step card ─── */
+.step-list { display: flex; flex-direction: column; gap: 12px; }
+.step-card {
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 4px 4px 0 var(--ink);
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.step-num {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 20px;
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; letter-spacing: -.02em;
+}
+.step-body { flex: 1; }
+.step-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.step-desc  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+/* ─── Highlight / Tip box ─── */
+.tip-box {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.tip-box-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.tip-box-body { flex: 1; }
+.tip-box-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sub); margin-bottom: 4px;
+}
+.tip-box-text { font-size: 14px; line-height: 1.7; }
+
+/* ─── Warn box ─── */
+.warn-box {
+  background: #fff8e6;
+  border: 3px solid var(--warn);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 4px 4px 0 var(--warn);
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 14px; line-height: 1.7;
+}
+body.dark .warn-box { background: #2a1f00; }
+.warn-box-icon { font-size: 20px; flex-shrink: 0; }
+
+/* ─── Data table ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.data-table th {
+  background: var(--yellow);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 13px;
+  padding: 10px 14px; text-align: left;
+  border-bottom: 2.5px solid var(--ink);
+}
+.data-table td {
+  background: var(--surface);
+  font-size: 14px; padding: 10px 14px;
+  border-bottom: 1.5px solid var(--border);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { font-weight: 700; }
+
+/* ─── CTA box ─── */
+.cta-box {
+  background: var(--ink);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+  box-shadow: 5px 5px 0 var(--yellow);
+}
+.cta-box-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: var(--yellow); margin-bottom: 6px;
+}
+.cta-box-desc {
+  font-size: 13px; color: #aaa; margin-bottom: 16px; line-height: 1.6;
+}
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--yellow);
+  border: 2.5px solid var(--yellow);
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  color: var(--ink); text-decoration: none;
+  box-shadow: 3px 3px 0 rgba(255,255,255,.3);
+  transition: all .12s;
+}
+.cta-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 rgba(255,255,255,.3); }
+
+/* ─── Related articles ─── */
+.related {
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.related-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.related-link {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: 12px; padding: 12px 14px;
+  text-decoration: none; color: inherit;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all .1s; margin-bottom: 8px;
+  font-size: 14px; font-weight: 700;
+}
+.related-link:last-child { margin-bottom: 0; }
+.related-link:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.related-link-icon { font-size: 20px; flex-shrink: 0; }
+.related-link-arrow { font-family: 'Nunito',sans-serif; font-size: 20px; font-weight: 900; margin-left: auto; }
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--yellow);
+  padding: 11px 22px; border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<header class="hdr">
+  <a href="../index.html" class="hdr-logo">📶 ギガチェッカー</a>
+  <div class="hdr-actions">
+    <button class="icon-btn" onclick="shareArticle()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
+  </div>
+</header>
+<main class="article">
+  <nav class="breadcrumb">
+    <a href="../index.html">ホーム</a><span class="breadcrumb-sep">›</span>
+    <a href="../index.html">記事一覧</a><span class="breadcrumb-sep">›</span>
+    <span>アプリ更新をWi-Fiのみに制限する方法</span>
+  </nav>
+  <div class="article-hero">
+    <span class="article-category">節約 Tips</span>
+    <h1 class="article-title">アプリ更新を<br>Wi-Fiのみに制限する方法</h1>
+    <div class="article-meta">
+      <span>📅 2025年6月更新</span>
+      <span>⏱ 読了2分</span>
+      <span>📱 Android対応</span>
+    </div>
+  </div>
+  <div class="summary-box">
+    <div class="summary-label">この記事でわかること</div>
+    <ul class="summary-list">
+      <li>Google Playの自動更新をWi-Fi限定にする手順</li>
+      <li>アプリのダウンロード設定も合わせて変更する方法</li>
+      <li>更新を制限した場合の注意点</li>
+    </ul>
+  </div>
+  <div class="article-body">
+
+    <section>
+      <h2 class="section-heading">アプリの自動更新はどのくらいギガを使う？</h2>
+      <p class="body-text">アプリは定期的にアップデートが配信されます。設定によっては外出中にモバイルデータを使って自動更新されてしまい、気づかないうちに数GBを消費してしまうことがあります。</p>
+      <br>
+      <div class="tip-box">
+        <span class="tip-box-icon">💡</span>
+        <div class="tip-box-body">
+          <div class="tip-box-label">どのくらい消費する？</div>
+          <div class="tip-box-text">アプリ1本あたり数MB〜数百MBのアップデートが頻繁に来ます。複数アプリが同時に更新されると<strong>1回で1GB以上</strong>消費するケースもあります。</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Google Playの自動更新をWi-Fiのみにする手順</h2>
+      <div class="step-list">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Google Playストアを開く</div><div class="step-desc">アプリ一覧またはホーム画面からPlayストアを起動します。</div></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">右上のアイコン →「設定」をタップ</div><div class="step-desc">プロフィールアイコンをタップするとメニューが開きます。</div></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">「ネットワーク設定」→「アプリの自動更新」をタップ</div><div class="step-desc">更新のタイミングを選択する画面が開きます。</div></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">「Wi-Fi経由のみ」を選択して完了</div><div class="step-desc">これでWi-Fi接続時のみアプリが自動更新されるようになります。</div></div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">アプリの自動ダウンロードもWi-Fiのみにする</h2>
+      <p class="body-text">Playストアでは、アプリの更新以外にも「自動ダウンロード」の設定があります。同じ画面で確認しておきましょう。</p>
+      <br>
+      <div class="step-list">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">「ネットワーク設定」内の各項目を確認</div><div class="step-desc">「動画の自動再生」「アプリのダウンロードサイズの上限」なども設定できます。</div></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">「動画の自動再生」を「Wi-Fiのみ」に変更</div><div class="step-desc">アプリのプレビュー動画がモバイルデータで自動再生されるのを防ぎます。</div></div></div>
+      </div>
+      <br>
+      <div class="warn-box">
+        <span class="warn-box-icon">⚠️</span>
+        <span>「Wi-Fi経由のみ」に設定すると、Wi-Fi未接続の状態ではアプリが更新されません。セキュリティアップデートも含まれるため、定期的にWi-Fi環境で手動更新することをおすすめします。</span>
+      </div>
+    </section>
+
+    <div class="cta-box">
+      <div class="cta-box-title">今月のギガ残量を確認しよう</div>
+      <div class="cta-box-desc">設定を変えたら、今日使える通信量をチェック。<br>月末まで余裕があるか一瞬でわかります。</div>
+      <a href="../index.html" class="cta-btn">📶 ギガチェッカーを使う →</a>
+    </div>
+    <div class="related">
+      <div class="related-title">📚 関連記事</div>
+
+      <a href="./android-data-saver.html" class="related-link"><span class="related-link-icon">🛡️</span>Androidのデータセーバー機能とは<span class="related-link-arrow">›</span></a>
+      <a href="./offline-maps.html" class="related-link"><span class="related-link-icon">🗺️</span>Googleマップをオフライン化する方法<span class="related-link-arrow">›</span></a>
+      <a href="./how-to-check-data-android.html" class="related-link"><span class="related-link-icon">📱</span>Androidで通信量を確認する方法<span class="related-link-arrow">›</span></a>
+
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+function shareArticle() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({ title: document.title, url }).catch(()=>{});
+  } else {
+    try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
+    catch(e) { showToast('コピーできませんでした'); }
+  }
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadDark();
+</script>
+</body>
+</html>
+
+</body>
+</html>
