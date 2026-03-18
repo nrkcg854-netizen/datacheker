@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ギガ残量チェッカー｜今日使えるデータ量をすぐ確認</title>
-<meta property="og:title" content="ギガ残量チェッカー｜今日使えるデータ量をすぐ確認">
-<meta property="og:description" content="月間プランと使用量を入力するだけ。今日使えるギガ数とペース診断を瞬時に表示。">
+<title>ギガペース診断ツール｜今日使えるデータ量をすぐ確認</title>
+<meta property="og:title" content="ギガペース診断ツール｜今日使えるデータ量をすぐ確認">
+<meta property="og:description" content="月間プランと使用量を入力するだけ。今日使えるギガ数と消費ペースを瞬時に診断。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://example.com/checker">
 <meta property="og:image" content="https://example.com/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ギガ残量チェッカー">
-<meta name="twitter:description" content="今日使えるギガ数とペース診断を瞬時に表示。">
+<meta name="twitter:title" content="ギガペース診断ツール">
+<meta name="twitter:description" content="今日使えるギガ数と消費ペースを瞬時に診断。">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -78,8 +78,11 @@ body.dark .hdr { background: var(--yellow); }
 
 .hdr-logo {
   font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 20px;
+  font-weight: 900; font-size: 16px;
   color: var(--ink); letter-spacing: -.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hdr-actions { display: flex; gap: 8px; }
@@ -231,8 +234,7 @@ body.dark .prog-track { background: #333330; }
 /* ─── Panel ─── */
 .panel {
   background: var(--surface);
-  margin-top: 22px;
-  border-top: 3px solid var(--ink);
+  margin-top: 0;
   padding: 26px 20px 36px;
   display: flex; flex-direction: column; gap: 24px;
 }
@@ -242,6 +244,19 @@ body.dark .prog-track { background: #333330; }
   font-size: 13px; font-weight: 900;
   letter-spacing: .1em; text-transform: uppercase;
   color: var(--sub); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.step-badge {
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  color: var(--ink);
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 /* Plan tabs */
@@ -417,15 +432,66 @@ body.dark .tips-card { background: var(--surface); }
 
 <!-- Header -->
 <header class="hdr">
-  <span class="hdr-logo">📶 ギガチェッカー</span>
+  <span class="hdr-logo">📶 ギガ使用ペースチェッカー</span>
   <div class="hdr-actions">
     <button class="icon-btn" onclick="shareTool()" title="共有">🔗</button>
     <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
   </div>
 </header>
 
-<!-- Hero -->
+<!-- Panel：① プラン → ② 使用量 -->
+<div class="panel">
+
+  <div>
+    <div class="sec-title"><span class="step-badge">1</span> 月間プランを選ぶ</div>
+    <div class="plan-tabs" id="planTabs">
+      <button class="plan-tab" data-gb="3">3GB</button>
+      <button class="plan-tab" data-gb="5">5GB</button>
+      <button class="plan-tab" data-gb="10">10GB</button>
+      <button class="plan-tab" data-gb="20">20GB</button>
+      <button class="plan-tab" data-gb="30">30GB</button>
+      <button class="plan-tab active" data-gb="50">50GB</button>
+    </div>
+    <div class="custom-row">
+      <label>カスタム</label>
+      <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
+      <span style="font-size:13px;color:var(--sub)">GB</span>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-title"><span class="step-badge">2</span> 今月の使用量を入力</div>
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-card-title">使用量</div>
+        <div class="adj-row">
+          <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+          <div>
+            <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
+            <span class="usage-unit">GB</span>
+          </div>
+          <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-card-title">残り</div>
+        <div style="margin-top:10px">
+          <span id="remainVal" class="usage-val">—</span>
+          <span class="usage-unit" id="remainUnit">GB</span>
+        </div>
+      </div>
+    </div>
+    <div class="slider-wrap">
+      <input id="slider" type="range" min="0" max="50" step="0.1" value="0">
+    </div>
+  </div>
+
+</div>
+
+<!-- ③ 診断結果 -->
 <section class="hero">
+
+  <div class="sec-title" style="color:var(--ink);margin-bottom:0;"><span class="step-badge">3</span> 診断結果</div>
 
   <div class="signal">
     <i class="active"></i><i class="active"></i><i class="active"></i><i class="active"></i>
@@ -448,8 +514,8 @@ body.dark .tips-card { background: var(--surface); }
   </div>
 
   <div class="today-block">
-    <div class="today-lbl">TODAY'S ALLOWANCE</div>
-    <div class="today-val">
+    <div class="today-lbl">今日使える通信量</div>
+    <div class="today-val" style="font-size:36px;">
       <span id="todayNum">—</span><span class="today-unit" id="todayUnit">GB</span>
     </div>
   </div>
@@ -477,58 +543,12 @@ body.dark .tips-card { background: var(--surface); }
 
 </section>
 
-<!-- Panel -->
-<div class="panel">
-
-  <div>
-    <div class="sec-title">月間プラン</div>
-    <div class="plan-tabs" id="planTabs">
-      <button class="plan-tab" data-gb="3">3GB</button>
-      <button class="plan-tab" data-gb="5">5GB</button>
-      <button class="plan-tab" data-gb="10">10GB</button>
-      <button class="plan-tab" data-gb="20">20GB</button>
-      <button class="plan-tab" data-gb="30">30GB</button>
-      <button class="plan-tab active" data-gb="50">50GB</button>
-    </div>
-    <div class="custom-row">
-      <label>カスタム</label>
-      <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
-      <span style="font-size:13px;color:var(--sub)">GB</span>
-    </div>
-  </div>
-
-  <div>
-    <div class="sec-title">今月の使用量</div>
-    <div class="usage-grid">
-      <div class="usage-card">
-        <div class="usage-card-title">使用量</div>
-        <div class="adj-row">
-          <button class="adj-btn" onclick="adjust(-0.1)">−</button>
-          <div>
-            <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
-            <span class="usage-unit">GB</span>
-          </div>
-          <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
-        </div>
-      </div>
-      <div class="usage-card">
-        <div class="usage-card-title">残り</div>
-        <div style="margin-top:10px">
-          <span id="remainVal" class="usage-val">—</span>
-          <span class="usage-unit" id="remainUnit">GB</span>
-        </div>
-      </div>
-    </div>
-    <div class="slider-wrap">
-      <input id="slider" type="range" min="0" max="50" step="0.1" value="0">
-    </div>
-  </div>
-
+<!-- Tips -->
+<div class="panel" style="margin-top:0;border-top:none;padding-top:0;">
   <div>
     <div class="sec-title">節約 Tips</div>
     <div id="tipsContainer"></div>
   </div>
-
 </div>
 
 <!-- Guide -->
@@ -621,30 +641,4 @@ function loadState() {
     const { monthKey } = getDateInfo();
     if (saved.savedMonth && saved.savedMonth !== monthKey) saved.used = 0;
     saved.savedMonth = monthKey;
-    Object.assign(state, saved);
-  } catch(e) {}
-}
-
-function fmtGB(gb) {
-  if (gb >= 1) return { num: gb.toFixed(1), unit: 'GB' };
-  return { num: Math.round(gb * 1024), unit: 'MB' };
-}
-
-function update() {
-  const { day, lastDay, remaining, monthKey } = getDateInfo();
-  state.savedMonth = monthKey;
-  const plan = state.plan;
-  const used = Math.max(0, state.used);
-  const rem  = Math.max(0, plan - used);
-
-  usedInput.value = used.toFixed(1);
-  slider.value    = used;
-
-  const pct  = Math.min(100, Math.round(used / plan * 100));
-  const CIRC = 565;
-  donutBar.style.strokeDashoffset = CIRC - (CIRC * pct / 100);
-  pctText.textContent  = `${pct}%`;
-  progFill.style.width = `${pct}%`;
-
-  const gap = (used / plan) - (day / lastDay);
-  let label, emoji,
+    Object.assign
