@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ギガチェッカー｜スマホのギガ消費ペースを診断するサイト</title>
+<title>ギガ使用ペースチェッカー｜スマホのギガ消費ペースを診断するサイト</title>
 <meta name="description" content="今月のギガの消費ペースを一瞬で診断できるWebツールと、通信量節約の設定方法を解説する記事をまとめています。">
 
 <!-- OGP -->
-<meta property="og:title" content="ギガチェッカー｜スマホのギガ消費ペースを診断するサイト">
+<meta property="og:title" content="ギガ使用ペースチェッカー｜スマホのギガ消費ペースを診断するサイト">
 <meta property="og:description" content="今月のギガの消費ペースを一瞬で診断できるWebツールと、通信量節約の設定方法を解説する記事をまとめています。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://example.com/">
@@ -71,8 +71,11 @@ body.dark {
 }
 .hdr-logo {
   font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 20px;
+  font-weight: 900; font-size: 18px;
   color: var(--ink); text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hdr-actions { display: flex; gap: 8px; }
 .icon-btn {
@@ -320,7 +323,7 @@ body.dark .tag { background: var(--surface); }
 
 <!-- Header -->
 <header class="hdr">
-  <span class="hdr-logo">📶 ギガチェッカー</span>
+  <span class="hdr-logo">📶 ギガ使用ペースチェッカー</span>
   <div class="hdr-actions">
     <button class="icon-btn" onclick="share()" title="共有">🔗</button>
     <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
@@ -545,7 +548,7 @@ body.dark .tag { background: var(--surface); }
   <section>
     <h2 class="sec-heading">このサイトについて</h2>
     <div class="concept-card">
-      <div class="concept-title">「月末にギガが足りない」を<br>なくすためのサイト</div>
+      <div class="concept-title">「月末にギガが足りない」をなくすためのサイト</div>
       <p class="concept-text">動画・SNS・ゲームの利用が増え、スマホの通信量はどんどん増加しています。このサイトでは、今月のペースを診断するWebツールと、通信量を節約するための設定方法をわかりやすく解説しています。</p>
       <div class="concept-list">
         <div class="concept-item">
@@ -569,7 +572,7 @@ body.dark .tag { background: var(--surface); }
 <div class="toast" id="toast"></div>
 
 <footer style="text-align:center;padding:28px 20px;border-top:3px solid var(--border);background:var(--surface);font-size:13px;color:var(--sub);">
-  <p style="margin-bottom:8px;">© ギガチェッカー</p>
+  <p style="margin-bottom:8px;">© ギガ使用ペースチェッカー</p>
   <p>
     <a href="./about.html" style="color:var(--sub);text-decoration:none;margin:0 8px;">運営者情報</a>|
     <a href="./contact.html" style="color:var(--sub);text-decoration:none;margin:0 8px;">お問い合わせ</a>
@@ -580,7 +583,7 @@ body.dark .tag { background: var(--surface); }
 function share() {
   const url = location.href;
   if (navigator.share) {
-    navigator.share({ title: 'ギガチェッカー', text: 'スマホのギガ消費ペースを診断するサイト', url }).catch(()=>{});
+    navigator.share({ title: 'ギガ使用ペースチェッカー', text: 'スマホのギガ消費ペースを診断するサイト', url }).catch(()=>{});
   } else {
     try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
     catch(e) { showToast('コピーできませんでした'); }
@@ -603,11 +606,4 @@ function loadDark() {
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-loadDark();
-</script>
-</body>
-</html>
+  t.textContent = msg; t.classList
