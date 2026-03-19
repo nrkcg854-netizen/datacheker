@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>アプリ更新をWi-Fiのみに制限する方法｜ギガチェッカー</title>
+<title>アプリ更新をWi-Fiのみに制限する方法｜ギガ使用ペースチェッカー</title>
 <meta property="og:title" content="アプリ更新をWi-Fiのみに制限する方法">
 <meta property="og:description" content="Google Playの自動更新設定をWi-Fiのみにする手順。知らないうちにギガを消費するのを防ぐ。">
 <meta property="og:type" content="article">
@@ -67,9 +67,12 @@ body.dark {
 }
 .hdr-logo {
   font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 18px;
+  font-weight: 900; font-size: 16px;
   color: var(--ink); text-decoration: none;
   letter-spacing: -.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hdr-actions { display: flex; gap: 8px; }
 .icon-btn {
@@ -124,9 +127,11 @@ body.dark {
 }
 .article-title {
   font-family: 'Nunito', sans-serif;
-  font-size: 26px; font-weight: 900;
-  line-height: 1.3; letter-spacing: -.02em;
+  font-size: 22px; font-weight: 900;
+  line-height: 1.4; letter-spacing: -.02em;
   color: var(--ink); margin-bottom: 10px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 .article-meta {
   display: flex; gap: 14px; flex-wrap: wrap;
@@ -352,10 +357,30 @@ body.dark .warn-box { background: #2a1f00; }
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
+<meta name="keywords" content="アプリ 自動更新 Wi-Fi, Google Play 設定, スマホ 通信量 アプリ更新">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ギガ使用ペースチェッカー">
+<link rel="canonical" href="https://example.com/articles/wifi-only-update">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "アプリ更新をWi-Fiのみに制限する方法",
+  "description": "Google Playの自動更新をWi-Fi接続時のみに設定する手順。知らないうちにモバイルデータを消費するのを防ぐ方法。",
+  "url": "https://example.com/articles/wifi-only-update",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://example.com"
+  },
+  "dateModified": "2025-06-01",
+  "inLanguage": "ja"
+}
+</script>
 </head>
 <body>
 <header class="hdr">
-  <a href="../index.html" class="hdr-logo">📶 ギガチェッカー</a>
+  <a href="../index.html" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
   <div class="hdr-actions">
     <button class="icon-btn" onclick="shareArticle()" title="共有">🔗</button>
     <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
@@ -369,7 +394,7 @@ body.dark .warn-box { background: #2a1f00; }
   </nav>
   <div class="article-hero">
     <span class="article-category">節約 Tips</span>
-    <h1 class="article-title">アプリ更新を<br>Wi-Fiのみに制限する方法</h1>
+    <h1 class="article-title">アプリ更新をWi-Fiのみに制限する方法</h1>
     <div class="article-meta">
       <span>📅 2025年6月更新</span>
       <span>⏱ 読了2分</span>
@@ -425,9 +450,9 @@ body.dark .warn-box { background: #2a1f00; }
     </section>
 
     <div class="cta-box">
-      <div class="cta-box-title">今月のギガ残量を確認しよう</div>
-      <div class="cta-box-desc">設定を変えたら、今日使える通信量をチェック。<br>月末まで余裕があるか一瞬でわかります。</div>
-      <a href="../index.html" class="cta-btn">📶 ギガチェッカーを使う →</a>
+      <div class="cta-box-title">今月のギガのペースを確認しよう</div>
+      <div class="cta-box-desc">設定を変えたら、ギガの消費ペースをチェック。<br>今日あと何GB使えるか一瞬でわかります。</div>
+      <a href="../index.html" class="cta-btn">📶 ギガのペースを診断する →</a>
     </div>
     <div class="related">
       <div class="related-title">📚 関連記事</div>
@@ -478,4 +503,4 @@ loadDark();
 </html>
 
 </body>
-</html>
+  </html>
