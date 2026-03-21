@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- TOPページ -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/top.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ツール -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/index.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 運営者情報 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/about.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- お問い合わせ -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/contact.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- 記事：Androidで通信量を確認する方法 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/how-to-check-data-android.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 記事：YouTubeの通信量を減らす設定方法 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/save-data-youtube.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 記事：SNSアプリの通信量を抑える設定 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/save-data-sns.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 記事：Androidのデータセーバー機能とは -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/android-data-saver.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 記事：アプリ更新をWi-Fiのみに制限する方法 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/wifi-only-update.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 記事：Googleマップをオフライン化する方法 -->
+  <url>
+    <loc>https://gigapace-checker.vercel.app/articles/offline-maps.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
