@@ -3,15 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ギガペース診断ツール｜今日使えるデータ量をすぐ確認</title>
-<meta property="og:title" content="ギガペース診断ツール｜今日使えるデータ量をすぐ確認">
-<meta property="og:description" content="月間プランと使用量を入力するだけ。今日使えるギガ数と消費ペースを瞬時に診断。">
+<title>ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断</title>
+<meta name="description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。登録不要・Android対応。">
+<meta name="keywords" content="ギガ 使用量 確認, 通信量 ペース 診断, スマホ ギガ 足りるか, 月末 通信量 予測, データ使用量 チェック, ギガ残量 確認 無料">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ギガ使用ペースチェッカー">
+<link rel="canonical" href="https://gigapace-checker.vercel.app/index.html">
+
+<!-- OGP -->
+<meta property="og:title" content="ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断">
+<meta property="og:description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://example.com/checker">
-<meta property="og:image" content="https://example.com/ogp.png">
+<meta property="og:url" content="https://gigapace-checker.vercel.app/index.html">
+<meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ギガペース診断ツール">
-<meta name="twitter:description" content="今日使えるギガ数と消費ペースを瞬時に診断。">
+<meta name="twitter:title" content="ギガ使用ペースチェッカー｜通信量ペースを無料診断">
+<meta name="twitter:description" content="今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ギガ使用ペースチェッカー",
+  "description": "月間プランと今月の使用量を入力するだけで、今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。",
+  "url": "https://gigapace-checker.vercel.app/index.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android, iOS, Windows, macOS",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app"
+  },
+  "inLanguage": "ja",
+  "featureList": [
+    "月末までの通信量ペース診断",
+    "今日使える通信量の自動計算",
+    "月末使用量の予測表示",
+    "3GB〜50GBまでのプラン対応",
+    "登録不要・完全無料"
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -612,33 +650,3 @@ const badgeText   = document.getElementById('badgeText');
 const todayNum    = document.getElementById('todayNum');
 const todayUnit   = document.getElementById('todayUnit');
 const forecastEl  = document.getElementById('forecast');
-const countdownEl = document.getElementById('countdown');
-const remainMeta  = document.getElementById('remainMeta');
-const progFill    = document.getElementById('progFill');
-const remainVal   = document.getElementById('remainVal');
-const remainUnit  = document.getElementById('remainUnit');
-const slider      = document.getElementById('slider');
-const usedInput   = document.getElementById('usedInput');
-const customPlan  = document.getElementById('customPlan');
-
-function getDateInfo() {
-  const now = new Date();
-  const year = now.getFullYear(), month = now.getMonth(), day = now.getDate();
-  const lastDay   = new Date(year, month + 1, 0).getDate();
-  const remaining = Math.max(1, lastDay - day + 1);
-  const monthKey  = `${year}-${String(month+1).padStart(2,'0')}`;
-  return { day, lastDay, remaining, monthKey };
-}
-
-function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
-}
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const saved = JSON.parse(raw);
-    const { monthKey } = getDateInfo();
-    if (saved.savedMonth && saved.savedMonth !== monthKey) saved.used = 0;
-    saved.savedMonth = monthKey;
-    Object.assign
