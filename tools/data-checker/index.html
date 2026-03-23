@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断</title>
+<meta name="description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。登録不要・Android対応。">
+<meta name="keywords" content="ギガ 使用量 確認, 通信量 ペース 診断, スマホ ギガ 足りるか, 月末 通信量 予測, データ使用量 チェック, ギガ残量 確認 無料">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ギガ使用ペースチェッカー">
+<link rel="canonical" href="https://gigapace-checker.vercel.app/tools/data-checker/">
+
+<!-- OGP -->
+<meta property="og:title" content="ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断">
+<meta property="og:description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gigapace-checker.vercel.app/index.html">
+<meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ギガ使用ペースチェッカー｜通信量ペースを無料診断">
+<meta name="twitter:description" content="今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ギガ使用ペースチェッカー",
+  "description": "月間プランと今月の使用量を入力するだけで、今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。",
+  "url": "https://gigapace-checker.vercel.app/index.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android, iOS, Windows, macOS",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app"
+  },
+  "inLanguage": "ja",
+  "featureList": [
+    "月末までの通信量ペース診断",
+    "今日使える通信量の自動計算",
+    "月末使用量の予測表示",
+    "3GB〜50GBまでのプラン対応",
+    "登録不要・完全無料"
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:  #ffe600;
+  --yellow2: #ffd000;
+  --ink:     #1a1a1a;
+  --ink2:    #2e2e2e;
+  --safe:    #00e096;
+  --ok:      #00c8ff;
+  --warn:    #ff9500;
+  --danger:  #ff3b5c;
+  --bg:      #f5f5f0;
+  --surface: #ffffff;
+  --border:  #1a1a1a;
+  --sub:     #777770;
+  --radius:  20px;
+}
+
+body.dark {
+  --bg:      #111110;
+  --surface: #1e1e1c;
+  --border:  #ffe600;
+  --sub:     #888880;
+  --ink:     #f0f0e8;
+  --ink2:    #d0d0c8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100svh;
+  transition: background .3s, color .3s;
+}
+
+/* ─── dot pattern bg ─── */
+body {
+  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: var(--bg);
+}
+body.dark {
+  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
+}
+
+/* ─── Header ─── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--yellow);
+  border-bottom: 3px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+body.dark .hdr { background: var(--yellow); }
+
+.hdr-logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  color: var(--ink); letter-spacing: -.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hdr-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 40px; height: 40px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 17px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s, box-shadow .12s;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ─── Hero ─── */
+.hero {
+  padding: 20px 20px 0;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+}
+
+/* Signal */
+.signal {
+  display: flex; gap: 4px;
+  align-items: flex-end; height: 22px;
+}
+.signal i {
+  display: block; width: 7px; border-radius: 3px 3px 0 0;
+  background: var(--ink); opacity: .15;
+  transition: opacity .3s;
+}
+.signal i:nth-child(1){ height: 7px; }
+.signal i:nth-child(2){ height: 11px; }
+.signal i:nth-child(3){ height: 16px; }
+.signal i:nth-child(4){ height: 22px; }
+.signal i.active { opacity: 1; }
+
+/* ─── Donut ─── */
+.donut-wrap {
+  position: relative; width: 210px; height: 210px;
+}
+.donut-wrap svg { transform: rotate(-90deg); }
+.donut-bg {
+  fill: none; stroke: #e0e0d8; stroke-width: 18;
+}
+body.dark .donut-bg { stroke: #333330; }
+.donut-bar {
+  fill: none; stroke-width: 18; stroke-linecap: butt;
+  stroke-dasharray: 565; stroke-dashoffset: 565;
+  transition: stroke-dashoffset .55s cubic-bezier(.4,0,.2,1), stroke .3s;
+}
+.donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+}
+.donut-pct {
+  font-family: 'Nunito', sans-serif;
+  font-size: 52px; font-weight: 900;
+  line-height: 1; transition: color .3s;
+  letter-spacing: -.03em;
+}
+.donut-lbl {
+  font-size: 12px; color: var(--sub);
+  font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ─── Badge ─── */
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: var(--ink);
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: background .25s;
+  letter-spacing: -.01em;
+}
+
+/* ─── Today ─── */
+.today-block {
+  text-align: center;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 16px 28px;
+  box-shadow: 5px 5px 0 var(--ink);
+  width: 100%;
+}
+.today-lbl {
+  font-size: 11px; color: var(--sub);
+  font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.today-val {
+  font-family: 'Nunito', sans-serif;
+  font-size: 68px; font-weight: 900;
+  line-height: 1; transition: color .3s;
+  letter-spacing: -.03em;
+}
+.today-unit { font-size: 28px; font-weight: 900; margin-left: 2px; }
+
+/* ─── Meta ─── */
+.meta-row { display: flex; gap: 10px; width: 100%; }
+.meta-card {
+  flex: 1;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.meta-title {
+  font-size: 11px; color: var(--sub);
+  font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.meta-val {
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px; font-weight: 900;
+  line-height: 1; letter-spacing: -.02em;
+}
+
+/* ─── Control ─── */
+.ctrl-panel {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 20px;
+  margin: 20px;
+}
+
+.ctrl-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  letter-spacing: .08em;
+  color: var(--sub);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.plan-tabs {
+  display: flex; gap: 8px;
+  flex-wrap: wrap; margin-bottom: 18px;
+}
+.plan-tab {
+  flex: 1; min-width: 66px;
+  padding: 10px 6px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 15px;
+  cursor: pointer; text-align: center;
+  transition: all .15s;
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+}
+.plan-tab:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.plan-tab.active {
+  background: var(--yellow);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.plan-custom-wrap {
+  display: flex; align-items: center; gap: 8px;
+}
+.plan-custom-wrap label {
+  font-size: 14px; font-weight: 700;
+  color: var(--sub); white-space: nowrap;
+}
+#customPlan {
+  flex: 1; padding: 10px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  outline: none;
+}
+#customPlan:focus { background: var(--yellow); }
+
+.ctrl-section { margin-top: 24px; }
+.used-ctrls {
+  display: flex; gap: 10px; align-items: center;
+}
+.used-input-wrap {
+  flex: 1; position: relative;
+}
+#usedInput {
+  width: 100%; padding: 12px 46px 12px 14px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px; font-weight: 900;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  outline: none;
+}
+#usedInput:focus { background: var(--yellow); }
+.used-unit {
+  position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  color: var(--sub); pointer-events: none;
+}
+
+.adj-btn {
+  width: 48px; height: 48px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px; font-weight: 900;
+  cursor: pointer; color: var(--ink);
+  transition: transform .12s, box-shadow .12s;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.adj-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.slider-wrap {
+  margin-top: 14px;
+}
+#slider {
+  width: 100%; height: 10px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--ink);
+}
+body.dark #slider { background: #333; }
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px; height: 26px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+#slider::-moz-range-thumb {
+  width: 26px; height: 26px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ─── Remain Bar ─── */
+.remain-bar-card {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 18px 20px;
+  margin: 20px;
+}
+.remain-head {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 12px;
+}
+.remain-lbl {
+  font-size: 12px; color: var(--sub);
+  font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.remain-meta {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: var(--ink); letter-spacing: -.01em;
+}
+.progress-bg {
+  height: 16px;
+  background: #e0e0d8;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+}
+body.dark .progress-bg { background: #333330; }
+.progress-fill {
+  height: 100%;
+  background: var(--safe);
+  border-radius: 20px;
+  transition: width .3s, background .3s;
+}
+
+/* ─── Recommended Articles (診断結果に応じて表示) ─── */
+.articles-section {
+  margin: 28px 20px 0;
+  padding: 24px 20px;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.articles-section h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px; font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.articles-desc {
+  font-size: 14px; color: var(--sub);
+  margin-bottom: 20px; line-height: 1.6;
+}
+.article-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--bg);
+  text-decoration: none;
+  color: var(--ink);
+  transition: all .15s;
+  box-shadow: 3px 3px 0 var(--ink);
+  margin-bottom: 12px;
+}
+.article-card:last-child { margin-bottom: 0; }
+.article-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.article-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+.article-body { flex: 1; }
+.article-title {
+  font-weight: 900; font-size: 15px;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.article-sub {
+  font-size: 12px; color: var(--sub);
+  line-height: 1.5;
+}
+.article-arrow {
+  font-size: 24px; color: var(--sub);
+  flex-shrink: 0;
+}
+
+/* ─── Related Articles (常に表示) ─── */
+.guide-section {
+  margin: 32px 20px 40px;
+  padding: 24px 20px;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.guide-section h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px; font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.guide-desc {
+  font-size: 14px; color: var(--sub);
+  margin-bottom: 20px; line-height: 1.6;
+}
+.guide-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--bg);
+  text-decoration: none;
+  color: var(--ink);
+  transition: all .15s;
+  box-shadow: 3px 3px 0 var(--ink);
+  margin-bottom: 12px;
+}
+.guide-link:last-child { margin-bottom: 0; }
+.guide-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.guide-link-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+.guide-link-body { flex: 1; }
+.guide-link-title {
+  font-weight: 900; font-size: 15px;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.guide-link-sub {
+  font-size: 12px; color: var(--sub);
+  line-height: 1.5;
+}
+.guide-link-arrow {
+  font-size: 24px; color: var(--sub);
+  flex-shrink: 0;
+}
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed; bottom: 80px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--ink);
+  color: var(--surface);
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 700; font-size: 14px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: transform .3s, opacity .3s;
+  z-index: 999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-logo">ギガ使用ペースチェッカー</div>
+  <div class="hdr-actions">
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" aria-label="ダークモード切り替え">🌙</button>
+    <button class="icon-btn" onclick="shareTool()" aria-label="シェア">📤</button>
+  </div>
+</header>
+
+<main class="hero">
+  <div class="signal">
+    <i></i><i></i><i></i><i></i>
+  </div>
+
+  <div class="donut-wrap">
+    <svg viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" class="donut-bg"></circle>
+      <circle cx="100" cy="100" r="90" class="donut-bar" id="donutBar"></circle>
+    </svg>
+    <div class="donut-center">
+      <div class="donut-pct" id="pctText">0%</div>
+      <div class="donut-lbl">USED</div>
+    </div>
+  </div>
+
+  <div class="badge" id="badge">
+    <span id="badgeEmoji">✦</span>
+    <span id="badgeText">余裕あり！</span>
+  </div>
+
+  <div class="today-block">
+    <div class="today-lbl">Today Limit</div>
+    <div class="today-val">
+      <span id="todayNum">0.0</span><span class="today-unit" id="todayUnit">GB</span>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-card">
+      <div class="meta-title">予測</div>
+      <div class="meta-val" id="forecast">—</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">残り日数</div>
+      <div class="meta-val" id="countdown">—</div>
+    </div>
+  </div>
+</main>
+
+<section class="ctrl-panel">
+  <div class="ctrl-title">📊 月間プラン</div>
+  <div class="plan-tabs" id="planTabs">
+    <button class="plan-tab" data-gb="3">3GB</button>
+    <button class="plan-tab" data-gb="5">5GB</button>
+    <button class="plan-tab" data-gb="10">10GB</button>
+    <button class="plan-tab" data-gb="20">20GB</button>
+    <button class="plan-tab active" data-gb="50">50GB</button>
+  </div>
+  <div class="plan-custom-wrap">
+    <label for="customPlan">カスタム:</label>
+    <input type="number" id="customPlan" placeholder="例: 30" min="1" max="999" step="1">
+    <span style="font-size:14px; font-weight:700; color:var(--sub);">GB</span>
+  </div>
+
+  <div class="ctrl-section">
+    <div class="ctrl-title">📱 今月の使用量</div>
+    <div class="used-ctrls">
+      <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+      <div class="used-input-wrap">
+        <input type="number" id="usedInput" step="0.1" min="0">
+        <span class="used-unit">GB</span>
+      </div>
+      <button class="adj-btn" onclick="adjust(+0.1)">+</button>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" id="slider" min="0" max="50" step="0.1" value="0">
+    </div>
+  </div>
+</section>
+
+<section class="remain-bar-card">
+  <div class="remain-head">
+    <span class="remain-lbl">残り通信量</span>
+    <span class="remain-meta" id="remainMeta">0.0GB</span>
+  </div>
+  <div class="progress-bg">
+    <div class="progress-fill" id="progFill"></div>
+  </div>
+</section>
+
+<!-- 診断結果に応じた推奨記事 -->
+<section class="articles-section" id="recommendedArticles">
+  <h2 id="articlesTitle">🎯 あなたにおすすめの記事</h2>
+  <p class="articles-desc" id="articlesDesc">診断結果に基づいて、最適な節約方法をご紹介します。</p>
+  <div id="articlesContainer"></div>
+</section>
+
+<!-- 常に表示される関連記事 -->
+<section class="guide-section">
+  <h2>📚 関連記事</h2>
+  <p class="guide-desc">通信量の節約方法や設定手順を詳しく解説しています。</p>
+
+  <a href="../../articles/how-to-check-data-android.html" class="guide-link">
+    <span class="guide-link-icon">📱</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidで通信量を確認する方法</div>
+      <div class="guide-link-sub">設定アプリからの手順を画像つきで解説</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/save-data-youtube.html" class="guide-link">
+    <span class="guide-link-icon">▶️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">YouTubeの通信量を減らす設定方法</div>
+      <div class="guide-link-sub">画質変更・自動再生OFFの手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/save-data-sns.html" class="guide-link">
+    <span class="guide-link-icon">📲</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">SNSアプリの通信量を抑える設定</div>
+      <div class="guide-link-sub">Instagram・X・TikTokの自動再生を止める</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/android-data-saver.html" class="guide-link">
+    <span class="guide-link-icon">🛡️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidのデータセーバー機能とは</div>
+      <div class="guide-link-sub">バックグラウンド通信をまとめて制限する方法</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/wifi-only-update.html" class="guide-link">
+    <span class="guide-link-icon">📶</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">アプリ更新をWi-Fiのみに設定する方法</div>
+      <div class="guide-link-sub">iPhoneとAndroidそれぞれの設定手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'gigacheck_v4';
+const state = { plan: 50, used: 0, savedMonth: null };
+
+const donutBar    = document.getElementById('donutBar');
+const pctText     = document.getElementById('pctText');
+const badge       = document.getElementById('badge');
+const badgeEmoji  = document.getElementById('badgeEmoji');
+const badgeText   = document.getElementById('badgeText');
+const todayNum    = document.getElementById('todayNum');
+const todayUnit   = document.getElementById('todayUnit');
+const forecastEl  = document.getElementById('forecast');
+const countdownEl = document.getElementById('countdown');
+const remainMeta  = document.getElementById('remainMeta');
+const progFill    = document.getElementById('progFill');
+const remainVal   = document.getElementById('remainVal');
+const remainUnit  = document.getElementById('remainUnit');
+const slider      = document.getElementById('slider');
+const usedInput   = document.getElementById('usedInput');
+const customPlan  = document.getElementById('customPlan');
+
+function getDateInfo() {
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth(), day = now.getDate();
+  const lastDay   = new Date(year, month + 1, 0).getDate();
+  const remaining = Math.max(1, lastDay - day + 1);
+  const monthKey  = `${year}-${String(month+1).padStart(2,'0')}`;
+  return { day, lastDay, remaining, monthKey };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    const { monthKey } = getDateInfo();
+    if (saved.savedMonth && saved.savedMonth !== monthKey) saved.used = 0;
+    saved.savedMonth = monthKey;
+    Object.assign(state, saved);
+  } catch(e) {}
+}
+
+function fmtGB(gb) {
+  if (gb >= 1) return { num: gb.toFixed(1), unit: 'GB' };
+  return { num: Math.round(gb * 1024), unit: 'MB' };
+}
+
+// 診断結果に応じた推奨記事を表示
+function renderRecommendedArticles(status) {
+  const articlesContainer = document.getElementById('articlesContainer');
+  const articlesTitle = document.getElementById('articlesTitle');
+  const articlesDesc = document.getElementById('articlesDesc');
+  
+  let articles = [];
+  let title = '';
+  let desc = '';
+  
+  if (status === 'safe') {
+    // 余裕あり：使用量確認方法や便利機能を紹介
+    title = '🎯 もっと快適に使うための記事';
+    desc = 'ペースは完璧です！さらに便利に使う方法をチェックしてみましょう。';
+    articles = [
+      { icon:'📱', title:'Androidで通信量を確認する方法', sub:'設定アプリから今月の使用量をチェック', url:'../../articles/how-to-check-data-android.html' },
+      { icon:'🍎', title:'iPhoneで通信量を確認する方法', sub:'設定から簡単にデータ使用量を確認', url:'../../articles/iphone-check-data.html' },
+      { icon:'🗺️', title:'Googleマップをオフラインで使う方法', sub:'事前ダウンロードで通信量ゼロでナビ', url:'../../articles/offline-maps.html' }
+    ];
+  } else if (status === 'ok') {
+    // いい感じ：このペースを維持するための軽い節約術
+    title = '🎯 このペースを維持するための記事';
+    desc = 'いいペースです！軽い節約術で月末まで安心して使えます。';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質変更・自動再生OFFで無理なく節約', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'Instagram・X・TikTokの自動再生を止める', url:'../../articles/save-data-sns.html' },
+      { icon:'🔄', title:'アプリ更新をWi-Fiのみに設定', sub:'バックグラウンドの大量通信を防ぐ', url:'../../articles/wifi-only-update.html' }
+    ];
+  } else if (status === 'warn') {
+    // ちょっと注意：具体的な節約方法が必要
+    title = '⚠️ 今すぐチェックすべき節約記事';
+    desc = 'ペースがやや速めです。今から対策すれば月末まで余裕で使えます。';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質を480pに下げるだけで通信量が半分に', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'動画の自動再生をOFFにして大幅節約', url:'../../articles/save-data-sns.html' },
+      { icon:'🛡️', title:'Androidのデータセーバー機能', sub:'バックグラウンド通信を一括制限', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', sub:'iOS標準機能で通信量を自動削減', url:'../../articles/iphone-low-data-mode.html' }
+    ];
+  } else {
+    // 使いすぎ：緊急で実践すべき強力な節約術
+    title = '🚨 緊急！今すぐ実践すべき節約術';
+    desc = 'このペースだと月末前に上限到達の可能性があります。今すぐ対策しましょう。';
+    articles = [
+      { icon:'🛡️', title:'Androidのデータセーバー機能', sub:'バックグラウンド通信を今すぐ制限', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', sub:'iOS標準機能で通信量を強制削減', url:'../../articles/iphone-low-data-mode.html' },
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質を最低にして通信量を75%カット', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'動画・画像の自動読み込みを全てOFF', url:'../../articles/save-data-sns.html' },
+      { icon:'⚙️', title:'Androidのデータ使用警告設定', sub:'上限前に自動でアラートを出す方法', url:'../../articles/android-data-warning.html' }
+    ];
+  }
+  
+  articlesTitle.textContent = title;
+  articlesDesc.textContent = desc;
+  
+  articlesContainer.innerHTML = articles.map(a => `
+    <a href="${a.url}" class="article-card">
+      <span class="article-icon">${a.icon}</span>
+      <div class="article-body">
+        <div class="article-title">${a.title}</div>
+        <div class="article-sub">${a.sub}</div>
+      </div>
+      <span class="article-arrow">›</span>
+    </a>
+  `).join('');
+}
+
+function update() {
+  const { day, lastDay, remaining, monthKey } = getDateInfo();
+  state.savedMonth = monthKey;
+  const plan = state.plan;
+  const used = Math.max(0, state.used);
+  const rem  = Math.max(0, plan - used);
+
+  usedInput.value = used.toFixed(1);
+  slider.value    = used;
+
+  const pct  = Math.min(100, Math.round(used / plan * 100));
+  const CIRC = 565;
+  donutBar.style.strokeDashoffset = CIRC - (CIRC * pct / 100);
+  pctText.textContent  = `${pct}%`;
+  progFill.style.width = `${pct}%`;
+
+  const gap = (used / plan) - (day / lastDay);
+  let label, emoji, color, status;
+  if      (gap < -0.05) { label = '余裕あり！';   emoji = '✦';  color = 'var(--safe)';   status = 'safe'; }
+  else if (gap <  0.05) { label = 'いい感じ';     emoji = '◎';  color = 'var(--ok)';     status = 'ok'; }
+  else if (gap <  0.15) { label = 'ちょっと注意'; emoji = '▲';  color = 'var(--warn)';   status = 'warn'; }
+  else                  { label = '使いすぎ！';   emoji = '!!'; color = 'var(--danger)'; status = 'danger'; }
+
+  badge.style.background = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--yellow)' : color;
+  badge.style.color      = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--ink)' : '#fff';
+  badgeEmoji.textContent = emoji;
+  badgeText.textContent  = label;
+  pctText.style.color    = color;
+  progFill.style.background = color;
+  donutBar.style.stroke  = color;
+
+  const f = fmtGB(rem / remaining);
+  todayNum.textContent  = f.num;
+  todayUnit.textContent = f.unit;
+  todayNum.style.color  = color;
+
+  forecastEl.textContent  = day > 0 ? `${((used/day)*lastDay).toFixed(1)} GB` : '—';
+  countdownEl.textContent = `${lastDay - day} 日`;
+
+  const rf = fmtGB(rem);
+  remainMeta.textContent = `${rf.num}${rf.unit}`;
+
+  const bars = document.querySelectorAll('.signal i');
+  const activeBars = Math.max(0, 4 - Math.floor(pct / 26));
+  bars.forEach((b, i) => b.classList.toggle('active', i < activeBars));
+
+  // 診断結果に応じた記事を表示
+  renderRecommendedArticles(status);
+
+  saveState();
+}
+
+function adjust(delta) {
+  state.used = Math.round(Math.max(0, Math.min(state.plan, state.used + delta)) * 10) / 10;
+  update();
+}
+
+slider.addEventListener('input', () => { state.used = parseFloat(slider.value); update(); });
+
+usedInput.addEventListener('change', () => {
+  const v = parseFloat(usedInput.value);
+  if (isNaN(v) || v < 0) { usedInput.value = state.used.toFixed(1); return; }
+  state.used = Math.min(v, state.plan);
+  update();
+});
+
+document.getElementById('planTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.plan-tab');
+  if (!btn) return;
+  state.plan = parseFloat(btn.dataset.gb);
+  customPlan.value = '';
+  setActivePlanTab(btn);
+  slider.max = state.plan;
+  update();
+});
+
+function setActivePlanTab(activeBtn) {
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+customPlan.addEventListener('change', () => {
+  const v = parseFloat(customPlan.value);
+  if (isNaN(v) || v <= 0) { customPlan.value = ''; return; }
+  state.plan = v; setActivePlanTab(null); slider.max = v; update();
+});
+
+function restorePlanTab() {
+  let matched = null;
+  document.querySelectorAll('.plan-tab').forEach(b => {
+    if (parseFloat(b.dataset.gb) === state.plan) matched = b;
+  });
+  setActivePlanTab(matched);
+  slider.max = state.plan; slider.value = state.used;
+}
+
+function shareTool() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({ title:'ギガペース診断ツール', text:'スマホのギガ消費ペースをすぐ確認！', url }).catch(()=>{});
+  } else {
+    try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
+    catch(e) { showToast('コピーできませんでした'); }
+  }
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadDark(); loadState(); restorePlanTab(); update();
+</script>
+</body>
+</html>
