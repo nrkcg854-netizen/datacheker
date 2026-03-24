@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Androidのデータ通信量の警告と制限の設定方法｜ギガ使用ペースチェッカー</title>
+<meta name="description" content="Androidスマホのデータ警告・データ制限の設定手順を解説。月末のギガ切れを自動で防ぐ方法がわかります。Pixel・Samsung・Xperia対応。">
+<meta name="keywords" content="Android データ警告 設定, Android データ制限 設定方法, スマホ 通信量 上限 設定, ギガ切れ 防ぐ Android, データ使用量 警告 通知 Android">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ギガ使用ペースチェッカー">
+<link rel="canonical" href="https://gigapace-checker.vercel.app/articles/android-data-warning.html">
+
+<!-- OGP -->
+<meta property="og:title" content="Androidのデータ通信量の警告と制限の設定方法">
+<meta property="og:description" content="Androidスマホのデータ警告・データ制限の設定手順を解説。月末のギガ切れを自動で防ぐ方法がわかります。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://gigapace-checker.vercel.app/articles/android-data-warning.html">
+<meta property="og:image" content="https://gigapace-checker.vercel.app/ogp-article.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Androidのデータ通信量の警告と制限の設定方法",
+  "description": "Androidスマホのデータ警告・データ制限の設定手順を解説。月末のギガ切れを自動で防ぐ方法がわかります。",
+  "url": "https://gigapace-checker.vercel.app/articles/android-data-warning.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app"
+  },
+  "dateModified": "2025-06-01",
+  "inLanguage": "ja",
+  "step": [
+    { "@type": "HowToStep", "name": "設定アプリを開く", "text": "ホーム画面から歯車アイコンの設定アプリをタップします。" },
+    { "@type": "HowToStep", "name": "「ネットワークとインターネット」をタップ", "text": "機種によっては「接続」「通信と通話」などの名称の場合があります。" },
+    { "@type": "HowToStep", "name": "「SIM / モバイルネットワーク」を選択", "text": "確認したいSIMを選びます。" },
+    { "@type": "HowToStep", "name": "「データ警告と制限」をタップ", "text": "データ使用量の警告と制限を設定する画面が開きます。" },
+    { "@type": "HowToStep", "name": "警告・制限の容量を設定する", "text": "データ警告をONにして月間プランの80〜90%に設定します。" }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --yellow:  #ffe600;
+  --ink:     #1a1a1a;
+  --ink2:    #2e2e2e;
+  --safe:    #00e096;
+  --warn:    #ff9500;
+  --danger:  #ff3b5c;
+  --bg:      #f5f5f0;
+  --surface: #ffffff;
+  --border:  #1a1a1a;
+  --sub:     #777770;
+  --radius:  16px;
+}
+body.dark {
+  --bg:      #111110;
+  --surface: #1e1e1c;
+  --border:  #ffe600;
+  --sub:     #888880;
+  --ink:     #f0f0e8;
+  --ink2:    #d0d0c8;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink); min-height: 100svh;
+  transition: background .3s, color .3s;
+}
+body.dark { background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px); }
+
+.hdr {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px; background: var(--yellow);
+  border-bottom: 3px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.hdr-logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  color: var(--ink); text-decoration: none;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hdr-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 38px; height: 38px;
+  border: 2.5px solid var(--ink); border-radius: 10px;
+  background: var(--surface); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .1s, box-shadow .1s;
+}
+.icon-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+
+.article { max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--sub);
+  font-weight: 700; margin-bottom: 20px; flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--sub); text-decoration: none; }
+.breadcrumb-sep { color: var(--sub); }
+
+.article-hero {
+  background: var(--yellow);
+  border: 3px solid var(--ink); border-radius: var(--radius);
+  padding: 24px 20px 20px; margin-bottom: 24px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.article-category {
+  display: inline-block;
+  background: var(--ink); color: var(--yellow);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px; margin-bottom: 12px;
+}
+.article-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px; font-weight: 900;
+  line-height: 1.4; letter-spacing: -.02em;
+  color: var(--ink); margin-bottom: 10px;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+.article-meta {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-size: 12px; color: var(--ink2); font-weight: 700;
+}
+
+.summary-box {
+  background: var(--surface);
+  border: 3px solid var(--ink); border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 28px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.summary-label {
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 12px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sub); margin-bottom: 10px;
+}
+.summary-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.summary-list li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 14px; line-height: 1.5; font-weight: 500;
+}
+.summary-list li::before {
+  content: '✦'; color: var(--yellow); background: var(--ink);
+  font-size: 10px; width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.article-body { display: flex; flex-direction: column; gap: 28px; }
+
+h2.section-heading {
+  font-family: 'Nunito', sans-serif; font-size: 20px; font-weight: 900;
+  border-left: 5px solid var(--yellow); padding-left: 12px; margin-bottom: 14px;
+}
+p.body-text { font-size: 15px; line-height: 1.85; color: var(--ink2); }
+body.dark p.body-text { color: var(--ink); }
+
+.step-list { display: flex; flex-direction: column; gap: 12px; }
+.step-card {
+  background: var(--surface);
+  border: 2.5px solid var(--ink); border-radius: var(--radius);
+  padding: 16px; box-shadow: 4px 4px 0 var(--ink);
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.step-num {
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 20px;
+  background: var(--yellow); border: 2.5px solid var(--ink);
+  border-radius: 10px; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.step-body { flex: 1; }
+.step-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.step-desc  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+.tip-box {
+  background: var(--surface);
+  border: 3px solid var(--ink); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: 4px 4px 0 var(--ink);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.tip-box-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.tip-box-body { flex: 1; }
+.tip-box-label {
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sub); margin-bottom: 4px;
+}
+.tip-box-text { font-size: 14px; line-height: 1.7; }
+
+.warn-box {
+  background: #fff8e6; border: 3px solid var(--warn); border-radius: var(--radius);
+  padding: 14px 16px; box-shadow: 4px 4px 0 var(--warn);
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 14px; line-height: 1.7;
+}
+body.dark .warn-box { background: #2a1f00; }
+.warn-box-icon { font-size: 20px; flex-shrink: 0; }
+
+.data-table {
+  width: 100%; border-collapse: collapse;
+  border: 2.5px solid var(--ink); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 4px 4px 0 var(--ink);
+}
+.data-table th {
+  background: var(--yellow); font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 13px;
+  padding: 10px 14px; text-align: left; border-bottom: 2.5px solid var(--ink);
+}
+.data-table td {
+  background: var(--surface); font-size: 13px; padding: 10px 14px;
+  border-bottom: 1.5px solid var(--border); line-height: 1.5;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { font-weight: 700; }
+
+.cta-box {
+  background: var(--ink); border-radius: var(--radius);
+  padding: 22px 20px; text-align: center;
+  box-shadow: 5px 5px 0 var(--yellow);
+}
+.cta-box-title {
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 18px;
+  color: var(--yellow); margin-bottom: 6px;
+}
+.cta-box-desc { font-size: 13px; color: #aaa; margin-bottom: 16px; line-height: 1.6; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--yellow); border: 2.5px solid var(--yellow);
+  border-radius: 999px; padding: 12px 28px;
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px;
+  color: var(--ink); text-decoration: none;
+  box-shadow: 3px 3px 0 rgba(255,255,255,.3); transition: all .12s;
+}
+.cta-btn:active { transform: translate(2px,2px); }
+
+.related {
+  background: var(--yellow); border: 3px solid var(--ink);
+  border-radius: var(--radius); padding: 18px 16px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.related-title {
+  font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 14px;
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px;
+}
+.related-link {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 2.5px solid var(--ink);
+  border-radius: 12px; padding: 12px 14px;
+  text-decoration: none; color: inherit;
+  box-shadow: 3px 3px 0 var(--ink); transition: all .1s;
+  margin-bottom: 8px; font-size: 14px; font-weight: 700;
+}
+.related-link:last-child { margin-bottom: 0; }
+.related-link:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.related-link-icon { font-size: 20px; flex-shrink: 0; }
+.related-link-arrow { font-family: 'Nunito',sans-serif; font-size: 20px; font-weight: 900; margin-left: auto; }
+
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--yellow);
+  padding: 11px 22px; border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="../../" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
+  <div class="hdr-actions">
+    <button class="icon-btn" onclick="shareArticle()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
+  </div>
+</header>
+
+<main class="article">
+
+  <nav class="breadcrumb">
+    <a href="../../">ホーム</a><span class="breadcrumb-sep">›</span>
+    <a href="../../">記事一覧</a><span class="breadcrumb-sep">›</span>
+    <span>Androidのデータ通信量の警告と制限の設定方法</span>
+  </nav>
+
+  <div class="article-hero">
+    <span class="article-category">Android設定</span>
+    <h1 class="article-title">Androidのデータ通信量の警告と制限の設定方法</h1>
+    <div class="article-meta">
+      <span>📅 2025年6月更新</span>
+      <span>⏱ 読了3分</span>
+      <span>📱 Android対応</span>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-label">この記事でわかること</div>
+    <ul class="summary-list">
+      <li>データ警告をONにして使いすぎを通知で知らせる設定手順</li>
+      <li>データ制限をONにして上限を超えたら自動でOFFにする設定手順</li>
+      <li>プランごとのおすすめ設定値の目安</li>
+    </ul>
+  </div>
+
+  <div class="article-body">
+
+    <section>
+      <h2 class="section-heading">データ警告とデータ制限の違い</h2>
+      <p class="body-text">Androidには通信量を管理する機能が2種類あります。まず違いを理解しておきましょう。</p>
+      <br>
+      <table class="data-table">
+        <thead><tr><th>機能</th><th>動作</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>データ警告</td><td>設定した容量に達すると通知が届く</td><td>使いすぎに気づくため</td></tr>
+          <tr><td>データ制限</td><td>設定した容量に達すると通信が自動でOFFになる</td><td>確実にギガ切れを防ぐため</td></tr>
+        </tbody>
+      </table>
+      <br>
+      <div class="tip-box">
+        <span class="tip-box-icon">💡</span>
+        <div class="tip-box-body">
+          <div class="tip-box-label">どちらを使うべき？</div>
+          <div class="tip-box-text">まずは<strong>データ警告だけON</strong>にするのがおすすめです。データ制限は通信が完全に止まるため、緊急時に困る場合があります。警告で気づいて自分で調整する方が使いやすいです。</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">設定画面を開く手順（共通）</h2>
+      <p class="body-text">データ警告・制限ともに同じ画面から設定できます。まずここまで進んでください。</p>
+      <br>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">設定アプリを開く</div>
+            <div class="step-desc">ホーム画面から歯車アイコンをタップします。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">「ネットワークとインターネット」をタップ</div>
+            <div class="step-desc">機種によって「接続」「通信と通話」「モバイルネットワーク」などの名称が異なります。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">「SIM / モバイルネットワーク」を選択</div>
+            <div class="step-desc">複数SIMがある場合は確認したいSIMを選びます。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">「データ警告と制限」をタップ</div>
+            <div class="step-desc">Pixelでは「データ使用量」の下に表示されています。Samsungでは「データ使用量の警告」という名称の場合があります。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">データ警告の設定手順</h2>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">「データ警告を設定」をONにする</div>
+            <div class="step-desc">スイッチをONにすると容量の入力欄が表示されます。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">警告する容量を入力する</div>
+            <div class="step-desc">月間プランの80〜90%を目安に設定します。例：20GBプランなら16〜18GBに設定。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">「設定」をタップして完了</div>
+            <div class="step-desc">この容量に達すると通知バーに警告が表示されます。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">データ制限の設定手順</h2>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">「データ制限を設定」をONにする</div>
+            <div class="step-desc">確認ダイアログが表示されるので「OK」をタップします。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">制限する容量を入力する</div>
+            <div class="step-desc">月間プランの95%前後を目安に設定します。例：20GBプランなら19GBに設定。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">「設定」をタップして完了</div>
+            <div class="step-desc">この容量に達するとモバイルデータが自動でOFFになります。</div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="warn-box">
+        <span class="warn-box-icon">⚠️</span>
+        <span>データ制限をONにするとモバイルデータが完全に止まります。緊急時に使えなくなる場合があるので、制限値は余裕を持った設定にしてください。LINEや地図アプリも使えなくなります。</span>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">リセット日の設定も忘れずに</h2>
+      <p class="body-text">データ使用量の集計をリセットする日を設定しておくと、当月の使用量だけを正確に把握できます。契約の更新日（毎月1日や毎月○日）に合わせて設定しましょう。</p>
+      <br>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">「データ警告と制限」画面で「データ使用量のリセット日」をタップ</div>
+            <div class="step-desc">月の何日にリセットするかを設定できます。</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">契約の更新日を入力して「設定」をタップ</div>
+            <div class="step-desc">毎月1日更新なら「1」を入力します。キャリアの更新日がわからない場合はMyページで確認しましょう。</div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="tip-box">
+        <span class="tip-box-icon">💡</span>
+        <div class="tip-box-body">
+          <div class="tip-box-label">プランごとのおすすめ設定値</div>
+          <div class="tip-box-text"></div>
+        </div>
+      </div>
+      <br>
+      <table class="data-table">
+        <thead><tr><th>月間プラン</th><th>データ警告の目安</th><th>データ制限の目安</th></tr></thead>
+        <tbody>
+          <tr><td>3GB</td><td>2.5GB</td><td>2.9GB</td></tr>
+          <tr><td>5GB</td><td>4GB</td><td>4.8GB</td></tr>
+          <tr><td>10GB</td><td>8GB</td><td>9.5GB</td></tr>
+          <tr><td>20GB</td><td>16GB</td><td>19GB</td></tr>
+          <tr><td>30GB</td><td>24GB</td><td>28GB</td></tr>
+          <tr><td>50GB</td><td>40GB</td><td>47GB</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="cta-box">
+      <div class="cta-box-title">今月のギガペースを診断しよう</div>
+      <div class="cta-box-desc">設定を終えたら今日使える通信量をチェック。<br>月末まで余裕があるか一瞬でわかります。</div>
+      <a href="../../tools/data-checker/" class="cta-btn">📶 ギガのペースを診断する →</a>
+    </div>
+
+    <div class="related">
+      <div class="related-title">📚 関連記事</div>
+      <a href="./how-to-check-data-android.html" class="related-link">
+        <span class="related-link-icon">📱</span>
+        Androidで通信量を確認する方法
+        <span class="related-link-arrow">›</span>
+      </a>
+      <a href="./android-data-saver.html" class="related-link">
+        <span class="related-link-icon">🛡️</span>
+        Androidのデータセーバー機能とは
+        <span class="related-link-arrow">›</span>
+      </a>
+      <a href="./save-data-youtube.html" class="related-link">
+        <span class="related-link-icon">▶️</span>
+        YouTubeの通信量を減らす設定方法
+        <span class="related-link-arrow">›</span>
+      </a>
+      <a href="./save-data-sns.html" class="related-link">
+        <span class="related-link-icon">📲</span>
+        SNSアプリの通信量を抑える設定
+        <span class="related-link-arrow">›</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function shareArticle() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({ title: document.title, url }).catch(()=>{});
+  } else {
+    try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
+    catch(e) { showToast('コピーできませんでした'); }
+  }
+}
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+loadDark();
+</script>
+</body>
+</html>
