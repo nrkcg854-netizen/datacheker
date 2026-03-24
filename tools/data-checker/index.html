@@ -141,9 +141,191 @@ body.dark .hdr { background: var(--yellow); }
   box-shadow: 1px 1px 0 var(--ink);
 }
 
-/* ─── Hero ─── */
+/* ─── Panel (月間プラン + 使用量入力) ─── */
+.panel {
+  padding: 24px 20px;
+  background: var(--surface);
+  border-bottom: 3px solid var(--ink);
+}
+body.dark .panel { background: var(--surface); }
+
+.sec-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px; font-weight: 900;
+  color: var(--sub);
+  letter-spacing: .02em;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; height: 24px;
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 900;
+  color: var(--ink);
+}
+
+.plan-tabs {
+  display: flex; gap: 8px;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+.plan-tab {
+  flex: 1; min-width: 60px;
+  padding: 10px 8px;
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 15px;
+  cursor: pointer; text-align: center;
+  transition: all .15s;
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+}
+.plan-tab:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.plan-tab.active {
+  background: var(--yellow);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.custom-row { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  margin-top: 10px; 
+}
+.custom-row label { 
+  font-size: 13px; 
+  color: var(--sub); 
+  font-weight: 700; 
+}
+.custom-input {
+  width: 88px; 
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; 
+  font-size: 16px;
+  text-align: center; 
+  outline: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: box-shadow .12s;
+}
+body.dark .custom-input { background: var(--surface); }
+.custom-input:focus { box-shadow: 1px 1px 0 var(--ink); outline: none; }
+
+.usage-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 14px;
+}
+.usage-card {
+  background: var(--bg);
+  border: 2.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.usage-card-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--sub);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.adj-row {
+  display: flex; align-items: center;
+  gap: 6px;
+}
+.adj-btn {
+  width: 32px; height: 32px;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px; font-weight: 900;
+  cursor: pointer; color: var(--ink);
+  transition: transform .12s, box-shadow .12s;
+  box-shadow: 2px 2px 0 var(--ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.adj-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.used-direct {
+  width: 70px;
+  padding: 6px 8px;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px; font-weight: 900;
+  color: var(--ink);
+  text-align: center;
+  box-shadow: 2px 2px 0 var(--ink);
+  outline: none;
+}
+.used-direct:focus { background: var(--yellow); }
+
+.usage-val {
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px; font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -.02em;
+}
+.usage-unit {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 900;
+  color: var(--sub);
+  margin-left: 2px;
+}
+
+.slider-wrap {
+  margin-top: 4px;
+}
+#slider {
+  width: 100%; height: 10px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--ink);
+}
+body.dark #slider { background: #333; }
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px; height: 26px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+#slider::-moz-range-thumb {
+  width: 26px; height: 26px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ─── Hero (診断結果) ─── */
 .hero {
-  padding: 20px 20px 0;
+  padding: 24px 20px;
   display: flex; flex-direction: column;
   align-items: center; gap: 16px;
 }
@@ -227,16 +409,20 @@ body.dark .donut-bg { stroke: #333330; }
 }
 .today-val {
   font-family: 'Nunito', sans-serif;
-  font-size: 68px; font-weight: 900;
+  font-size: 36px; font-weight: 900;
   line-height: 1; transition: color .3s;
   letter-spacing: -.03em;
 }
-.today-unit { font-size: 28px; font-weight: 900; margin-left: 2px; }
+.today-unit { font-size: 18px; font-weight: 900; margin-left: 2px; }
 
 /* ─── Meta ─── */
-.meta-row { display: flex; gap: 10px; width: 100%; }
+.meta-row { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; 
+  width: 100%; 
+}
 .meta-card {
-  flex: 1;
   background: var(--surface);
   border: 3px solid var(--ink);
   border-radius: var(--radius);
@@ -251,431 +437,249 @@ body.dark .donut-bg { stroke: #333330; }
 }
 .meta-val {
   font-family: 'Nunito', sans-serif;
-  font-size: 24px; font-weight: 900;
+  font-size: 18px; font-weight: 900;
   line-height: 1; letter-spacing: -.02em;
 }
 
-/* ─── Control ─── */
-.ctrl-panel {
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: 5px 5px 0 var(--ink);
-  padding: 20px;
-  margin: 20px;
+/* ─── Progress Bar ─── */
+.prog-wrap {
+  width: 100%;
 }
-
-.ctrl-title {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 14px;
-  letter-spacing: .08em;
-  color: var(--sub);
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-
-.plan-tabs {
-  display: flex; gap: 8px;
-  flex-wrap: wrap; margin-bottom: 18px;
-}
-.plan-tab {
-  flex: 1; min-width: 66px;
-  padding: 10px 6px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 15px;
-  cursor: pointer; text-align: center;
-  transition: all .15s;
-  box-shadow: 2px 2px 0 var(--ink);
-  color: var(--ink);
-}
-.plan-tab:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-.plan-tab.active {
-  background: var(--yellow);
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.plan-custom-wrap {
-  display: flex; align-items: center; gap: 8px;
-}
-.plan-custom-wrap label {
-  font-size: 14px; font-weight: 700;
-  color: var(--sub); white-space: nowrap;
-}
-#customPlan {
-  flex: 1; padding: 10px 12px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-family: 'Nunito', sans-serif;
-  font-size: 16px; font-weight: 700;
-  color: var(--ink);
-  box-shadow: 2px 2px 0 var(--ink);
-  outline: none;
-}
-#customPlan:focus { background: var(--yellow); }
-
-.ctrl-section { margin-top: 24px; }
-.used-ctrls {
-  display: flex; gap: 10px; align-items: center;
-}
-.used-input-wrap {
-  flex: 1; position: relative;
-}
-#usedInput {
-  width: 100%; padding: 12px 46px 12px 14px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-family: 'Nunito', sans-serif;
-  font-size: 18px; font-weight: 900;
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-  outline: none;
-}
-#usedInput:focus { background: var(--yellow); }
-.used-unit {
-  position: absolute; right: 14px; top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 14px;
-  color: var(--sub); pointer-events: none;
-}
-
-.adj-btn {
-  width: 48px; height: 48px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px; font-weight: 900;
-  cursor: pointer; color: var(--ink);
-  transition: transform .12s, box-shadow .12s;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.adj-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-.slider-wrap {
-  margin-top: 14px;
-}
-#slider {
-  width: 100%; height: 10px;
-  -webkit-appearance: none;
-  background: #ddd;
-  border-radius: 5px;
-  outline: none;
-  border: 2px solid var(--ink);
-}
-body.dark #slider { background: #333; }
-#slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 26px; height: 26px;
-  background: var(--yellow);
-  border: 3px solid var(--ink);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 2px 2px 0 var(--ink);
-}
-#slider::-moz-range-thumb {
-  width: 26px; height: 26px;
-  background: var(--yellow);
-  border: 3px solid var(--ink);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-/* ─── Remain Bar ─── */
-.remain-bar-card {
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: 5px 5px 0 var(--ink);
-  padding: 18px 20px;
-  margin: 20px;
-}
-.remain-head {
-  display: flex; justify-content: space-between;
-  align-items: baseline; margin-bottom: 12px;
-}
-.remain-lbl {
-  font-size: 12px; color: var(--sub);
-  font-weight: 700; letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.remain-meta {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 18px;
-  color: var(--ink); letter-spacing: -.01em;
-}
-.progress-bg {
-  height: 16px;
+.prog-track {
+  height: 14px;
   background: #e0e0d8;
   border-radius: 20px;
   overflow: hidden;
-  border: 2px solid var(--ink);
+  border: 2.5px solid var(--ink);
 }
-body.dark .progress-bg { background: #333330; }
-.progress-fill {
+body.dark .prog-track { background: #333330; }
+.prog-fill {
   height: 100%;
   background: var(--safe);
   border-radius: 20px;
   transition: width .3s, background .3s;
 }
 
-/* ─── Recommended Articles (診断結果に応じて表示) ─── */
-.articles-section {
-  margin: 28px 20px 0;
-  padding: 24px 20px;
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-.articles-section h2 {
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px; font-weight: 900;
-  margin-bottom: 8px;
-  color: var(--ink);
-  letter-spacing: -.01em;
-}
-.articles-desc {
-  font-size: 14px; color: var(--sub);
-  margin-bottom: 20px; line-height: 1.6;
-}
-.article-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: 3px solid var(--ink);
-  border-radius: 16px;
+/* ─── Tips (診断結果に応じた記事) ─── */
+.tips-card {
+  display: flex; align-items: center; gap: 12px;
   background: var(--bg);
-  text-decoration: none;
-  color: var(--ink);
-  transition: all .15s;
-  box-shadow: 3px 3px 0 var(--ink);
-  margin-bottom: 12px;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  text-decoration: none; color: inherit;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s;
+  margin-bottom: 10px;
 }
-.article-card:last-child { margin-bottom: 0; }
-.article-card:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+body.dark .tips-card { background: var(--surface); }
+.tips-card:last-child { margin-bottom: 0; }
+.tips-card:active { 
+  transform: translate(2px,2px); 
+  box-shadow: 2px 2px 0 var(--ink); 
 }
-.article-icon {
-  font-size: 28px;
-  flex-shrink: 0;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
+.tips-icon { 
+  font-size: 24px; 
+  flex-shrink: 0; 
 }
-.article-body { flex: 1; }
-.article-title {
-  font-weight: 900; font-size: 15px;
-  margin-bottom: 4px;
-  line-height: 1.4;
+.tips-body { 
+  flex: 1; 
+  min-width: 0; 
 }
-.article-sub {
-  font-size: 12px; color: var(--sub);
-  line-height: 1.5;
+.tips-title { 
+  font-size: 14px; 
+  font-weight: 700; 
+  line-height: 1.4; 
+  margin-bottom: 2px; 
 }
-.article-arrow {
-  font-size: 24px; color: var(--sub);
+.tips-desc { 
+  font-size: 12px; 
+  color: var(--sub); 
+  line-height: 1.4; 
+}
+.tips-arrow {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px; 
+  font-weight: 900;
+  color: var(--ink); 
   flex-shrink: 0;
 }
 
-/* ─── Related Articles (常に表示) ─── */
-.guide-section {
-  margin: 32px 20px 40px;
-  padding: 24px 20px;
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: 5px 5px 0 var(--ink);
+/* ─── Guide (関連記事) ─── */
+.guide {
+  padding: 28px 20px 48px;
+  border-top: 3px solid var(--ink);
+  background: var(--yellow);
 }
-.guide-section h2 {
+.guide h2 {
   font-family: 'Nunito', sans-serif;
-  font-size: 20px; font-weight: 900;
-  margin-bottom: 8px;
-  color: var(--ink);
-  letter-spacing: -.01em;
+  font-size: 18px; font-weight: 900;
+  margin-bottom: 6px; letter-spacing: -.01em;
 }
 .guide-desc {
-  font-size: 14px; color: var(--sub);
-  margin-bottom: 20px; line-height: 1.6;
+  font-size: 13px; color: var(--ink2);
+  margin-bottom: 18px; line-height: 1.6;
 }
 .guide-link {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: 3px solid var(--ink);
-  border-radius: 16px;
-  background: var(--bg);
-  text-decoration: none;
-  color: var(--ink);
-  transition: all .15s;
-  box-shadow: 3px 3px 0 var(--ink);
-  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius); padding: 14px 16px;
+  text-decoration: none; color: inherit;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s; margin-bottom: 10px;
 }
 .guide-link:last-child { margin-bottom: 0; }
-.guide-link:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-.guide-link-icon {
-  font-size: 28px;
-  flex-shrink: 0;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-}
-.guide-link-body { flex: 1; }
-.guide-link-title {
-  font-weight: 900; font-size: 15px;
-  margin-bottom: 4px;
-  line-height: 1.4;
-}
-.guide-link-sub {
-  font-size: 12px; color: var(--sub);
-  line-height: 1.5;
-}
+.guide-link:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+.guide-link-icon  { font-size: 24px; flex-shrink: 0; }
+.guide-link-body  { flex: 1; }
+.guide-link-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.guide-link-sub   { font-size: 12px; color: var(--sub); }
 .guide-link-arrow {
-  font-size: 24px; color: var(--sub);
-  flex-shrink: 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px; font-weight: 900; color: var(--ink); flex-shrink: 0;
 }
 
-/* ─── Toast ─── */
+/* Toast */
 .toast {
-  position: fixed; bottom: 80px; left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--ink);
-  color: var(--surface);
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-weight: 700; font-size: 14px;
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
-  opacity: 0;
-  transition: transform .3s, opacity .3s;
-  z-index: 999;
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--yellow);
+  padding: 11px 22px; border-radius: 999px;
+  border: 2.5px solid var(--ink);
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap; z-index: 999;
 }
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <header class="hdr">
-  <div class="hdr-logo">ギガ使用ペースチェッカー</div>
+  <a href="../../" class="hdr-logo" style="text-decoration:none;">📶 ギガ使用ペースチェッカー</a>
   <div class="hdr-actions">
-    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" aria-label="ダークモード切り替え">🌙</button>
-    <button class="icon-btn" onclick="shareTool()" aria-label="シェア">📤</button>
+    <button class="icon-btn" onclick="shareTool()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
   </div>
 </header>
 
-<main class="hero">
-  <div class="signal">
-    <i></i><i></i><i></i><i></i>
-  </div>
+<!-- Panel：① プラン → ② 使用量 -->
+<div class="panel">
 
-  <div class="donut-wrap">
-    <svg viewBox="0 0 200 200">
-      <circle cx="100" cy="100" r="90" class="donut-bg"></circle>
-      <circle cx="100" cy="100" r="90" class="donut-bar" id="donutBar"></circle>
-    </svg>
-    <div class="donut-center">
-      <div class="donut-pct" id="pctText">0%</div>
-      <div class="donut-lbl">USED</div>
+  <div>
+    <div class="sec-title"><span class="step-badge">1</span> 月間プランを選ぶ</div>
+    <div class="plan-tabs" id="planTabs">
+      <button class="plan-tab" data-gb="3">3GB</button>
+      <button class="plan-tab" data-gb="5">5GB</button>
+      <button class="plan-tab" data-gb="10">10GB</button>
+      <button class="plan-tab" data-gb="20">20GB</button>
+      <button class="plan-tab" data-gb="30">30GB</button>
+      <button class="plan-tab active" data-gb="50">50GB</button>
+    </div>
+    <div class="custom-row">
+      <label>カスタム</label>
+      <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
+      <span style="font-size:13px;color:var(--sub)">GB</span>
     </div>
   </div>
 
-  <div class="badge" id="badge">
+  <div>
+    <div class="sec-title"><span class="step-badge">2</span> 今月の使用量を入力</div>
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-card-title">使用量</div>
+        <div class="adj-row">
+          <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+          <div>
+            <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
+            <span class="usage-unit">GB</span>
+          </div>
+          <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-card-title">残り</div>
+        <div style="margin-top:10px">
+          <span id="remainVal" class="usage-val">—</span>
+          <span class="usage-unit" id="remainUnit">GB</span>
+        </div>
+      </div>
+    </div>
+    <div class="slider-wrap">
+      <input id="slider" type="range" min="0" max="50" step="0.1" value="0">
+    </div>
+  </div>
+
+</div>
+
+<!-- ③ 診断結果 -->
+<section class="hero">
+
+  <div class="sec-title" style="color:var(--ink);margin-bottom:0;"><span class="step-badge">3</span> 診断結果</div>
+
+  <div class="signal">
+    <i class="active"></i><i class="active"></i><i class="active"></i><i class="active"></i>
+  </div>
+
+  <div class="donut-wrap">
+    <svg width="210" height="210" viewBox="0 0 210 210">
+      <circle class="donut-bg"  cx="105" cy="105" r="90"/>
+      <circle id="donutBar" class="donut-bar" cx="105" cy="105" r="90"/>
+    </svg>
+    <div class="donut-center">
+      <span id="pctText" class="donut-pct">0%</span>
+      <span class="donut-lbl">使用率</span>
+    </div>
+  </div>
+
+  <div id="badge" class="badge">
     <span id="badgeEmoji">✦</span>
-    <span id="badgeText">余裕あり！</span>
+    <span id="badgeText">判定中</span>
   </div>
 
   <div class="today-block">
-    <div class="today-lbl">Today Limit</div>
+    <div class="today-lbl">今日使える通信量</div>
     <div class="today-val">
-      <span id="todayNum">0.0</span><span class="today-unit" id="todayUnit">GB</span>
+      <span id="todayNum">—</span><span class="today-unit" id="todayUnit">GB</span>
     </div>
   </div>
 
   <div class="meta-row">
     <div class="meta-card">
-      <div class="meta-title">予測</div>
+      <div class="meta-title">月末予測</div>
       <div class="meta-val" id="forecast">—</div>
     </div>
     <div class="meta-card">
-      <div class="meta-title">残り日数</div>
-      <div class="meta-val" id="countdown">—</div>
+      <div class="meta-title">月末まで</div>
+      <div class="meta-val" id="countdown">— 日</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">残り容量</div>
+      <div class="meta-val" id="remainMeta">—</div>
     </div>
   </div>
-</main>
 
-<section class="ctrl-panel">
-  <div class="ctrl-title">📊 月間プラン</div>
-  <div class="plan-tabs" id="planTabs">
-    <button class="plan-tab" data-gb="3">3GB</button>
-    <button class="plan-tab" data-gb="5">5GB</button>
-    <button class="plan-tab" data-gb="10">10GB</button>
-    <button class="plan-tab" data-gb="20">20GB</button>
-    <button class="plan-tab active" data-gb="50">50GB</button>
-  </div>
-  <div class="plan-custom-wrap">
-    <label for="customPlan">カスタム:</label>
-    <input type="number" id="customPlan" placeholder="例: 30" min="1" max="999" step="1">
-    <span style="font-size:14px; font-weight:700; color:var(--sub);">GB</span>
-  </div>
-
-  <div class="ctrl-section">
-    <div class="ctrl-title">📱 今月の使用量</div>
-    <div class="used-ctrls">
-      <button class="adj-btn" onclick="adjust(-0.1)">−</button>
-      <div class="used-input-wrap">
-        <input type="number" id="usedInput" step="0.1" min="0">
-        <span class="used-unit">GB</span>
-      </div>
-      <button class="adj-btn" onclick="adjust(+0.1)">+</button>
-    </div>
-    <div class="slider-wrap">
-      <input type="range" id="slider" min="0" max="50" step="0.1" value="0">
+  <div class="prog-wrap">
+    <div class="prog-track">
+      <div id="progFill" class="prog-fill"></div>
     </div>
   </div>
+
 </section>
 
-<section class="remain-bar-card">
-  <div class="remain-head">
-    <span class="remain-lbl">残り通信量</span>
-    <span class="remain-meta" id="remainMeta">0.0GB</span>
+<!-- Tips (診断結果に応じた記事) -->
+<div class="panel" style="margin-top:0;border-top:none;padding-top:0;">
+  <div>
+    <div class="sec-title" id="tipsTitle">節約 Tips</div>
+    <div id="tipsContainer"></div>
   </div>
-  <div class="progress-bg">
-    <div class="progress-fill" id="progFill"></div>
-  </div>
-</section>
+</div>
 
-<!-- 診断結果に応じた推奨記事 -->
-<section class="articles-section" id="recommendedArticles">
-  <h2 id="articlesTitle">🎯 あなたにおすすめの記事</h2>
-  <p class="articles-desc" id="articlesDesc">診断結果に基づいて、最適な節約方法をご紹介します。</p>
-  <div id="articlesContainer"></div>
-</section>
-
-<!-- 常に表示される関連記事 -->
-<section class="guide-section">
+<!-- Guide (関連記事) -->
+<section class="guide">
   <h2>📚 関連記事</h2>
   <p class="guide-desc">通信量の節約方法や設定手順を詳しく解説しています。</p>
 
@@ -773,68 +777,61 @@ function fmtGB(gb) {
   return { num: Math.round(gb * 1024), unit: 'MB' };
 }
 
-// 診断結果に応じた推奨記事を表示
-function renderRecommendedArticles(status) {
-  const articlesContainer = document.getElementById('articlesContainer');
-  const articlesTitle = document.getElementById('articlesTitle');
-  const articlesDesc = document.getElementById('articlesDesc');
+// 診断結果に応じた記事を表示
+function renderTips(status) {
+  const container = document.getElementById('tipsContainer');
+  const title = document.getElementById('tipsTitle');
   
   let articles = [];
-  let title = '';
-  let desc = '';
+  let titleText = '';
   
   if (status === 'safe') {
-    // 余裕あり：使用量確認方法や便利機能を紹介
-    title = '🎯 もっと快適に使うための記事';
-    desc = 'ペースは完璧です！さらに便利に使う方法をチェックしてみましょう。';
+    // 余裕あり
+    titleText = '🎯 もっと快適に使うための記事';
     articles = [
-      { icon:'📱', title:'Androidで通信量を確認する方法', sub:'設定アプリから今月の使用量をチェック', url:'../../articles/how-to-check-data-android.html' },
-      { icon:'🍎', title:'iPhoneで通信量を確認する方法', sub:'設定から簡単にデータ使用量を確認', url:'../../articles/iphone-check-data.html' },
-      { icon:'🗺️', title:'Googleマップをオフラインで使う方法', sub:'事前ダウンロードで通信量ゼロでナビ', url:'../../articles/offline-maps.html' }
+      { icon:'📱', title:'Androidで通信量を確認する方法', desc:'設定アプリから今月の使用量をチェック →', url:'../../articles/how-to-check-data-android.html' },
+      { icon:'🍎', title:'iPhoneで通信量を確認する方法', desc:'設定から簡単にデータ使用量を確認 →', url:'../../articles/iphone-check-data.html' },
+      { icon:'🗺️', title:'Googleマップをオフラインで使う方法', desc:'事前ダウンロードで通信量ゼロでナビ →', url:'../../articles/offline-maps.html' }
     ];
   } else if (status === 'ok') {
-    // いい感じ：このペースを維持するための軽い節約術
-    title = '🎯 このペースを維持するための記事';
-    desc = 'いいペースです！軽い節約術で月末まで安心して使えます。';
+    // いい感じ
+    titleText = '🎯 このペースを維持するための記事';
     articles = [
-      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質変更・自動再生OFFで無理なく節約', url:'../../articles/save-data-youtube.html' },
-      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'Instagram・X・TikTokの自動再生を止める', url:'../../articles/save-data-sns.html' },
-      { icon:'🔄', title:'アプリ更新をWi-Fiのみに設定', sub:'バックグラウンドの大量通信を防ぐ', url:'../../articles/wifi-only-update.html' }
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質変更・自動再生OFFで無理なく節約 →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'Instagram・X・TikTokの自動再生を止める →', url:'../../articles/save-data-sns.html' },
+      { icon:'🔄', title:'アプリ更新をWi-Fiのみに設定', desc:'バックグラウンドの大量通信を防ぐ →', url:'../../articles/wifi-only-update.html' }
     ];
   } else if (status === 'warn') {
-    // ちょっと注意：具体的な節約方法が必要
-    title = '⚠️ 今すぐチェックすべき節約記事';
-    desc = 'ペースがやや速めです。今から対策すれば月末まで余裕で使えます。';
+    // ちょっと注意
+    titleText = '⚠️ 今すぐチェックすべき節約記事';
     articles = [
-      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質を480pに下げるだけで通信量が半分に', url:'../../articles/save-data-youtube.html' },
-      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'動画の自動再生をOFFにして大幅節約', url:'../../articles/save-data-sns.html' },
-      { icon:'🛡️', title:'Androidのデータセーバー機能', sub:'バックグラウンド通信を一括制限', url:'../../articles/android-data-saver.html' },
-      { icon:'🍎', title:'iPhoneの低データモード', sub:'iOS標準機能で通信量を自動削減', url:'../../articles/iphone-low-data-mode.html' }
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を480pに下げるだけで半分に →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画の自動再生をOFFにして大幅節約 →', url:'../../articles/save-data-sns.html' },
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を一括制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を自動削減 →', url:'../../articles/iphone-low-data-mode.html' }
     ];
   } else {
-    // 使いすぎ：緊急で実践すべき強力な節約術
-    title = '🚨 緊急！今すぐ実践すべき節約術';
-    desc = 'このペースだと月末前に上限到達の可能性があります。今すぐ対策しましょう。';
+    // 使いすぎ
+    titleText = '🚨 緊急！今すぐ実践すべき節約術';
     articles = [
-      { icon:'🛡️', title:'Androidのデータセーバー機能', sub:'バックグラウンド通信を今すぐ制限', url:'../../articles/android-data-saver.html' },
-      { icon:'🍎', title:'iPhoneの低データモード', sub:'iOS標準機能で通信量を強制削減', url:'../../articles/iphone-low-data-mode.html' },
-      { icon:'▶️', title:'YouTubeの通信量を減らす設定', sub:'画質を最低にして通信量を75%カット', url:'../../articles/save-data-youtube.html' },
-      { icon:'📲', title:'SNSアプリの通信量を抑える設定', sub:'動画・画像の自動読み込みを全てOFF', url:'../../articles/save-data-sns.html' },
-      { icon:'⚙️', title:'Androidのデータ使用警告設定', sub:'上限前に自動でアラートを出す方法', url:'../../articles/android-data-warning.html' }
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を今すぐ制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を強制削減 →', url:'../../articles/iphone-low-data-mode.html' },
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を最低にして通信量を75%カット →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画・画像の自動読み込みを全てOFF →', url:'../../articles/save-data-sns.html' },
+      { icon:'⚙️', title:'Androidのデータ使用警告設定', desc:'上限前に自動でアラートを出す方法 →', url:'../../articles/android-data-warning.html' }
     ];
   }
   
-  articlesTitle.textContent = title;
-  articlesDesc.textContent = desc;
+  title.textContent = titleText;
   
-  articlesContainer.innerHTML = articles.map(a => `
-    <a href="${a.url}" class="article-card">
-      <span class="article-icon">${a.icon}</span>
-      <div class="article-body">
-        <div class="article-title">${a.title}</div>
-        <div class="article-sub">${a.sub}</div>
+  container.innerHTML = articles.map(a => `
+    <a href="${a.url}" class="tips-card">
+      <span class="tips-icon">${a.icon}</span>
+      <div class="tips-body">
+        <div class="tips-title">${a.title}</div>
+        <div class="tips-desc">${a.desc}</div>
       </div>
-      <span class="article-arrow">›</span>
+      <span class="tips-arrow">›</span>
     </a>
   `).join('');
 }
@@ -880,13 +877,15 @@ function update() {
 
   const rf = fmtGB(rem);
   remainMeta.textContent = `${rf.num}${rf.unit}`;
+  remainVal.textContent  = rf.num;
+  remainUnit.textContent = rf.unit;
 
   const bars = document.querySelectorAll('.signal i');
   const activeBars = Math.max(0, 4 - Math.floor(pct / 26));
   bars.forEach((b, i) => b.classList.toggle('active', i < activeBars));
 
   // 診断結果に応じた記事を表示
-  renderRecommendedArticles(status);
+  renderTips(status);
 
   saveState();
 }
