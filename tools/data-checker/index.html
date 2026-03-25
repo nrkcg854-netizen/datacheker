@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断</title>
+<meta name="description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。登録不要・Android対応。">
+<meta name="keywords" content="ギガ 使用量 確認, 通信量 ペース 診断, スマホ ギガ 足りるか, 月末 通信量 予測, データ使用量 チェック, ギガ残量 確認 無料">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ギガ使用ペースチェッカー">
+<link rel="canonical" href="https://gigapace-checker.vercel.app/tools/data-checker/">
+
+<!-- OGP -->
+<meta property="og:title" content="ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断">
+<meta property="og:description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gigapace-checker.vercel.app/index.html">
+<meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ギガ使用ペースチェッカー｜通信量ペースを無料診断">
+<meta name="twitter:description" content="今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ギガ使用ペースチェッカー",
+  "description": "月間プランと今月の使用量を入力するだけで、今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。",
+  "url": "https://gigapace-checker.vercel.app/index.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android, iOS, Windows, macOS",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app"
+  },
+  "inLanguage": "ja",
+  "featureList": [
+    "月末までの通信量ペース診断",
+    "今日使える通信量の自動計算",
+    "月末使用量の予測表示",
+    "3GB〜50GBまでのプラン対応",
+    "登録不要・完全無料"
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:  #ffe600;
+  --yellow2: #ffd000;
+  --ink:     #1a1a1a;
+  --ink2:    #2e2e2e;
+  --safe:    #00e096;
+  --ok:      #00c8ff;
+  --warn:    #ff9500;
+  --danger:  #ff3b5c;
+  --bg:      #f5f5f0;
+  --surface: #ffffff;
+  --border:  #1a1a1a;
+  --sub:     #777770;
+  --radius:  20px;
+}
+
+body.dark {
+  --bg:      #111110;
+  --surface: #1e1e1c;
+  --border:  #ffe600;
+  --sub:     #888880;
+  --ink:     #f0f0e8;
+  --ink2:    #d0d0c8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100svh;
+  transition: background .3s, color .3s;
+}
+
+/* ─── dot pattern bg ─── */
+body {
+  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: var(--bg);
+}
+body.dark {
+  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
+}
+
+/* ─── Header ─── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--yellow);
+  border-bottom: 3px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+body.dark .hdr { background: var(--yellow); }
+
+.hdr-logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  color: var(--ink); letter-spacing: -.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hdr-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 40px; height: 40px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 17px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s, box-shadow .12s;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ─── Hero ─── */
+.hero {
+  padding: 20px 20px 0;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+}
+
+/* Signal */
+.signal {
+  display: flex; gap: 4px;
+  align-items: flex-end; height: 22px;
+}
+.signal i {
+  display: block; width: 7px; border-radius: 3px 3px 0 0;
+  background: var(--ink); opacity: .15;
+  transition: opacity .3s;
+}
+.signal i:nth-child(1){ height: 7px; }
+.signal i:nth-child(2){ height: 11px; }
+.signal i:nth-child(3){ height: 16px; }
+.signal i:nth-child(4){ height: 22px; }
+.signal i.active { opacity: 1; }
+
+/* ─── Donut ─── */
+.donut-wrap {
+  position: relative; width: 210px; height: 210px;
+}
+.donut-wrap svg { transform: rotate(-90deg); }
+.donut-bg {
+  fill: none; stroke: #e0e0d8; stroke-width: 18;
+}
+body.dark .donut-bg { stroke: #333330; }
+.donut-bar {
+  fill: none; stroke-width: 18; stroke-linecap: butt;
+  stroke-dasharray: 565; stroke-dashoffset: 565;
+  transition: stroke-dashoffset .55s cubic-bezier(.4,0,.2,1), stroke .3s;
+}
+.donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+}
+.donut-pct {
+  font-family: 'Nunito', sans-serif;
+  font-size: 52px; font-weight: 900;
+  line-height: 1; transition: color .3s;
+  letter-spacing: -.03em;
+}
+.donut-lbl {
+  font-size: 12px; color: var(--sub);
+  font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ─── Badge ─── */
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: var(--ink);
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: background .25s;
+  letter-spacing: -.01em;
+}
+
+/* ─── Today ─── */
+.today-block {
+  text-align: center;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 16px 28px;
+  box-shadow: 5px 5px 0 var(--ink);
+  width: 100%;
+}
+.today-lbl {
+  font-size: 11px; color: var(--sub);
+  font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.today-val {
+  font-family: 'Nunito', sans-serif;
+  font-size: 68px; font-weight: 900;
+  line-height: 1; transition: color .3s;
+  letter-spacing: -.03em;
+}
+.today-unit { font-size: 28px; font-weight: 900; margin-left: 2px; }
+
+/* ─── Meta ─── */
+.meta-row { display: flex; gap: 10px; width: 100%; }
+.meta-card {
+  flex: 1;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.meta-title {
+  font-size: 11px; color: var(--sub);
+  font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.meta-val {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 19px;
+  letter-spacing: -.02em;
+}
+
+/* ─── Progress ─── */
+.prog-wrap { width: 100%; }
+.prog-track {
+  height: 14px;
+  background: #e0e0d8;
+  border: 2.5px solid var(--ink);
+  border-radius: 99px; overflow: hidden;
+}
+body.dark .prog-track { background: #333330; }
+.prog-fill {
+  height: 100%; border-radius: 99px; width: 0%;
+  transition: width .55s cubic-bezier(.4,0,.2,1), background .3s;
+}
+
+/* ─── Panel ─── */
+.panel {
+  background: var(--surface);
+  margin-top: 0;
+  padding: 26px 20px 36px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+.sec-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 900;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sub); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.step-badge {
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  color: var(--ink);
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Plan tabs */
+.plan-tabs {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+}
+.plan-tab {
+  padding: 11px 4px;
+  border-radius: 12px;
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 14px;
+  cursor: pointer; color: var(--ink);
+  transition: all .12s; text-align: center;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+body.dark .plan-tab { background: var(--surface); }
+.plan-tab:active {
+  transform: translate(2px,2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.plan-tab.active {
+  background: var(--yellow);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Custom row */
+.custom-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.custom-row label { font-size: 13px; color: var(--sub); font-weight: 700; }
+.custom-input {
+  width: 88px; padding: 9px 10px;
+  border-radius: 10px;
+  border: 2.5px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  text-align: center; outline: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: box-shadow .12s;
+}
+body.dark .custom-input { background: var(--surface); }
+.custom-input:focus { box-shadow: 1px 1px 0 var(--ink); outline: none; }
+
+/* Usage */
+.usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.usage-card {
+  background: var(--bg);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius); padding: 14px 12px; text-align: center;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+body.dark .usage-card { background: var(--surface); }
+.usage-card-title { font-size: 11px; color: var(--sub); font-weight: 700; letter-spacing:.08em; text-transform:uppercase; margin-bottom: 10px; }
+.usage-val  { font-family: 'Nunito', sans-serif; font-size: 30px; font-weight: 900; letter-spacing: -.02em; }
+.usage-unit { font-size: 16px; font-weight: 700; margin-left: 1px; }
+.adj-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.adj-btn {
+  width: 34px; height: 34px;
+  border: 2.5px solid var(--ink); border-radius: 10px;
+  background: var(--yellow); color: var(--ink);
+  font-size: 20px; font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all .1s;
+}
+.adj-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.used-direct {
+  width: 68px; border: none; background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px; font-weight: 900;
+  color: var(--ink); text-align: center; outline: none;
+  border-bottom: 2.5px solid var(--ink);
+}
+
+/* Slider */
+.slider-wrap { padding: 0 2px; margin-top: 14px; }
+input[type=range] {
+  -webkit-appearance: none; width: 100%; height: 8px;
+  background: #e0e0d8; border-radius: 0;
+  border: 2px solid var(--ink);
+  outline: none; cursor: pointer;
+}
+body.dark input[type=range] { background: #333330; }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform .1s;
+}
+input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+/* Tips */
+.tips-card {
+  background: var(--bg);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius); padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: inherit;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s; margin-bottom: 10px;
+}
+body.dark .tips-card { background: var(--surface); }
+.tips-card:last-child { margin-bottom: 0; }
+.tips-card:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+.tips-icon  { font-size: 24px; flex-shrink: 0; }
+.tips-body  { flex: 1; min-width: 0; }
+.tips-title { font-size: 14px; font-weight: 700; line-height: 1.4; margin-bottom: 2px; }
+.tips-desc  { font-size: 12px; color: var(--sub); line-height: 1.4; }
+.tips-arrow {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--ink); flex-shrink: 0;
+}
+
+/* Guide */
+.guide {
+  padding: 28px 20px 48px;
+  border-top: 3px solid var(--ink);
+  background: var(--yellow);
+}
+.guide h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px; font-weight: 900;
+  margin-bottom: 6px; letter-spacing: -.01em;
+}
+.guide-desc {
+  font-size: 13px; color: var(--ink2);
+  margin-bottom: 18px; line-height: 1.6;
+}
+.guide-link {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius); padding: 14px 16px;
+  text-decoration: none; color: inherit;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s; margin-bottom: 10px;
+}
+.guide-link:last-child { margin-bottom: 0; }
+.guide-link:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+.guide-link-icon  { font-size: 24px; flex-shrink: 0; }
+.guide-link-body  { flex: 1; }
+.guide-link-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.guide-link-sub   { font-size: 12px; color: var(--sub); }
+.guide-link-arrow {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px; font-weight: 900; color: var(--ink); flex-shrink: 0;
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--yellow);
+  padding: 11px 22px; border-radius: 999px;
+  border: 2.5px solid var(--ink);
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="hdr">
+  <a href="../../" class="hdr-logo" style="text-decoration:none;">📶 ギガ使用ペースチェッカー</a>
+  <div class="hdr-actions">
+    <button class="icon-btn" onclick="shareTool()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
+  </div>
+</header>
+
+<!-- Panel：① プラン → ② 使用量 -->
+<div class="panel">
+
+  <div>
+    <div class="sec-title"><span class="step-badge">1</span> 月間プランを選ぶ</div>
+    <div class="plan-tabs" id="planTabs">
+      <button class="plan-tab" data-gb="3">3GB</button>
+      <button class="plan-tab" data-gb="5">5GB</button>
+      <button class="plan-tab" data-gb="10">10GB</button>
+      <button class="plan-tab" data-gb="20">20GB</button>
+      <button class="plan-tab" data-gb="30">30GB</button>
+      <button class="plan-tab active" data-gb="50">50GB</button>
+    </div>
+    <div class="custom-row">
+      <label>カスタム</label>
+      <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
+      <span style="font-size:13px;color:var(--sub)">GB</span>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-title"><span class="step-badge">2</span> 今月の使用量を入力</div>
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-card-title">使用量</div>
+        <div class="adj-row">
+          <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+          <div>
+            <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
+            <span class="usage-unit">GB</span>
+          </div>
+          <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-card-title">残り</div>
+        <div style="margin-top:10px">
+          <span id="remainVal" class="usage-val">—</span>
+          <span class="usage-unit" id="remainUnit">GB</span>
+        </div>
+      </div>
+    </div>
+    <div class="slider-wrap">
+      <input id="slider" type="range" min="0" max="50" step="0.1" value="0">
+    </div>
+  </div>
+
+</div>
+
+<!-- ③ 診断結果 -->
+<section class="hero">
+
+  <div class="sec-title" style="color:var(--ink);margin-bottom:0;align-self:flex-start;"><span class="step-badge">3</span> 診断結果</div>
+
+  <div class="signal">
+    <i class="active"></i><i class="active"></i><i class="active"></i><i class="active"></i>
+  </div>
+
+  <div class="donut-wrap">
+    <svg width="210" height="210" viewBox="0 0 210 210">
+      <circle class="donut-bg"  cx="105" cy="105" r="90"/>
+      <circle id="donutBar" class="donut-bar" cx="105" cy="105" r="90"/>
+    </svg>
+    <div class="donut-center">
+      <span id="pctText" class="donut-pct">0%</span>
+      <span class="donut-lbl">使用率</span>
+    </div>
+  </div>
+
+  <div id="badge" class="badge">
+    <span id="badgeEmoji">✦</span>
+    <span id="badgeText">判定中</span>
+  </div>
+
+  <div class="today-block">
+    <div class="today-lbl">今日使える通信量</div>
+    <div class="today-val" style="font-size:36px;">
+      <span id="todayNum">—</span><span class="today-unit" id="todayUnit">GB</span>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-card">
+      <div class="meta-title">月末予測</div>
+      <div class="meta-val" id="forecast">—</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">月末まで</div>
+      <div class="meta-val" id="countdown">— 日</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-title">残り容量</div>
+      <div class="meta-val" id="remainMeta">—</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Tips -->
+<div class="panel" style="margin-top:24px;border-top:none;padding-top:0;">
+  <div>
+    <div class="sec-title" id="tipsTitle">節約 Tips</div>
+    <div id="tipsContainer"></div>
+  </div>
+</div>
+
+<!-- Guide -->
+<section class="guide">
+  <h2>📚 関連記事</h2>
+  <p class="guide-desc">通信量の節約方法や設定手順を詳しく解説しています。</p>
+
+  <a href="../../articles/how-to-check-data-android.html" class="guide-link">
+    <span class="guide-link-icon">📱</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidで通信量を確認する方法</div>
+      <div class="guide-link-sub">設定アプリからの手順を画像つきで解説</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/save-data-youtube.html" class="guide-link">
+    <span class="guide-link-icon">▶️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">YouTubeの通信量を減らす設定方法</div>
+      <div class="guide-link-sub">画質変更・自動再生OFFの手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/save-data-sns.html" class="guide-link">
+    <span class="guide-link-icon">📲</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">SNSアプリの通信量を抑える設定</div>
+      <div class="guide-link-sub">Instagram・X・TikTokの自動再生を止める</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/android-data-saver.html" class="guide-link">
+    <span class="guide-link-icon">🛡️</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Androidのデータセーバー機能とは</div>
+      <div class="guide-link-sub">バックグラウンド通信をまとめて制限する方法</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+  <a href="../../articles/wifi-priority-setting.html" class="guide-link">
+    <span class="guide-link-icon">📶</span>
+    <div class="guide-link-body">
+      <div class="guide-link-title">Wi-Fiを優先接続にする設定方法</div>
+      <div class="guide-link-sub">外出先でも自動でWi-Fiに切り替える手順</div>
+    </div>
+    <span class="guide-link-arrow">›</span>
+  </a>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'gigacheck_v4';
+const state = { plan: 50, used: 0, savedMonth: null };
+
+const donutBar    = document.getElementById('donutBar');
+const pctText     = document.getElementById('pctText');
+const badge       = document.getElementById('badge');
+const badgeEmoji  = document.getElementById('badgeEmoji');
+const badgeText   = document.getElementById('badgeText');
+const todayNum    = document.getElementById('todayNum');
+const todayUnit   = document.getElementById('todayUnit');
+const forecastEl  = document.getElementById('forecast');
+const countdownEl = document.getElementById('countdown');
+const remainMeta  = document.getElementById('remainMeta');
+const remainVal   = document.getElementById('remainVal');
+const remainUnit  = document.getElementById('remainUnit');
+const slider      = document.getElementById('slider');
+const usedInput   = document.getElementById('usedInput');
+const customPlan  = document.getElementById('customPlan');
+
+function getDateInfo() {
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth(), day = now.getDate();
+  const lastDay   = new Date(year, month + 1, 0).getDate();
+  const remaining = Math.max(1, lastDay - day + 1);
+  const monthKey  = `${year}-${String(month+1).padStart(2,'0')}`;
+  return { day, lastDay, remaining, monthKey };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    const { monthKey } = getDateInfo();
+    if (saved.savedMonth && saved.savedMonth !== monthKey) saved.used = 0;
+    saved.savedMonth = monthKey;
+    Object.assign(state, saved);
+  } catch(e) {}
+}
+
+function fmtGB(gb) {
+  if (gb >= 1) return { num: gb.toFixed(1), unit: 'GB' };
+  return { num: Math.round(gb * 1024), unit: 'MB' };
+}
+
+function update() {
+  const { day, lastDay, remaining, monthKey } = getDateInfo();
+  state.savedMonth = monthKey;
+  const plan = state.plan;
+  const used = Math.max(0, state.used);
+  const rem  = Math.max(0, plan - used);
+
+  usedInput.value = used.toFixed(1);
+  slider.value    = used;
+
+  const pct  = Math.min(100, Math.round(used / plan * 100));
+  const CIRC = 565;
+  donutBar.style.strokeDashoffset = CIRC - (CIRC * pct / 100);
+  pctText.textContent  = `${pct}%`;
+
+  const gap = (used / plan) - (day / lastDay);
+  let label, emoji, color, status;
+  if      (gap < -0.05) { label = '余裕あり！';   emoji = '✦';  color = 'var(--safe)';   status = 'safe'; }
+  else if (gap <  0.05) { label = 'いい感じ';     emoji = '◎';  color = 'var(--ok)';     status = 'ok'; }
+  else if (gap <  0.15) { label = 'ちょっと注意'; emoji = '▲';  color = 'var(--warn)';   status = 'warn'; }
+  else                  { label = '使いすぎ！';   emoji = '!!'; color = 'var(--danger)'; status = 'danger'; }
+
+  badge.style.background = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--yellow)' : color;
+  badge.style.color      = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--ink)' : '#fff';
+  badgeEmoji.textContent = emoji;
+  badgeText.textContent  = label;
+  pctText.style.color    = color;
+  donutBar.style.stroke  = color;
+
+  const f = fmtGB(rem / remaining);
+  todayNum.textContent  = f.num;
+  todayUnit.textContent = f.unit;
+  todayNum.style.color  = color;
+
+  forecastEl.textContent  = day > 0 ? `${((used/day)*lastDay).toFixed(1)} GB` : '—';
+  countdownEl.textContent = `${lastDay - day} 日`;
+
+  const rf = fmtGB(rem);
+  remainMeta.textContent = `${rf.num}${rf.unit}`;
+  remainVal.textContent  = rf.num;
+  remainUnit.textContent = rf.unit;
+
+  const bars = document.querySelectorAll('.signal i');
+  const activeBars = Math.max(0, 4 - Math.floor(pct / 26));
+  bars.forEach((b, i) => b.classList.toggle('active', i < activeBars));
+
+  // 診断結果に応じた記事を表示
+  renderTips(status);
+
+  saveState();
+}
+
+function adjust(delta) {
+  state.used = Math.round(Math.max(0, Math.min(state.plan, state.used + delta)) * 10) / 10;
+  update();
+}
+
+slider.addEventListener('input', () => { state.used = parseFloat(slider.value); update(); });
+
+usedInput.addEventListener('change', () => {
+  const v = parseFloat(usedInput.value);
+  if (isNaN(v) || v < 0) { usedInput.value = state.used.toFixed(1); return; }
+  state.used = Math.min(v, state.plan);
+  update();
+});
+
+document.getElementById('planTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.plan-tab');
+  if (!btn) return;
+  state.plan = parseFloat(btn.dataset.gb);
+  customPlan.value = '';
+  setActivePlanTab(btn);
+  slider.max = state.plan;
+  update();
+});
+
+function setActivePlanTab(activeBtn) {
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+customPlan.addEventListener('change', () => {
+  const v = parseFloat(customPlan.value);
+  if (isNaN(v) || v <= 0) { customPlan.value = ''; return; }
+  state.plan = v; setActivePlanTab(null); slider.max = v; update();
+});
+
+function restorePlanTab() {
+  let matched = null;
+  document.querySelectorAll('.plan-tab').forEach(b => {
+    if (parseFloat(b.dataset.gb) === state.plan) matched = b;
+  });
+  setActivePlanTab(matched);
+  slider.max = state.plan; slider.value = state.used;
+}
+
+// 診断結果に応じた記事を表示
+function renderTips(status) {
+  const container = document.getElementById('tipsContainer');
+  const title = document.getElementById('tipsTitle');
+  
+  let articles = [];
+  let titleText = '';
+  
+  if (status === 'safe') {
+    // 余裕あり
+    titleText = '🎯 もっと快適に使うための記事';
+    articles = [
+      { icon:'📱', title:'Androidで通信量を確認する方法', desc:'設定アプリから今月の使用量をチェック →', url:'../../articles/how-to-check-data-android.html' },
+      { icon:'🍎', title:'iPhoneで通信量を確認する方法', desc:'設定から簡単にデータ使用量を確認 →', url:'../../articles/iphone-check-data.html' },
+      { icon:'🗺️', title:'Googleマップをオフラインで使う方法', desc:'事前ダウンロードで通信量ゼロでナビ →', url:'../../articles/offline-maps.html' }
+    ];
+  } else if (status === 'ok') {
+    // いい感じ
+    titleText = '🎯 このペースを維持するための記事';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質変更・自動再生OFFで無理なく節約 →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'Instagram・X・TikTokの自動再生を止める →', url:'../../articles/save-data-sns.html' },
+      { icon:'🔄', title:'アプリ更新をWi-Fiのみに設定', desc:'バックグラウンドの大量通信を防ぐ →', url:'../../articles/wifi-only-update.html' }
+    ];
+  } else if (status === 'warn') {
+    // ちょっと注意
+    titleText = '⚠️ 今すぐチェックすべき節約記事';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を480pに下げるだけで半分に →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画の自動再生をOFFにして大幅節約 →', url:'../../articles/save-data-sns.html' },
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を一括制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を自動削減 →', url:'../../articles/iphone-low-data-mode.html' }
+    ];
+  } else {
+    // 使いすぎ
+    titleText = '🚨 緊急！今すぐ実践すべき節約術';
+    articles = [
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を今すぐ制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を強制削減 →', url:'../../articles/iphone-low-data-mode.html' },
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を最低にして通信量を75%カット →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画・画像の自動読み込みを全てOFF →', url:'../../articles/save-data-sns.html' },
+      { icon:'⚙️', title:'Androidのデータ使用警告設定', desc:'上限前に自動でアラートを出す方法 →', url:'../../articles/android-data-warning.html' }
+    ];
+  }
+  
+  title.textContent = titleText;
+  
+  container.innerHTML = articles.map(a => `
+    <a href="${a.url}" class="tips-card">
+      <span class="tips-icon">${a.icon}</span>
+      <div class="tips-body">
+        <div class="tips-title">${a.title}</div>
+        <div class="tips-desc">${a.desc}</div>
+      </div>
+      <span class="tips-arrow">›</span>
+    </a>
+  `).join('');
+}
+
+function shareTool() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({ title:'ギガペース診断ツール', text:'スマホのギガ消費ペースをすぐ確認！', url }).catch(()=>{});
+  } else {
+    try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
+    catch(e) { showToast('コピーできませんでした'); }
+  }
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadDark(); loadState(); restorePlanTab(); update();
+</script>
+</body>
+</html>
