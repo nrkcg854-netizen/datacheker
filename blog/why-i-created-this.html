@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話｜ギガ使用ペースチェッカー</title>
+<meta name="description" content="docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。日付消化率と通信量消化率で導き出す、究極の判定式とは。">
+<meta name="keywords" content="My docomo 残りギガ, 通信量管理, 3GB プラン, 自作ツール, ギガ ペース 計算">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gigapace-checker.vercel.app/blog/why-i-created-this.html">
+
+<!-- OGP -->
+<meta property="og:title" content="My docomoの「残りギガ表示」に振り回されない。自作ツールで通信量管理をした話">
+<meta property="og:description" content="docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://gigapace-checker.vercel.app/blog/why-i-created-this.html">
+<meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話",
+  "description": "docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。日付消化率と通信量消化率で導き出す、究極の判定式とは。",
+  "author": {
+    "@type": "Person",
+    "name": "kyon"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app"
+  },
+  "datePublished": "2025-03-30",
+  "dateModified": "2025-03-30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://gigapace-checker.vercel.app/blog/why-i-created-this.html"
+  },
+  "inLanguage": "ja"
+}
+</script>
+
+<!-- フォント -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:  #ffe600;
+  --yellow2: #ffd000;
+  --ink:     #1a1a1a;
+  --ink2:    #2e2e2e;
+  --safe:    #00e096;
+  --ok:      #00c8ff;
+  --warn:    #ff9500;
+  --danger:  #ff3b5c;
+  --bg:      #f5f5f0;
+  --surface: #ffffff;
+  --border:  #1a1a1a;
+  --sub:     #777770;
+  --radius:  20px;
+  --blog-accent: #00c8ff;
+}
+
+body.dark {
+  --bg:      #111110;
+  --surface: #1e1e1c;
+  --border:  #ffe600;
+  --sub:     #888880;
+  --ink:     #f0f0e8;
+  --ink2:    #d0d0c8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100svh;
+  transition: background .3s, color .3s;
+  line-height: 1.9;
+}
+
+body {
+  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: var(--bg);
+}
+body.dark {
+  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
+}
+
+/* ─── Header ─── */
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--yellow);
+  border-bottom: 3px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+body.dark .hdr { background: var(--yellow); }
+
+.hdr-logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900; font-size: 16px;
+  color: var(--ink); letter-spacing: -.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hdr-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 40px; height: 40px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 17px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s, box-shadow .12s;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ─── Blog Article ─── */
+.blog-article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all .12s;
+}
+.back-link:hover {
+  background: var(--yellow);
+}
+.back-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* Blog Header */
+.blog-header {
+  margin-bottom: 40px;
+}
+
+.blog-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--blog-accent);
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: .05em;
+  margin-bottom: 16px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.blog-date {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sub);
+  margin-bottom: 16px;
+  letter-spacing: .05em;
+}
+
+.blog-article h1 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+.blog-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.blog-author-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.blog-author-info {
+  flex: 1;
+}
+
+.blog-author-name {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.blog-author-desc {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.4;
+}
+
+/* Blog Content */
+.blog-content {
+  margin-top: 36px;
+}
+
+.blog-article p {
+  font-size: 15.5px;
+  line-height: 1.9;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+
+.blog-article h2 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  margin-top: 52px;
+  margin-bottom: 20px;
+  padding-left: 14px;
+  border-left: 5px solid var(--blog-accent);
+  color: var(--ink);
+}
+
+.blog-article h3 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.blog-article strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--blog-accent) 60%);
+  padding: 0 3px;
+  color: var(--ink);
+}
+
+.blog-article em {
+  font-style: normal;
+  color: var(--blog-accent);
+  font-weight: 700;
+}
+
+/* Quote Block */
+.quote-box {
+  background: var(--surface);
+  border-left: 5px solid var(--blog-accent);
+  border: 2.5px solid var(--ink);
+  border-left-width: 5px;
+  border-radius: 12px;
+  padding: 20px 18px;
+  margin: 28px 0;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.quote-box p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 0;
+  color: var(--ink2);
+}
+
+.quote-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* Step Box */
+.step-box {
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  margin: 28px 0;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.step-box-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-box-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--blog-accent);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.step-box ol {
+  margin-left: 22px;
+  margin-bottom: 0;
+}
+
+.step-box li {
+  font-size: 14.5px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.step-box li:last-child {
+  margin-bottom: 0;
+}
+
+/* Highlight Box */
+.highlight-box {
+  background: var(--surface);
+  border: 3px solid var(--blog-accent);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  margin: 32px 0;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.highlight-box p {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.0;
+  margin-bottom: 0;
+  color: var(--ink);
+}
+
+/* CTA Box */
+.cta-box {
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  margin: 40px 0;
+  text-align: center;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.cta-box-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.cta-box p {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--ink2);
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s;
+}
+
+.cta-btn:hover {
+  background: var(--yellow2);
+}
+
+.cta-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Closing */
+.blog-closing {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--surface);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.blog-closing p {
+  font-size: 14.5px;
+  line-height: 1.8;
+  margin-bottom: 0;
+  color: var(--ink2);
+}
+
+.blog-closing-sign {
+  margin-top: 16px;
+  text-align: right;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--yellow);
+  padding: 11px 22px; border-radius: 999px;
+  border: 2.5px solid var(--ink);
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="hdr">
+  <a href="../" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
+  <div class="hdr-actions">
+    <button class="icon-btn" onclick="shareArticle()" title="共有">🔗</button>
+    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
+  </div>
+</header>
+
+<!-- Blog Article -->
+<article class="blog-article">
+
+<a href="../" class="back-link">← TOPに戻る</a>
+
+<!-- Blog Header -->
+<div class="blog-header">
+  <div class="blog-category">📝 Blog</div>
+  <div class="blog-date">2025.03.30</div>
+  <h1>My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話</h1>
+  
+  <div class="blog-author">
+    <div class="blog-author-icon">📱</div>
+    <div class="blog-author-info">
+      <div class="blog-author-name">kyon</div>
+      <div class="blog-author-desc">docomo irumo 3GBプラン利用者</div>
+    </div>
+  </div>
+</div>
+
+<!-- Blog Content -->
+<div class="blog-content">
+
+<p>「今月、あとどれくらいデータ通信を使えるだろう？」</p>
+
+<p>毎月15日、月末前になると、スマホの通信残量が気になってソワソワしてしまいます。</p>
+
+<p>私は現在、docomoの月間3GBのプランを契約していますが、仕事に関わるWEB閲覧などで月末まで持つのだろうかという不安が常にありました。</p>
+
+<p>そこで、私は定期的に自分の「通信ペース」を計算していたのですが……これが意外と面倒だったのです。</p>
+
+<h2>「残り」を表示してくれる親切が、計算をややこしくする</h2>
+
+<p>ドコモの「My docomo」を開くと、現在の使用量ではなく<strong>「残りのデータ通信量」</strong>が表示されます。例えば「残り 1.2GB」といった具合です。</p>
+
+<p>しかし、自分の利用ペースが適正かどうかを知るには、一度「引き算」をしなければなりません。</p>
+
+<div class="step-box">
+  <div class="step-box-title">
+    <span class="step-box-icon">📊</span>
+    毎回やっていた面倒な計算
+  </div>
+  <ol>
+    <li>現在の使用量を出す（3.0GB － 残り1.2GB ＝ 1.8GB）</li>
+    <li>日付の経過率を出す（今日が18日なら、18 ÷ 31 ＝ 約58%）</li>
+    <li>通信量の消費率を出す（1.8GB ÷ 3.0GB ＝ 60%）</li>
+    <li>両者を比較する（58% vs 60% ……あ、ちょっと使いすぎだ）</li>
+  </ol>
+</div>
+
+<p>この計算を月に数回なんですが、電卓を叩いて行うのは、いささか面倒くさい作業でした。</p>
+
+<h2>「日付消化率」と「通信量消化率」で導き出す、究極の判定式</h2>
+
+<p>この「面倒くさい」を解消するために、私は自分専用の<strong>『通信量ペースチェッカー』</strong>を自作することにしました。ロジックは至ってシンプルですが、極めて強力です。先程さらっと書きましたが</p>
+
+<div class="highlight-box">
+  <p>日付消化率 ＝<br>
+  今日の日付 ÷ 月の日数<br>
+  <br>
+  通信量消化率 ＝<br>
+  （月間プラン － 残り量） ÷ 月間プラン<br>
+  <br>
+  判定結果 ＝<br>
+  日付消化率 － 通信量消化率</p>
+</div>
+
+<p>この数値がプラスなら「余裕」、マイナスなら「使いすぎ」。たったこれだけの比較で、今のペースが安全かどうかが一瞬で可視化されます。</p>
+
+<h2>バイブコーディングを駆使して、数分でアプリ化</h2>
+
+<p>計算式はできましたが、毎回数値を入力して計算するのは手間です。そこで、今話題の<strong>バイブコーディング</strong>の力を借りました。</p>
+
+<p>AIに「My docomoの残量をそのまま入力できて、日付と自動で比較して『余裕』か『使いすぎ』かを判定するツールを作って」と指示を出したところ、数分でスマホ最適化されたWebアプリが完成しました。</p>
+
+<p>さらに、Android 16の最新機能である「データ警告と制限」のTipsや、iPhoneユーザー向けの自衛策なども盛り込み、実用性を極限まで高めています。</p>
+
+<div class="cta-box">
+  <div class="cta-box-title">📊 通信量ペースチェッカー</div>
+  <p>今月の通信量が月末まで足りるか、<br>一瞬で診断できます</p>
+  <a href="../tools/data-checker/" class="cta-btn">無料で使ってみる →</a>
+</div>
+
+<h2>結論：ツールは「自分の不便」から生まれるのが一番強い</h2>
+
+<p>今回、自分の「ちょっとした不便」を解決するためにツールを作ってみて、改めて感じたことがあります。</p>
+
+<p>世の中には多機能なアプリが溢れていますが、「自分の環境（ドコモの表示仕様など）」と「自分の思考プロセス（日付との比較）」に100%フィットするツールは、自分で作る（あるいはAIに作らせる）のが一番効率的だということです。</p>
+
+<p>おかげで、今ではスマホを開いて「残り」を入力するだけで、月末までの安心感が手に入るようになりました。</p>
+
+<div class="blog-closing">
+  <p>もし同じように「毎月のギガ計算が面倒！」と感じている方がいれば、ぜひこの「日付消化率」という考え方を取り入れてみてください。</p>
+  <div class="blog-closing-sign">— kyon</div>
+</div>
+
+</div>
+
+</article>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function shareArticle() {
+  const url = location.href;
+  const title = document.title;
+  if (navigator.share) {
+    navigator.share({ title, url }).catch(()=>{});
+  } else {
+    try { 
+      navigator.clipboard.writeText(url); 
+      showToast('URLをコピーしました'); 
+    } catch(e) { 
+      showToast('コピーできませんでした'); 
+    }
+  }
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; 
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadDark();
+</script>
+
+</body>
+</html>
