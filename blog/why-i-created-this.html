@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話｜ギガ使用ペースチェッカー</title>
-<meta name="description" content="docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。日付消化率と通信量消化率で導き出す、究極の判定式とは。">
+<title>docomoの「残りギガ表示」に振り回されない！自作ツールで通信量管理をした話｜ギガ使用ペースチェッカー</title>
+<meta name="description" content="3GBプランで月末の通信量不足に悩んでいた私が、「日付消化率」という独自の計算式で通信量ペースを可視化する自作ツールを開発。AIで数分で完成した方法と、My docomoの「残り表示」の問題点を解説。">
 <meta name="keywords" content="My docomo 残りギガ, 通信量管理, 3GB プラン, 自作ツール, ギガ ペース 計算">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://gigapace-checker.vercel.app/blog/why-i-created-this.html">
 
 <!-- OGP -->
-<meta property="og:title" content="My docomoの「残りギガ表示」に振り回されない。自作ツールで通信量管理をした話">
-<meta property="og:description" content="docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。">
+<meta property="og:title" content="docomoの「残りギガ表示」に振り回されない！自作ツールで通信量管理をした話">
+<meta property="og:description" content="3GBプランで月末の通信量不足に悩んでいた私が、「日付消化率」という独自の計算式で通信量ペースを可視化する自作ツールを開発。AIで数分で完成した方法と、My docomoの「残り表示」の問題点を解説。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://gigapace-checker.vercel.app/blog/why-i-created-this.html">
 <meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.png">
@@ -22,8 +22,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話",
-  "description": "docomoの3GBプランで毎月の通信量管理に苦労していた私が、自作ツールを作るまでのストーリー。日付消化率と通信量消化率で導き出す、究極の判定式とは。",
+  "headline": "docomoの「残りギガ表示」に振り回されない！自作ツールで通信量管理をした話",
+  "description": "3GBプランで月末の通信量不足に悩んでいた私が、「日付消化率」という独自の計算式で通信量ペースを可視化する自作ツールを開発。AIで数分で完成した方法と、My docomoの「残り表示」の問題点を解説。",
   "author": {
     "@type": "Person",
     "name": "kyon"
@@ -473,6 +473,51 @@ body.dark .hdr { background: var(--yellow); }
   color: var(--ink);
 }
 
+/* Share Section */
+.share-section {
+  margin: 40px 0;
+  padding: 24px 20px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.share-section p {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: all .12s;
+}
+
+.share-btn:hover {
+  background: var(--yellow2);
+}
+
+.share-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
 /* Toast */
 .toast {
   position: fixed; bottom: 28px; left: 50%;
@@ -508,7 +553,7 @@ body.dark .hdr { background: var(--yellow); }
 <div class="blog-header">
   <div class="blog-category">📝 Blog</div>
   <div class="blog-date">2025.03.30</div>
-  <h1>My docomoの「残りギガ表示」に振り回されない。3GB契約の私が自作ツールで通信量管理をした話</h1>
+  <h1>docomoの「残りギガ表示」に振り回されない！自作ツールで通信量管理をした話</h1>
   
   <div class="blog-author">
     <div class="blog-author-icon">📱</div>
@@ -589,6 +634,11 @@ body.dark .hdr { background: var(--yellow); }
 <p>世の中には多機能なアプリが溢れていますが、「自分の環境（ドコモの表示仕様など）」と「自分の思考プロセス（日付との比較）」に100%フィットするツールは、自分で作る（あるいはAIに作らせる）のが一番効率的だということです。</p>
 
 <p>おかげで、今ではスマホを開いて「残り」を入力するだけで、月末までの安心感が手に入るようになりました。</p>
+
+<div class="share-section">
+  <p>📢 この記事が役に立ったらシェアしてください</p>
+  <button class="share-btn" onclick="shareArticle()">🔗 記事をシェアする</button>
+</div>
 
 <div class="blog-closing">
   <p>もし同じように「毎月のギガ計算が面倒！」と感じている方がいれば、ぜひこの「日付消化率」という考え方を取り入れてみてください。</p>
