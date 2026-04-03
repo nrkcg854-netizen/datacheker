@@ -1,0 +1,10 @@
+{
+  "name": "gigapace-checker",
+  "version": "1.0.0",
+  "description": "ギガ使用ペースチェッカー",
+  "scripts": {
+    "build": "node generate-sitemap.js"
+  },
+  "author": "kyon",
+  "license": "MIT"
+}
