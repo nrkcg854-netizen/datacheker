@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>節約記事一覧｜ギガ使用ペースチェッカー</title>
+    <style>
+        /* ベース設定 */
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #fafafa;
+            color: #111;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 80px; /* フッター用の余白を確保 */
+        }
+
+        /* 見出しデザイン */
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #ffe600;
+            border-radius: 2px;
+        }
+
+        /* 記事リストのコンテナ */
+        #article-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* カード間の余白 */
+        }
+
+        /* 個別の記事アイテム（ネオブルータリズムのカード） */
+        .article-link {
+            display: flex;
+            align-items: center;
+            padding: 24px;
+            background-color: #fff;
+            border: 3px solid #111;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #111;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 4px 4px 0px #111;
+            transition: all 0.2s ease;
+        }
+
+        /* ホバー時のアクション（黄色＋浮き上がり） */
+        .article-link:hover {
+            background-color: #ffe600;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #111;
+        }
+
+        /* クリック時のアクション */
+        .article-link:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        /* カード内のアイコン */
+        .article-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+        }
+
+        /* タイトルテキストのラッパー */
+        .article-title {
+            flex-grow: 1;
+        }
+
+        /* 矢印アイコン */
+        .article-arrow {
+            font-size: 1.2rem;
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1 class="page-title">節約記事一覧</h1>
+        
+        <ul id="article-list"></ul>
+    </main>
+
+    <script>
+        // 自動作成された articles.json を読み込む
+        // ※必要に応じてパスを '/articles/articles.json' 等に変更してください
+        fetch('/articles.json')
+            .then(response => response.json())
+            .then(articles => {
+                const listElement = document.getElementById('article-list');
+                
+                // 記事の数だけカードを作る
+                articles.forEach(article => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    
+                    // リンク先の設定（/articles/ファイル名）
+                    a.href = '/articles/' + article.filename;
+                    a.className = 'article-link'; // CSSクラスを付与
+                    
+                    // カード内のHTML構造（アイコン＋タイトル＋矢印）
+                    a.innerHTML = `
+                        <span class="article-icon">📖</span>
+                        <span class="article-title">${article.title}</span>
+                        <span class="article-arrow">＞</span>
+                    `;
+                    
+                    li.appendChild(a);
+                    listElement.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('記事の読み込みに失敗しました:', error);
+                document.getElementById('article-list').innerHTML = `
+                    <li>
+                        <div class="article-link" style="background-color: #f8d7da; justify-content: center;">
+                            記事を読み込めませんでした。
+                        </div>
+                    </li>`;
+            });
+    </script>
+
+    <script src="/footer.js" defer></script>
+</body>
+</html>
