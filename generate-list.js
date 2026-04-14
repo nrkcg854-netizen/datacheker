@@ -1,38 +1,40 @@
 const fs = require('fs');
 const path = require('path');
 
-// フォルダのパス設定
 const articlesDir = path.join(__dirname, 'articles');
 const outputFile = path.join(__dirname, 'articles.json');
 
-// articlesフォルダ内のファイルを読み込む
 const files = fs.readdirSync(articlesDir);
 const articleList = [];
 
 files.forEach(file => {
-    // HTMLファイルのみを対象にする
     if (path.extname(file) === '.html' && file !== 'index.html') {
         const filePath = path.join(articlesDir, file);
         const content = fs.readFileSync(filePath, 'utf-8');
         
-        // <title>タグの中身を抜き出す
+        // タイトルの抽出
         const titleMatch = content.match(/<title>([\s\S]*?)<\/title>/i);
-        let title = "タイトルなし";
+        let title = titleMatch ? titleMatch[1].replace('｜ギガ使用ペースチェッカー', '').trim() : "タイトルなし";
         
-        if (titleMatch && titleMatch[1]) {
-            title = titleMatch[1].trim();
-            // 一覧をスッキリさせるため、サイト名を削る（不要ならこの1行は消してOKです）
-            title = title.replace('｜ギガ使用ペースチェッカー', '');
-        }
+        // ディスクリプション（説明文）の抽出
+        const descMatch = content.match(/<meta\s+name=["']description["']\s+content=["']([\s\S]*?)["']/i);
+        let description = descMatch ? descMatch[1].trim() : "記事の説明がありません。";
 
-        // リストに追加
+        // 公開日（<time datetime="...">）の抽出
+        const timeMatch = content.match(/<time[^>]*datetime=["']([^"']+)["'][^>]*>/i);
+        let date = timeMatch ? timeMatch[1].trim() : "";
+
         articleList.push({
             filename: file,
-            title: title
+            title: title,
+            description: description,
+            date: date
         });
     }
 });
 
-// articles.json というファイル名で保存する
+// 日付が新しい順に並び替える（降順ソート）
+articleList.sort((a, b) => new Date(b.date) - new Date(a.date));
+
 fs.writeFileSync(outputFile, JSON.stringify(articleList, null, 2));
-console.log('記事一覧データ(articles.json)の作成が完了しました！');
+console.log('✅ articles.json に説明文と日付を追加し、最新順にソートしました。');
