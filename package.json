@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ギガ使用ペースチェッカー",
   "scripts": {
-    "build": "node generate-sitemap.js"
+    "build": "node generate-sitemap.js && node generate-list.js && node generate-blog-list.js"
   },
   "author": "kyon",
   "license": "MIT"
