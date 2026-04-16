@@ -1,0 +1,26 @@
+/* style.css */
+/* --- 共通デザインシステム (Neo-Brutalism) --- */
+:root {
+  --yellow:  #ffe600; /* アクセントカラー */
+  --black:   #111;     /* テキスト・枠線カラー */
+  --white:   #fff;     /* コンテンツ背景カラー */
+  --bg:      #fafafa;  /* ページ全体の背景カラー */
+  --radius:  16px;     /* 丸角 */
+  --border:  3px solid var(--black); /* 太枠 */
+  --shadow:  4px 4px 0 var(--black); /* ハードシャドウ */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg); color: var(--black); line-height: 1.8; }
+.container { max-width: 800px; margin: 0 auto; padding: 40px 20px 100px; }
+h1, h2 { font-weight: 900; }
+a { text-decoration: none; color: inherit; }
+li { list-style: none; }
+
+/* --- 共通フッター (footer.jsで動的に挿入されるHTMLに対応) --- */
+.footer { background-color: #fafafa; border-top: var(--border); padding: 30px 10px; text-align: center; }
+.footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; margin-bottom: 20px; font-size: 0.9rem; }
+.footer-nav a { display: flex; align-items: center; gap: 4px; font-weight: 600; }
+.footer-copy { font-size: 0.8rem; margin-top: 15px; }
+
+/* その他、全ページ共通で使うレイアウトをここに追加 */
