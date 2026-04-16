@@ -1,50 +1,4 @@
 // footer.js
-const footerStyles = `
-<style>
-  .footer {
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-    padding: 30px 10px;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    text-align: center;
-  }
-  .footer-content {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 12px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  .footer-nav a {
-    text-decoration: none;
-    color: #111;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .footer-nav span {
-    color: #ccc;
-    font-weight: normal;
-  }
-  .footer-copy {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 15px;
-  }
-  .footer-copy a {
-    color: #666;
-    text-decoration: underline;
-  }
-</style>
-`;
-
 const footerHTML = `
   <footer class="footer">
     <div class="footer-content">
@@ -87,6 +41,6 @@ const footerHTML = `
 `;
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.head.insertAdjacentHTML("beforeend", footerStyles);
+  // CSSの挿入を削除し、HTMLのみをbodyの最後に追加
   document.body.insertAdjacentHTML("beforeend", footerHTML);
 });
