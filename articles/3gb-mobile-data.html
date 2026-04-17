@@ -1,299 +1,97 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月3GBで足りる？スマホ通信量の目安と節約方法｜ギガ使用ペースチェッカー</title>
-    <meta name="description" content="スマホの通信量3GBで足りるのかをプロが解説。YouTubeやSNSの利用目安、足りない人の特徴、効果的な節約方法を詳しく紹介。無料の通信量ペース判定ツールも完備。">
+    <meta name="description" content="スマホの通信量3GBで足りるのかをプロが解説。YouTubeやSNSの利用目安、節約方法、通信量ペースを判定できる無料ツールも紹介。">
     
+    <!-- 外部CSSの読み込み -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- OGP -->
     <meta property="og:title" content="月3GBで足りる？スマホ通信量の目安と節約方法">
     <meta property="og:description" content="3GBでできることを徹底検証。月末にギガが足りなくなる前にチェック！">
     <meta property="og:url" content="https://gigapace-checker.vercel.app/articles/3gb-mobile-data.html">
     <meta property="og:type" content="article">
-    <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-3gb.webp">
 
-    <style>
-        /* デザインシステム: ネオブルータリズム */
-        :root {
-            --primary: #ffe600;
-            --black: #111;
-            --white: #fff;
-            --bg: #fafafa;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background-color: var(--bg);
-            color: var(--black);
-            margin: 0;
-            padding: 0;
-            line-height: 1.8;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px 100px;
-        }
-
-        /* 記事ヘッダー */
-        h1 {
-            font-size: 2rem;
-            font-weight: 900;
-            background: var(--primary);
-            padding: 20px;
-            border: 3px solid var(--black);
-            box-shadow: 6px 6px 0px var(--black);
-            margin-bottom: 40px;
-            border-radius: 4px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            border-left: 8px solid var(--primary);
-            padding: 10px 15px;
-            margin-top: 50px;
-            background: var(--white);
-            border-bottom: 3px solid var(--black);
-            border-right: 3px solid var(--black);
-            border-top: 3px solid var(--black);
-            box-shadow: 4px 4px 0px var(--black);
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            margin-top: 30px;
-            color: var(--black);
-        }
-
-        p { margin-bottom: 20px; }
-
-        /* リストスタイル */
-        ul {
-            padding-left: 20px;
-            margin-bottom: 30px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            position: relative;
-            list-style: none;
-        }
-
-        li::before {
-            content: "▶";
-            color: var(--primary);
-            -webkit-text-stroke: 1px var(--black);
-            position: absolute;
-            left: -25px;
-        }
-
-        /* ツール誘導ボタン */
-        .tool-link {
-            display: block;
-            text-align: center;
-            background: var(--primary);
-            color: var(--black);
-            text-decoration: none;
-            font-weight: 900;
-            padding: 20px;
-            border: 3px solid var(--black);
-            box-shadow: 6px 6px 0px var(--black);
-            border-radius: 12px;
-            margin: 40px 0;
-            transition: 0.2s;
-        }
-
-        .tool-link:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px var(--black);
-        }
-
-        /* テーブルデザイン */
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 30px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--white);
-            border: 3px solid var(--black);
-            box-shadow: 4px 4px 0px var(--black);
-        }
-
-        th {
-            background: var(--primary);
-            border: 2px solid var(--black);
-            padding: 12px;
-            text-align: left;
-        }
-
-        td {
-            border: 2px solid var(--black);
-            padding: 12px;
-        }
-
-        /* 強調 */
-        strong {
-            background: linear-gradient(transparent 70%, var(--primary) 70%);
-        }
-
-        /* 著者情報（E-E-A-T） */
-        .author-box {
-            background: var(--white);
-            border: 3px solid var(--black);
-            padding: 20px;
-            margin-top: 60px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-radius: 8px;
-        }
-
-        .author-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary);
-            border: 2px solid var(--black);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
-        }
-    </style>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "3GBでYouTubeはどれくらい見られますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "低画質設定で約10〜12時間、高画質設定では約3〜4時間が目安です。動画視聴が多い場合は不足する可能性が高いです。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "3GBプランで足りる人の特徴は？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "自宅にWi-Fiがある、動画をあまり見ない、SNSはテキスト中心、外出先での利用が少ないといった特徴を持つ方は、3GBでも十分足ります。"
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- 外部JSの読み込み（ヘッダー・フッター・解析など） -->
+    <script src="/header.js" defer></script>
+    <script src="/footer.js" defer></script>
 </head>
 <body>
 
+<!-- header.js によってここにヘッダーが挿入される -->
+
 <main class="container">
     <article>
-        <h1>月3GBで足りる？スマホ通信量の目安と節約方法</h1>
-        
-        <p>格安プランや小容量プランで主流の「3GB」。実際に使ってみると「月末に低速化してしまう」「どれくらい使っていいのか不安」という声をよく耳にします。</p>
-        
-        <p>まずはあなたの現在の利用ペースが、<strong>月末まで3GBで足りるペースなのか</strong>を確認してみましょう。</p>
+        <div class="hero-bg">
+            <h1>月3GBで足りる？スマホ通信量の目安と節約方法</h1>
+            <p>格安プランで最も一般的な「3GB」。しかし、動画やSNSを多用すると意外と早く上限に達してしまいます。まずはあなたの今のペースを確認しましょう。</p>
+        </div>
 
-        <a href="/data-checker/" class="tool-link">
-            🚀 通信量ペースチェッカーで今のペースを判定する
-        </a>
+        <div class="cta-section">
+            <div class="cta-text">現在の通信量を入力して<br>月末まで足りるか判定しよう</div>
+            <a href="/data-checker/" class="cta-button">通信量チェッカーを使う</a>
+        </div>
 
-        <h2>3GBとは具体的にどれくらいの通信量？</h2>
-        <p>3GBは3000MBのデータ通信量です。数値だけでは分かりにくいですが、日常的な利用に換算すると以下のようになります。</p>
-
-        <div class="table-wrapper">
+        <div class="card">
+            <h2>3GBとはどれくらいの通信量？</h2>
+            <p>3GB（3000MB）で利用できる目安は以下の通りです。特に動画視聴は画質設定によって大きく消費量が変わります。</p>
             <table>
                 <thead>
-                    <tr>
-                        <th>用途</th>
-                        <th>3GBで利用できる目安</th>
-                    </tr>
+                    <tr><th>用途</th><th>3GBで利用できる目安</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Webサイト閲覧</td>
-                        <td>約9,000ページ</td>
-                    </tr>
-                    <tr>
-                        <td>YouTube（低画質）</td>
-                        <td>約10〜12時間</td>
-                    </tr>
-                    <tr>
-                        <td>YouTube（高画質）</td>
-                        <td>約3〜4時間</td>
-                    </tr>
-                    <tr>
-                        <td>Instagram閲覧</td>
-                        <td>約5〜6時間</td>
-                    </tr>
-                    <tr>
-                        <td>LINE（トーク・通話）</td>
-                        <td>ほぼ無制限（動画送信除く）</td>
-                    </tr>
+                    <tr><td>Webサイト閲覧</td><td>約9,000ページ</td></tr>
+                    <tr><td>YouTube（低画質）</td><td>約10〜12時間</td></tr>
+                    <tr><td>YouTube（高画質）</td><td>約3〜4時間</td></tr>
+                    <tr><td>Instagram閲覧</td><td>約5〜6時間</td></tr>
+                    <tr><td>LINE（トーク）</td><td>ほぼ無制限</td></tr>
                 </tbody>
             </table>
         </div>
 
         <h2>3GBで足りる人・足りない人の境界線</h2>
-        
-        <h3>3GBで十分足りる人</h3>
-        <ul>
-            <li>自宅や職場に<strong>Wi-Fi環境</strong>があり、外ではあまり使わない</li>
-            <li>動画視聴はWi-Fi接続時のみに限定している</li>
-            <li>SNSはInstagramよりX（旧Twitter）などテキスト中心</li>
-            <li>音楽ストリーミングをオフライン再生で楽しんでいる</li>
-        </ul>
-
-        <h3>3GBでは足りなくなる人</h3>
-        <ul>
-            <li>移動中や外出先で<strong>YouTubeやTikTok</strong>を頻繁に見る</li>
-            <li>Instagramのストーリーやリールを長時間チェックする</li>
-            <li>テザリングでパソコン作業を行う</li>
-            <li>アプリの自動更新をモバイル通信で行っている</li>
-        </ul>
-
-        <h2>通信量が足りなくなる原因と節約のコツ</h2>
-        <p>3GBを賢く使うために、以下の設定を見直してみましょう。</p>
-        
-        <ul>
-            <li><strong>動画の画質制限:</strong> YouTube等の設定で「データ節約モード」をオンにする。</li>
-            <li><strong>SNSの自動再生オフ:</strong> InstagramやFacebookの動画自動再生をWi-Fiのみに制限。</li>
-            <li><strong>バックグラウンド通信の制限:</strong> iPhoneなら「低データモード」、Androidなら「データセーバー」を活用。</li>
-        </ul>
-
-        <h2>まとめ：足りるかどうかは「ペース」で決まる</h2>
-        <p>3GBで足りるかどうかは、単なる合計量ではなく「いつ、どれくらいの速さで消費しているか」という<strong>ペース配分</strong>が重要です。</p>
-
-        <div style="background: var(--white); border: 3px solid var(--black); padding: 20px; box-shadow: 4px 4px 0px var(--black); margin: 30px 0;">
-            <p style="margin:0;"><strong>💡 判定の目安：</strong><br>
-            月の半分（15日）が経過した時点で、通信量が1.5GBを超えていたら、月末に速度制限がかかる危険信号です。</p>
+        <div class="card">
+            <h3>✅ 3GBで十分足りる人</h3>
+            <ul>
+                <li>自宅にWi-Fi環境がある</li>
+                <li>外出先での動画視聴は控えている</li>
+                <li>SNSはテキスト中心のX（Twitter）が多い</li>
+            </ul>
         </div>
 
-        <a href="/data-checker/" class="tool-link">
-            📊 自分のペースを今すぐ判定する（無料ツール）
-        </a>
-
-        <div class="author-box">
-            <div class="author-icon">👤</div>
-            <div>
-                <p style="margin:0; font-weight:900;">監修・執筆：kyon</p>
-                <p style="margin:0; font-size:0.9rem;">通信費節約の専門家。ギガ使用ペースチェッカー開発者。</p>
-            </div>
+        <div class="card">
+            <h3>⚠️ 3GBでは足りなくなる人</h3>
+            <ul>
+                <li>通勤中にYouTubeやTikTokを毎日見る</li>
+                <li>Instagramのストーリーやリールを頻繁にチェックする</li>
+                <li>外出先でパソコンをテザリング接続する</li>
+            </ul>
         </div>
+
+        <h2>通信量を節約する3つの即効策</h2>
+        <div class="card">
+            <ol>
+                <li><strong>動画アプリの画質設定:</strong> YouTubeの設定で「データ節約モード」をオンに。</li>
+                <li><strong>SNSの自動再生オフ:</strong> InstagramやXの「動画の自動再生」をWi-Fiのみに制限。</li>
+                <li><strong>OSのデータ節約機能:</strong> iPhoneの「低データモード」やAndroidの「データセーバー」を活用。</li>
+            </ol>
+        </div>
+
+        <div class="cta-section">
+            <div class="cta-text">あなたの通信量ペースは<br>安全圏ですか？</div>
+            <a href="/data-checker/" class="cta-button">今すぐ無料で判定する</a>
+        </div>
+
     </article>
 </main>
 
-<script src="/footer.js" defer></script>
+<!-- footer.js によってここにフッターが挿入される -->
 
 </body>
 </html>
+
+```
