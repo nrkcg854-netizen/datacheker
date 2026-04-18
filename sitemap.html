@@ -1,509 +1,122 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>サイトマップ｜ギガ使用ペースチェッカー</title>
-<meta name="description" content="ギガ使用ペースチェッカーの全ページ一覧。ツール、記事コンテンツ、各種情報ページへのリンク集です。">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://gigapace-checker.vercel.app/sitemap.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サイトマップ｜ギガ使用ペースチェッカー</title>
+    <meta name="description" content="ギガ使用ペースチェッカーの全ページ一覧。ツール、記事コンテンツ、各種情報ページへのリンク集です。">
+    <link rel="canonical" href="https://gigapace-checker.vercel.app/sitemap.html">
 
-<!-- OGP -->
-<meta property="og:title" content="サイトマップ｜ギガ使用ペースチェッカー">
-<meta property="og:description" content="サイト内の全ページ一覧">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://gigapace-checker.vercel.app/sitemap.html">
-
-<!-- フォント最適化 -->
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --yellow:  #ffe600;
-  --yellow2: #ffd000;
-  --ink:     #1a1a1a;
-  --ink2:    #2e2e2e;
-  --bg:      #f5f5f0;
-  --surface: #ffffff;
-  --border:  #1a1a1a;
-  --sub:     #777770;
-  --radius:  20px;
-}
-
-body.dark {
-  --bg:      #111110;
-  --surface: #1e1e1c;
-  --border:  #ffe600;
-  --sub:     #888880;
-  --ink:     #f0f0e8;
-  --ink2:    #d0d0c8;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100svh;
-  transition: background .3s, color .3s;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ─── dot pattern bg ─── */
-body {
-  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-color: var(--bg);
-}
-body.dark {
-  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
-}
-
-/* ─── Header ─── */
-.hdr {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: var(--yellow);
-  border-bottom: 3px solid var(--border);
-  position: sticky; top: 0; z-index: 10;
-}
-body.dark .hdr { background: var(--yellow); }
-
-.hdr-logo {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 16px;
-  color: var(--ink); letter-spacing: -.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-decoration: none;
-}
-
-.hdr-actions { display: flex; gap: 8px; }
-
-.icon-btn {
-  width: 40px; height: 40px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-size: 17px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform .12s, box-shadow .12s;
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.icon-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-/* ─── Main ─── */
-main {
-  flex: 1;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 40px 20px 60px;
-}
-
-.page-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -.02em;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.page-subtitle {
-  font-size: 14px;
-  color: var(--sub);
-  margin-bottom: 32px;
-  line-height: 1.6;
-}
-
-.sitemap-section {
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  padding: 28px 24px;
-  margin-bottom: 24px;
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.sitemap-section h2 {
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 16px;
-  letter-spacing: -.01em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sitemap-list {
-  list-style: none;
-}
-
-.sitemap-list li {
-  margin-bottom: 12px;
-}
-
-.sitemap-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: var(--bg);
-  border: 2.5px solid var(--ink);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--ink);
-  transition: all .12s;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-
-body.dark .sitemap-link {
-  background: var(--surface);
-}
-
-.sitemap-link:hover {
-  background: var(--yellow);
-}
-
-.sitemap-link:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-.sitemap-link-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.sitemap-link-body {
-  flex: 1;
-}
-
-.sitemap-link-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.sitemap-link-desc {
-  font-size: 12px;
-  color: var(--sub);
-}
-
-/* ─── Footer ─── */
-.footer {
-  background: var(--surface);
-  border-top: 3px solid var(--ink);
-  padding: 32px 20px;
-  margin-top: auto;
-}
-
-.footer-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 16px;
-  margin-bottom: 20px;
-}
-
-.footer-link {
-  font-size: 13px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color .2s;
-}
-
-.footer-link:hover {
-  color: var(--yellow2);
-}
-
-.footer-copy {
-  text-align: center;
-  font-size: 12px;
-  color: var(--sub);
-}
-</style>
+    <!-- 共通リソースの読み込み -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- 外部JSの読み込み -->
+    <script src="/analytics.js" defer></script>
+    <script src="/header.js" defer></script>
+    <script src="/footer.js" defer></script>
 </head>
 <body>
 
-<!-- Header -->
-<header class="hdr">
-  <a href="./" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
-  <div class="hdr-actions">
-    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
-  </div>
-</header>
+<main class="container">
+    <div class="hero-bg">
+        <h1>🗺️ サイトマップ</h1>
+        <p>全コンテンツの最新一覧です。記事やブログが追加されると自動的にここに反映されます。</p>
+    </div>
 
-<!-- Main -->
-<main>
-  <h1 class="page-title">🗺️ サイトマップ</h1>
-  <p class="page-subtitle">ギガ使用ペースチェッカーの全ページ一覧です。目的のページを簡単に見つけることができます。</p>
+    <!-- 固定ページセクション -->
+    <section class="card">
+        <h2 style="border-bottom: 2px solid var(--navy); padding-bottom: 8px; margin-bottom: 1.5rem;">📄 メインページ & ツール</h2>
+        <div style="display: grid; gap: 0.75rem;">
+            <a href="/" class="sitemap-item">🏠 ホーム</a>
+            <a href="/tools/data-checker/" class="sitemap-item">📊 ギガ使用ペースチェッカー</a>
+            <a href="/profile.html" class="sitemap-item">👤 運営者・このサイトについて</a>
+            <a href="/contact.html" class="sitemap-item">📧 お問い合わせ</a>
+        </div>
+    </section>
 
-  <!-- メインページ -->
-  <div class="sitemap-section">
-    <h2>📄 メインページ</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./" class="sitemap-link">
-          <span class="sitemap-link-icon">🏠</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">ホーム</div>
-            <div class="sitemap-link-desc">TOPページ</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./about.html" class="sitemap-link">
-          <span class="sitemap-link-icon">ℹ️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">このサイトについて</div>
-            <div class="sitemap-link-desc">サイトの目的と運営者情報</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./contact.html" class="sitemap-link">
-          <span class="sitemap-link-icon">📧</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">お問い合わせ</div>
-            <div class="sitemap-link-desc">ご意見・ご質問はこちら</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
+    <!-- 自動生成セクション：節約記事 -->
+    <section class="card">
+        <h2 style="border-bottom: 2px solid var(--navy); padding-bottom: 8px; margin-bottom: 1.5rem;">📑 節約記事（最新順）</h2>
+        <div id="sitemap-articles" style="display: grid; gap: 0.75rem;">
+            <p style="color: #6b7280; font-size: 0.9rem;">読み込み中...</p>
+        </div>
+    </section>
 
-  <!-- ツール -->
-  <div class="sitemap-section">
-    <h2>🛠️ ツール</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./tools/data-checker/" class="sitemap-link">
-          <span class="sitemap-link-icon">📊</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">ギガ使用ペースチェッカー</div>
-            <div class="sitemap-link-desc">今月の通信量ペースを診断</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
+    <!-- 自動生成セクション：ブログ -->
+    <section class="card">
+        <h2 style="border-bottom: 2px solid var(--navy); padding-bottom: 8px; margin-bottom: 1.5rem;">📝 ブログ・開発秘話</h2>
+        <div id="sitemap-blog" style="display: grid; gap: 0.75rem;">
+            <p style="color: #6b7280; font-size: 0.9rem;">読み込み中...</p>
+        </div>
+    </section>
 
-  <!-- Android関連記事 -->
-  <div class="sitemap-section">
-    <h2>📱 Android関連記事</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./articles/how-to-check-data-android.html" class="sitemap-link">
-          <span class="sitemap-link-icon">📱</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">Androidで通信量を確認する方法</div>
-            <div class="sitemap-link-desc">設定アプリからの手順を画像つきで解説</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/android-data-saver.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🛡️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">Androidのデータセーバー機能とは</div>
-            <div class="sitemap-link-desc">バックグラウンド通信をまとめて制限する方法</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/android-data-warning.html" class="sitemap-link">
-          <span class="sitemap-link-icon">⚙️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">Androidのデータ使用警告設定</div>
-            <div class="sitemap-link-desc">上限前に自動でアラートを出す方法</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- iPhone関連記事 -->
-  <div class="sitemap-section">
-    <h2>🍎 iPhone関連記事</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./articles/iphone-check-data.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🍎</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">iPhoneで通信量を確認する方法</div>
-            <div class="sitemap-link-desc">設定から簡単にデータ使用量を確認</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/iphone-low-data-mode.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🍎</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">iPhoneの低データモード</div>
-            <div class="sitemap-link-desc">iOS標準機能で通信量を自動削減</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- アプリ別節約術 -->
-  <div class="sitemap-section">
-    <h2>💡 アプリ別節約術</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./articles/save-data-youtube.html" class="sitemap-link">
-          <span class="sitemap-link-icon">▶️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">YouTubeの通信量を減らす設定方法</div>
-            <div class="sitemap-link-desc">画質変更・自動再生OFFの手順</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/save-data-sns.html" class="sitemap-link">
-          <span class="sitemap-link-icon">📲</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">SNSアプリの通信量を抑える設定</div>
-            <div class="sitemap-link-desc">Instagram・X・TikTokの自動再生を止める</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- その他の節約術 -->
-  <div class="sitemap-section">
-    <h2>🔧 その他の節約術</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./articles/wifi-priority-setting.html" class="sitemap-link">
-          <span class="sitemap-link-icon">📶</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">Wi-Fiを優先接続にする設定方法</div>
-            <div class="sitemap-link-desc">外出先でも自動でWi-Fiに切り替える手順</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/wifi-only-update.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🔄</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">アプリ更新をWi-Fiのみに設定</div>
-            <div class="sitemap-link-desc">バックグラウンドの大量通信を防ぐ</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./articles/offline-maps.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🗺️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">Googleマップをオフラインで使う方法</div>
-            <div class="sitemap-link-desc">事前ダウンロードで通信量ゼロでナビ</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- サイト情報 -->
-  <div class="sitemap-section">
-    <h2>📋 サイト情報</h2>
-    <ul class="sitemap-list">
-      <li>
-        <a href="./privacy.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🔒</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">プライバシーポリシー</div>
-            <div class="sitemap-link-desc">個人情報の取り扱いについて</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./terms.html" class="sitemap-link">
-          <span class="sitemap-link-icon">📜</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">利用規約</div>
-            <div class="sitemap-link-desc">サービスの利用条件</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a href="./sitemap.html" class="sitemap-link">
-          <span class="sitemap-link-icon">🗺️</span>
-          <div class="sitemap-link-body">
-            <div class="sitemap-link-title">サイトマップ</div>
-            <div class="sitemap-link-desc">このページ</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
+    <!-- 法的情報 -->
+    <section class="card">
+        <h2 style="border-bottom: 2px solid var(--navy); padding-bottom: 8px; margin-bottom: 1.5rem;">⚖️ 規約・その他</h2>
+        <div style="display: grid; gap: 0.75rem;">
+            <a href="/privacy.html" class="sitemap-item">🔒 プライバシーポリシー</a>
+            <a href="/terms.html" class="sitemap-item">📜 利用規約</a>
+        </div>
+    </section>
 </main>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-links">
-      <a href="./tools/data-checker/" class="footer-link">🛠️ ツール</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./blog.html" class="footer-link">📚 ブログ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./about.html" class="footer-link">ℹ️ このサイトについて</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./contact.html" class="footer-link">📧 お問い合わせ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./sitemap.html" class="footer-link">🗺️ サイトマップ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./privacy.html" class="footer-link">🔒 プライバシーポリシー</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./terms.html" class="footer-link">📜 利用規約</a>
-    </div>
-    <p class="footer-copy">&copy; 2025 ギガ使用ペースチェッカー by kyon</p>
-  </div>
-</footer>
+<style>
+/* サイトマップ専用の簡易スタイル */
+.sitemap-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--navy);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+.sitemap-item:hover {
+    border-color: var(--accent);
+    background: #f0f9ff;
+    transform: translateX(4px);
+}
+</style>
 
 <script>
-function toggleDark() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
-  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
-}
-function loadDark() {
-  try {
-    if (localStorage.getItem('gigacheck_dark') === 'true') {
-      document.body.classList.add('dark');
-      document.getElementById('darkBtn').textContent = '☀️';
+document.addEventListener("DOMContentLoaded", function() {
+    // 汎用フェッチ＆レンダリング関数
+    async function loadToSitemap(jsonPath, containerId, urlPrefix) {
+        const container = document.getElementById(containerId);
+        try {
+            const response = await fetch(jsonPath);
+            if (!response.ok) throw new Error();
+            const data = await response.json();
+            
+            if (data.length === 0) {
+                container.innerHTML = '<p style="color: #6b7280;">記事がありません。</p>';
+                return;
+            }
+
+            container.innerHTML = data.map(item => `
+                <a href="${urlPrefix}${item.filename}" class="sitemap-item">
+                    ${item.title}
+                    <span style="font-size: 0.75rem; color: #9ca3af; font-weight: normal; margin-left: 8px;">
+                        ${item.date || ''}
+                    </span>
+                </a>
+            `).join('');
+        } catch (e) {
+            container.innerHTML = '<p style="color: #ef4444;">読み込みエラー</p>';
+        }
     }
-  } catch(e) {}
-}
-loadDark();
+
+    // 記事とブログをそれぞれ読み込み
+    loadToSitemap('/articles.json', 'sitemap-articles', '/articles/');
+    loadToSitemap('/blog.json', 'sitemap-blog', '/blog/');
+});
 </script>
+
 </body>
 </html>
+
+```
