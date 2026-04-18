@@ -1,40 +1,94 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>節約記事一覧｜ギガ使用ペースチェッカー</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通信量節約・ガジェット解説記事一覧｜ギガ使用ペースチェッカー</title>
+    <meta name="description" content="スマホの通信量を賢く節約するためのガイド記事一覧。3GBプランの活用法やYouTubeのギガ節約術などをロジカルに解説。">
+    
+    <!-- 外部CSSの読み込み (Tech Lightデザイン) -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- 外部JSの読み込み -->
+    <script src="/analytics.js" defer></script>
+    <script src="/header.js" defer></script>
+    <script src="/footer.js" defer></script>
 </head>
 <body>
-    <h1>節約記事一覧</h1>
-    
-    <!-- このulタグの中に自動でリストが入ります -->
-    <ul id="article-list"></ul>
 
-    <script>
+<!-- header.js がここにヘッダーを挿入 -->
+
+<main class="container">
+    <div class="hero-bg">
+        <h1>節約記事一覧</h1>
+        <p>データ通信の仕組みを理解し、賢くコストを抑えるための情報を発信しています。</p>
+    </div>
+
+    <!-- ここに articles.json のデータが自動で流し込まれる -->
+    <div id="article-list-container" style="display: grid; gap: 1.5rem;">
+        <p style="text-align: center; color: var(--navy); font-weight: 500;">記事を読み込み中...</p>
+    </div>
+</main>
+
+<!-- 自動表示用スクリプト (ヨネハラのロジックをデザイン拡張) -->
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    const container = document.getElementById('article-list-container');
+    
+    try {
         // 自動作成された articles.json を読み込む
-        fetch('/articles.json')
-            .then(response => response.json())
-            .then(articles => {
-                const listElement = document.getElementById('article-list');
-                
-                // 記事の数だけ <li><a href="...">タイトル</a></li> を作る
-                articles.forEach(article => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    
-                    // リンク先の設定（/articles/ファイル名.html）
-                    a.href = '/articles/' + article.filename;
-                    // タイトルの設定
-                    a.textContent = article.title;
-                    
-                    li.appendChild(a);
-                    listElement.appendChild(li);
-                });
-            })
-            .catch(error => {
-                console.error('記事の読み込みに失敗しました:', error);
-                document.getElementById('article-list').innerHTML = '<li>記事を読み込めませんでした。</li>';
-            });
-    </script>
+        const response = await fetch('/articles.json');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const articles = await response.json();
+        
+        // ローディング表示を消す
+        container.innerHTML = '';
+        
+        if (articles.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: var(--gray-200);">現在公開されている記事はありません。</p>';
+            return;
+        }
+
+        // 記事の数だけカードを作る
+        articles.forEach(article => {
+            const articleUrl = `/articles/${article.filename}`;
+            const dateHtml = article.date 
+                ? `<span style="font-size: 0.85rem; color: #6b7280; font-weight: 500; margin-left: auto;">${article.date}</span>` 
+                : '';
+
+            const cardHTML = `
+                <a href="${articleUrl}" style="text-decoration: none; color: inherit; display: block;">
+                    <div class="card" style="margin-bottom: 0; padding: 1.5rem;">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="background: var(--accent); color: white; padding: 2px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; letter-spacing: 0.05em;">節約ガイド</span>
+                                ${dateHtml}
+                            </div>
+                            <h2 style="margin: 0.5rem 0; font-size: 1.25rem; border-bottom: none; padding-bottom: 0;">${article.title}</h2>
+                            <p style="font-size: 0.95rem; color: #4b5563; margin-bottom: 0; line-height: 1.6;">${article.description}</p>
+                        </div>
+                    </div>
+                </a>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHTML);
+        });
+
+    } catch (error) {
+        console.error('記事一覧の読み込みに失敗しました:', error);
+        container.innerHTML = '<p style="text-align: center; color: #ef4444; font-weight: 600;">記事の読み込みに失敗しました。時間をおいて再読み込みしてください。</p>';
+    }
+});
+</script>
+
+<!-- footer.js がここにフッターを挿入 -->
+
 </body>
 </html>
+
+
+```
