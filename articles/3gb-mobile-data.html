@@ -7,89 +7,194 @@
     <title>月3GBで足りる？スマホ通信量の目安と節約方法｜ギガ使用ペースチェッカー</title>
     <meta name="description" content="スマホの通信量3GBで足りるのかをプロが解説。YouTubeやSNSの利用目安、節約方法、通信量ペースを判定できる無料ツールも紹介。">
     
-    <!-- 外部CSSの読み込み -->
+    <!-- 共通リソースの読み込み -->
     <link rel="stylesheet" href="/style.css">
     
-    <!-- OGP -->
+    <!-- OGP設定 -->
     <meta property="og:title" content="月3GBで足りる？スマホ通信量の目安と節約方法">
     <meta property="og:description" content="3GBでできることを徹底検証。月末にギガが足りなくなる前にチェック！">
     <meta property="og:url" content="https://gigapace-checker.vercel.app/articles/3gb-mobile-data.html">
     <meta property="og:type" content="article">
 
-    <!-- 外部JSの読み込み（ヘッダー・フッター・解析など） -->
+    <!-- 外部JSの読み込み（解析・ヘッダー・フッター） -->
+    <script src="/analytics.js" defer></script>
     <script src="/header.js" defer></script>
     <script src="/footer.js" defer></script>
+
+    <!-- AIO対策：構造化データ (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": "月3GBで足りる？スマホ通信量の目安と節約方法",
+          "description": "スマホの通信量3GBで足りるのかをプロが解説。YouTubeやSNSの利用目安、節約方法をロジカルに検証。",
+          "author": {
+            "@type": "Person",
+            "name": "kyon",
+            "url": "https://gigapace-checker.vercel.app/profile.html"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "ギガ使用ペースチェッカー"
+          },
+          "datePublished": "2026-04-19",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://gigapace-checker.vercel.app/articles/3gb-mobile-data.html"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "TOP", "item": "https://gigapace-checker.vercel.app/" },
+            { "@type": "ListItem", "position": 2, "name": "節約記事一覧", "item": "https://gigapace-checker.vercel.app/articles/" },
+            { "@type": "ListItem", "position": 3, "name": "3GBの目安" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "3GBでYouTubeはどれくらい見れますか？",
+              "acceptedAnswer": { "@type": "Answer", "text": "低画質（360p）で約10〜12時間、高画質（720p）では約3〜4時間程度が目安です。" }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
-<!-- header.js によってここにヘッダーが挿入される -->
-
 <main class="container">
     <article>
-        <div class="hero-bg">
-            <h1>月3GBで足りる？スマホ通信量の目安と節約方法</h1>
-            <p>格安プランで最も一般的な「3GB」。しかし、動画やSNSを多用すると意外と早く上限に達してしまいます。まずはあなたの今のペースを確認しましょう。</p>
-        </div>
+        <!-- ヒーローセクション -->
+        <header class="hero-bg">
+            <time datetime="2026-04-19" style="font-size: 0.9rem; opacity: 0.8;">2026.04.19 更新</time>
+            <h1 style="margin-top: 0.5rem;">月3GBで足りる？スマホ通信量の目安と節約方法</h1>
+            <p>格安SIMやサブブランドで最も選ばれている「3GBプラン」。料金は魅力的ですが、実際に使ってみると「月末に速度制限がかかる」という悩みは尽きません。ロジカルにその限界値を検証します。</p>
+        </header>
 
+        <!-- メインCTA -->
         <div class="cta-section">
-            <div class="cta-text">現在の通信量を入力して<br>月末まで足りるか判定しよう</div>
-            <a href="/data-checker/" class="cta-button">通信量チェッカーを使う</a>
+            <div class="cta-text">現在の通信量を入力して<br>月末まで足りるか即判定</div>
+            <a href="/tools/data-checker/" class="cta-button">通信量チェッカーを使う</a>
         </div>
 
-        <div class="card">
-            <h2>3GBとはどれくらいの通信量？</h2>
-            <p>3GB（3000MB）で利用できる目安は以下の通りです。特に動画視聴は画質設定によって大きく消費量が変わります。</p>
+        <section class="card">
+            <h2>3GBとは具体的にどれくらいの通信量？</h2>
+            <p>3GB（3000MB）は、現代のスマホライフにおいては「管理が必要な容量」です。特に画像や動画を伴うSNSは、無意識のうちに容量を消費します。</p>
             <table>
                 <thead>
-                    <tr><th>用途</th><th>3GBで利用できる目安</th></tr>
+                    <tr>
+                        <th>用途</th>
+                        <th>3GBで利用できる目安</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr><td>Webサイト閲覧</td><td>約9,000ページ</td></tr>
-                    <tr><td>YouTube（低画質）</td><td>約10〜12時間</td></tr>
-                    <tr><td>YouTube（高画質）</td><td>約3〜4時間</td></tr>
-                    <tr><td>Instagram閲覧</td><td>約5〜6時間</td></tr>
-                    <tr><td>LINE（トーク）</td><td>ほぼ無制限</td></tr>
+                    <tr>
+                        <td>Webサイト閲覧</td>
+                        <td>約9,000ページ</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube（低画質 360p）</td>
+                        <td>約10〜12時間</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube（高画質 720p）</td>
+                        <td>約3〜4時間</td>
+                    </tr>
+                    <tr>
+                        <td>Instagram閲覧</td>
+                        <td>約5〜6時間</td>
+                    </tr>
                 </tbody>
             </table>
-        </div>
+            <p style="font-size: 0.9rem; color: #ef4444; font-weight: bold; margin-top: 1rem;">
+                ※高画質動画を毎日15分見るだけで、1ヶ月の容量はほぼ使い切ります。
+            </p>
+        </section>
 
-        <h2>3GBで足りる人・足りない人の境界線</h2>
-        <div class="card">
-            <h3>✅ 3GBで十分足りる人</h3>
-            <ul>
-                <li>自宅にWi-Fi環境がある</li>
-                <li>外出先での動画視聴は控えている</li>
-                <li>SNSはテキスト中心のX（Twitter）が多い</li>
-            </ul>
-        </div>
+        <section>
+            <h2>3GBで足りる人・足りない人の境界線</h2>
+            <div class="card">
+                <h3>✅ 3GBで十分足りる「スマート層」</h3>
+                <ul>
+                    <li>自宅や職場に<strong>完備されたWi-Fi</strong>がある</li>
+                    <li>移動中に動画を見る習慣がない</li>
+                    <li>SNSはテキスト主体のX（旧Twitter）がメイン</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left-color: #ef4444;">
+                <h3>⚠️ 3GBでは確実に不足する「アクティブ層」</h3>
+                <ul>
+                    <li>通勤・通学中に<strong>YouTubeやTikTok</strong>を視聴する</li>
+                    <li>Instagramのリールやストーリーをよく見る</li>
+                    <li>外出先でパソコンをテザリング接続する</li>
+                </ul>
+            </div>
+        </section>
 
-        <div class="card">
-            <h3>⚠️ 3GBでは足りなくなる人</h3>
-            <ul>
-                <li>通勤中にYouTubeやTikTokを毎日見る</li>
-                <li>Instagramのストーリーやリールを頻繁にチェックする</li>
-                <li>外出先でパソコンをテザリング接続する</li>
-            </ul>
-        </div>
+        <section>
+            <h2>【検証】旅館フロントでの実例と一次情報</h2>
+            <p>私は鳥取県米子市の旅館でフロント業務を行っていますが、夜勤中の情報収集や、空き時間に動画を少し見るだけで、3GBの枠はあっという間に埋まります。現場での実感を踏まえると、<strong>「Wi-Fiがない環境での動画視聴」</strong>が最大の敵です。</p>
+            <div class="card" style="background: #f0f9ff;">
+                <p style="margin: 0; font-weight: bold; color: var(--navy);">
+                    💡 ポイント：自分の利用目的が「情報の受信（テキスト）」なのか「コンテンツの消費（動画）」なのかを明確に分けるのが節約の第一歩です。
+                </p>
+            </div>
+        </section>
 
-        <h2>通信量を節約する3つの即効策</h2>
-        <div class="card">
-            <ol>
-                <li><strong>動画アプリの画質設定:</strong> YouTubeの設定で「データ節約モード」をオンに。</li>
-                <li><strong>SNSの自動再生オフ:</strong> InstagramやXの「動画の自動再生」をWi-Fiのみに制限。</li>
-                <li><strong>OSのデータ節約機能:</strong> iPhoneの「低データモード」やAndroidの「データセーバー」を活用。</li>
-            </ol>
-        </div>
+        <section>
+            <h2>通信量を劇的に抑える3つの節約設定</h2>
+            <div class="card">
+                <h3>1. 動画アプリの画質制限</h3>
+                <p>YouTubeの設定から画質を「データ節約」に変更。スマホ画面なら360pで十分です。</p>
 
-        <div class="cta-section">
-            <div class="cta-text">あなたの通信量ペースは<br>安全圏ですか？</div>
-            <a href="/data-checker/" class="cta-button">今すぐ無料で判定する</a>
-        </div>
+                <h3>2. SNSの動画自動再生オフ</h3>
+                <p>InstagramやXの設定で、自動再生を「Wi-Fiのみ」に。これだけで月数百MB変わります。</p>
 
+                <h3>3. バックグラウンド通信の制限</h3>
+                <p>iPhoneなら「低データモード」、Androidなら「データセーバー」を活用しましょう。</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>まとめ：3GBは「ペース管理」がすべて</h2>
+            <p>3GBプランを使いこなすには、意志の力ではなく、現在の使用ペースを客観的に把握すること。月末に速度制限でストレスを抱える前に、シミュレーションを行いましょう。</p>
+            
+            <div class="cta-section">
+                <div class="cta-text">今月の通信量は安全圏？<br>手遅れになる前にチェック！</div>
+                <a href="/tools/data-checker/" class="cta-button">無料でペース判定する</a>
+            </div>
+        </section>
+
+        <!-- 著者プロフィール：E-E-A-T対策 -->
+        <section class="card" style="margin-top: 60px; border-top: 4px solid var(--navy); background: #fcfcfc;">
+            <div style="display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="font-size: 3.5rem; background: #fff; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                    👤
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3 style="margin-top: 0; color: var(--navy); font-size: 1.25rem;">執筆者：kyon（ヨネハラ）</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #4b5563;">
+                        鳥取県米子市に在住。
+                        限られた時間と通信量（ギガ）をいかにロジカルに管理し、効率化するかを追求中。
+                        実体験に基づいた、嘘のない通信費節約術を発信しています。
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <a href="/profile.html" style="color: var(--accent); font-weight: bold; text-decoration: none; font-size: 0.9rem;">
+                            → 運営者の詳しいプロフィール・このサイトについて
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </article>
 </main>
-
-<!-- footer.js によってここにフッターが挿入される -->
 
 </body>
 </html>
