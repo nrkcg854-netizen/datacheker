@@ -142,16 +142,7 @@
     </div>
   </header>
 
-  <!-- パンくずリスト -->
-  <nav aria-label="パンくずリスト" class="container" style="margin-top: 1.5rem;">
-    <ol style="display: flex; gap: 0.5rem; list-style: none; font-size: 0.875rem; color: var(--text-muted);">
-      <li><a href="../index.html">ホーム</a></li>
-      <li>›</li>
-      <li><a href="../articles/">節約記事</a></li>
-      <li>›</li>
-      <li aria-current="page">月3GBで足りる人の特徴と節約術</li>
-    </ol>
-  </nav>
+  <!-- パンくずリストは breadcrumb.js が自動生成 -->
 
   <!-- メインコンテンツ -->
   <main class="container">
@@ -203,12 +194,8 @@
       </div>
     </article>
 
-    <!-- CTA -->
-    <section class="cta-section">
-      <p class="cta-text">あなたは何GB必要？</p>
-      <p class="cta-subtext">30秒で診断できます</p>
-      <a href="../tools/data-checker/index.html" class="cta-button">無料で診断する</a>
-    </section>
+    <!-- CTAセクションは cta.js が自動生成 -->
+    <div id="cta-container"></div>
   </main>
 
   <!-- フッター -->
@@ -225,6 +212,8 @@
 
   <!-- JavaScript -->
   <script src="../js/analytics.js"></script>
+  <script src="../js/breadcrumb.js"></script>
+  <script src="../js/cta.js"></script>
   <script src="../js/main.js"></script>
 </body>
-    </html>
+</html>
