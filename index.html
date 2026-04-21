@@ -1,529 +1,211 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ギガ使用ペースチェッカー｜スマホの通信量を無料診断</title>
-<meta name="description" content="月末までギガは足りる？3秒で診断。月間プランと今月の使用量を入力するだけで、今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・完全無料。">
-<meta name="keywords" content="ギガ 使用量 確認, 通信量 ペース 診断, スマホ ギガ 足りるか, 月末 通信量 予測, データ使用量 チェック, ギガ残量 確認 無料">
-<meta name="robots" content="index, follow">
-<meta name="author" content="kyon">
-<link rel="canonical" href="https://gigapace-checker.vercel.app/">
-
-<!-- OGP -->
-<meta property="og:title" content="ギガ使用ペースチェッカー｜スマホの通信量を無料診断">
-<meta property="og:description" content="月末までギガは足りる？3秒で診断。登録不要・完全無料。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://gigapace-checker.vercel.app/">
-<meta property="og:image" content="https://gigapace-checker.vercel.app/images/hero.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ギガ使用ペースチェッカー｜通信量を無料診断">
-<meta name="twitter:description" content="月末までギガは足りる？3秒で診断。登録不要・完全無料。">
-<meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/hero.webp">
-
-<!-- 構造化データ -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "ギガ使用ペースチェッカー",
-  "description": "スマホの通信量ペースを無料診断できるWebツール。月末までのギガ使用状況を瞬時に判定。",
-  "url": "https://gigapace-checker.vercel.app/",
-  "publisher": {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO基本設定 -->
+  <title>ギガ使用ペースチェッカー｜あなたに最適なデータプランを診断</title>
+  <meta name="description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。格安SIMユーザー必見。">
+  <meta name="keywords" content="ギガ,データ通信量,診断,格安SIM,通信量節約,スマホプラン">
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/">
+  
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ギガ使用ペースチェッカー">
+  <meta property="og:description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。">
+  <meta property="og:url" content="https://gigapace-checker.vercel.app/">
+  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
+  <meta property="og:site_name" content="ギガ使用ペースチェッカー">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ギガ使用ペースチェッカー">
+  <meta name="twitter:description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。">
+  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
+  
+  <!-- Robots -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  
+  <!-- 構造化データ - WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app/",
+    "description": "月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://gigapace-checker.vercel.app/articles/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  
+  <!-- 構造化データ - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
     "@type": "Organization",
     "name": "ギガ使用ペースチェッカー",
-    "url": "https://gigapace-checker.vercel.app"
-  },
-  "inLanguage": "ja",
-  "potentialAction": {
-    "@type": "UseAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://gigapace-checker.vercel.app/tools/data-checker/"
+    "url": "https://gigapace-checker.vercel.app/",
+    "logo": "https://gigapace-checker.vercel.app/images/logo.png",
+    "founder": {
+      "@type": "Person",
+      "name": "kyon"
     }
   }
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "ホーム",
-    "item": "https://gigapace-checker.vercel.app/"
-  }]
-}
-</script>
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9ZCQB6GTL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Z9ZCQB6GTL');
-</script>
-
-<!-- フォント最適化 -->
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --yellow:  #ffe600;
-  --yellow2: #ffd000;
-  --ink:     #1a1a1a;
-  --ink2:    #2e2e2e;
-  --bg:      #f5f5f0;
-  --surface: #ffffff;
-  --border:  #1a1a1a;
-  --sub:     #777770;
-  --radius:  20px;
-}
-
-body.dark {
-  --bg:      #111110;
-  --surface: #1e1e1c;
-  --border:  #ffe600;
-  --sub:     #888880;
-  --ink:     #f0f0e8;
-  --ink2:    #d0d0c8;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100svh;
-  transition: background .3s, color .3s;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ─── dot pattern bg ─── */
-body {
-  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-color: var(--bg);
-}
-body.dark {
-  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
-}
-
-/* ─── Header ─── */
-.hdr {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: var(--yellow);
-  border-bottom: 3px solid var(--border);
-  position: sticky; top: 0; z-index: 10;
-}
-body.dark .hdr { background: var(--yellow); }
-
-.hdr-logo {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 16px;
-  color: var(--ink); letter-spacing: -.01em;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.hdr-actions { display: flex; gap: 8px; }
-
-.icon-btn {
-  width: 40px; height: 40px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-size: 17px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform .12s, box-shadow .12s;
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.icon-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-/* ─── Main ─── */
-main {
-  flex: 1;
-}
-
-/* ─── Hero ─── */
-.hero {
-  position: relative;
-  background: var(--surface);
-  border-bottom: 3px solid var(--ink);
-  overflow: hidden;
-}
-
-.hero-content {
-  position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 60px 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-@media (max-width: 768px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    padding: 40px 20px;
-    text-align: center;
-  }
-}
-
-.hero-text h1 {
-  font-family: 'Nunito', sans-serif;
-  font-size: 42px;
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -.02em;
-}
-
-@media (max-width: 768px) {
-  .hero-text h1 {
-    font-size: 32px;
-  }
-}
-
-.hero-text p {
-  font-size: 16px;
-  color: var(--sub);
-  margin-bottom: 32px;
-  line-height: 1.8;
-}
-
-.hero-cta {
-  display: inline-block;
-  padding: 18px 36px;
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: 'Nunito', sans-serif;
-  font-size: 18px;
-  font-weight: 900;
-  text-decoration: none;
-  border: 3px solid var(--ink);
-  border-radius: 999px;
-  box-shadow: 5px 5px 0 var(--ink);
-  transition: transform .12s, box-shadow .12s;
-  letter-spacing: -.01em;
-}
-
-.hero-cta:active {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-.hero-image {
-  position: relative;
-}
-
-.hero-image img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius);
-  border: 3px solid var(--ink);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-/* ─── Features ─── */
-.features {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.feature-card {
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  padding: 32px 24px;
-  text-align: center;
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.feature-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.feature-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 12px;
-  letter-spacing: -.01em;
-}
-
-.feature-desc {
-  font-size: 14px;
-  color: var(--sub);
-  line-height: 1.6;
-}
-
-/* ─── Articles ─── */
-.articles {
-  padding: 60px 20px;
-  background: var(--surface);
-  border-top: 3px solid var(--ink);
-}
-
-.articles-inner {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.section-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 28px;
-  font-weight: 900;
-  margin-bottom: 32px;
-  letter-spacing: -.01em;
-  text-align: center;
-}
-
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.article-card {
-  background: var(--bg);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 5px 5px 0 var(--ink);
-  transition: transform .12s, box-shadow .12s;
-}
-
-body.dark .article-card {
-  background: var(--surface);
-}
-
-.article-card:active {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 var(--ink);
-}
-
-.article-thumb {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  border-bottom: 3px solid var(--ink);
-}
-
-.article-body {
-  padding: 20px;
-}
-
-.article-title {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.article-desc {
-  font-size: 13px;
-  color: var(--sub);
-  line-height: 1.6;
-}
-
-/* ─── Footer ─── */
-.footer {
-  background: var(--surface);
-  border-top: 3px solid var(--ink);
-  padding: 32px 20px;
-  margin-top: auto;
-}
-
-.footer-content {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 16px;
-  margin-bottom: 20px;
-}
-
-.footer-link {
-  font-size: 13px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color .2s;
-}
-
-.footer-link:hover {
-  color: var(--yellow2);
-}
-
-.footer-copy {
-  text-align: center;
-  font-size: 12px;
-  color: var(--sub);
-}
-</style>
+  </script>
 </head>
 <body>
+  <!-- header.js がここにヘッダーを挿入 -->
 
-<!-- Header -->
-<header class="hdr">
-  <a href="./" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
-  <div class="hdr-actions">
-    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
-  </div>
-</header>
+  <!-- ヒーローセクション -->
+  <section class="hero-bg">
+    <div class="container" style="text-align: center; padding: 4rem 1.5rem;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--teal);">
+        あなたに最適な<br>データプランを診断
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.75;">
+        月に本当に必要なギガ数を30秒で診断。<br>
+        3GB・7GB・20GB、どのプランがベスト？
+      </p>
+      <a href="/tools/data-checker/index.html" class="btn btn-primary" style="font-size: 1.25rem; padding: 1.25rem 3rem;">
+        無料で診断する
+      </a>
+    </div>
+  </section>
 
-<!-- Main -->
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1>月末までギガは足りる？<br>3秒で診断。</h1>
-        <p>月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・完全無料。</p>
-        <a href="./tools/data-checker/" class="hero-cta">今すぐ無料で診断する →</a>
+  <!-- 特徴セクション -->
+  <section class="container" style="margin-top: 4rem;">
+    <h2 style="text-align: center; margin-bottom: 3rem;">ギガペースチェッカーの特徴</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+      <!-- カード1 -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+        <h3 style="color: var(--teal); margin-bottom: 1rem;">30秒で診断完了</h3>
+        <p style="color: var(--text-muted); line-height: 1.65;">
+          簡単な質問に答えるだけで、あなたに必要なデータ通信量がわかります。
+        </p>
       </div>
-      <div class="hero-image">
-        <img src="./images/hero.webp" alt="スマホでデータ通信量を確認する様子" width="600" height="400">
+
+      <!-- カード2 -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+        <h3 style="color: var(--teal); margin-bottom: 1rem;">プラン選びの失敗を防ぐ</h3>
+        <p style="color: var(--text-muted); line-height: 1.65;">
+          大容量プランで無駄な出費をしたり、低容量で速度制限に悩むことがなくなります。
+        </p>
+      </div>
+
+      <!-- カード3 -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+        <h3 style="color: var(--teal); margin-bottom: 1rem;">節約術も紹介</h3>
+        <p style="color: var(--text-muted); line-height: 1.65;">
+          診断結果に合わせて、データ通信量を節約する具体的な方法も提案します。
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section class="features">
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">⚡</span>
-        <h2 class="feature-title">結果は瞬時</h2>
-        <p class="feature-desc">入力したら即座に診断結果を表示。待ち時間ゼロ。</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🔓</span>
-        <h2 class="feature-title">登録不要</h2>
-        <p class="feature-desc">面倒な会員登録は一切なし。すぐに使えます。</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">💰</span>
-        <h2 class="feature-title">完全無料</h2>
-        <p class="feature-desc">すべての機能が無料。課金要素はありません。</p>
-      </div>
+  <!-- 人気記事セクション -->
+  <section class="container" style="margin-top: 5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <h2 style="margin: 0;">人気の節約記事</h2>
+      <a href="/articles/" style="color: var(--teal-light); font-weight: 600; font-size: 1rem;">
+        記事一覧を見る →
+      </a>
+    </div>
+    
+    <!-- 記事一覧（自動生成） -->
+    <div id="popular-articles" style="display: grid; gap: 1.5rem;">
+      <p style="text-align: center; color: var(--text-muted);">記事を読み込み中...</p>
     </div>
   </section>
 
-  <!-- Articles -->
-  <section class="articles">
-    <div class="articles-inner">
-      <h2 class="section-title">📚 新着記事</h2>
-      <div class="articles-grid">
-        <a href="./articles/save-data-youtube.html" class="article-card">
-          <img src="./images/hero.webp" alt="YouTubeの通信量を減らす設定方法" class="article-thumb" width="400" height="225">
-          <div class="article-body">
-            <h3 class="article-title">YouTubeの通信量を減らす設定方法</h3>
-            <p class="article-desc">画質変更・自動再生OFFで無理なく節約する手順を解説。</p>
-          </div>
-        </a>
-        <a href="./articles/save-data-sns.html" class="article-card">
-          <img src="./images/hero.webp" alt="SNSアプリの通信量を抑える設定" class="article-thumb" width="400" height="225">
-          <div class="article-body">
-            <h3 class="article-title">SNSアプリの通信量を抑える設定</h3>
-            <p class="article-desc">Instagram・X・TikTokの自動再生を止める方法。</p>
-          </div>
-        </a>
-        <a href="./articles/how-to-check-data-android.html" class="article-card">
-          <img src="./images/hero.webp" alt="Androidで通信量を確認する方法" class="article-thumb" width="400" height="225">
-          <div class="article-body">
-            <h3 class="article-title">Androidで通信量を確認する方法</h3>
-            <p class="article-desc">設定アプリから今月の使用量をチェックする手順。</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
+  <!-- CTAセクション -->
+  <div id="cta-container"></div>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-links">
-      <a href="./tools/data-checker/" class="footer-link">🛠️ ツール</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./blog.html" class="footer-link">📚 ブログ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./about.html" class="footer-link">ℹ️ このサイトについて</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./contact.html" class="footer-link">📧 お問い合わせ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./sitemap.html" class="footer-link">🗺️ サイトマップ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./privacy.html" class="footer-link">🔒 プライバシーポリシー</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./terms.html" class="footer-link">📜 利用規約</a>
-    </div>
-    <p class="footer-copy">&copy; 2025 ギガ使用ペースチェッカー by kyon</p>
-  </div>
-</footer>
+  <!-- footer.js がここにフッターを挿入 -->
 
-<script>
-function toggleDark() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
-  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
-}
-function loadDark() {
-  try {
-    if (localStorage.getItem('gigacheck_dark') === 'true') {
-      document.body.classList.add('dark');
-      document.getElementById('darkBtn').textContent = '☀️';
+  <!-- JavaScript -->
+  <script src="/analytics.js" defer></script>
+  <script src="/header.js" defer></script>
+  <script src="/footer.js" defer></script>
+  <script src="/js/cta.js" defer></script>
+  <script src="/js/main.js" defer></script>
+
+  <!-- 人気記事表示スクリプト -->
+  <script>
+  document.addEventListener("DOMContentLoaded", async function() {
+    const container = document.getElementById('popular-articles');
+    
+    try {
+      const response = await fetch('/articles.json');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const articles = await response.json();
+      
+      container.innerHTML = '';
+      
+      if (articles.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">現在公開されている記事はありません。</p>';
+        return;
+      }
+
+      // 最新3件を表示
+      const recentArticles = articles.slice(0, 3);
+      
+      recentArticles.forEach(article => {
+        const articleUrl = `/articles/${article.filename}`;
+        const dateHtml = article.date 
+          ? `<span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">${article.date}</span>` 
+          : '';
+
+        const cardHTML = `
+          <a href="${articleUrl}" style="text-decoration: none; color: inherit; display: block;">
+            <div class="card" style="padding: 1.75rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                  <span style="background: var(--gradient-primary); color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;">節約ガイド</span>
+                  ${dateHtml}
+                </div>
+                <h3 style="margin: 0; font-size: 1.25rem; color: var(--teal); line-height: 1.4;">${article.title}</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0; line-height: 1.65;">${article.description}</p>
+              </div>
+            </div>
+          </a>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHTML);
+      });
+
+      // カードにフェードインアニメーション
+      const cards = container.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          card.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+
+    } catch (error) {
+      console.error('記事一覧の読み込みに失敗しました:', error);
+      container.innerHTML = '<p style="text-align: center; color: #ef4444;">記事の読み込みに失敗しました。</p>';
     }
-  } catch(e) {}
-}
-loadDark();
-</script>
+  });
+  </script>
 </body>
 </html>
