@@ -759,8 +759,241 @@
   <script src="/footer.js" defer></script>
   <script src="/js/main.js" defer></script>
 
-  <!-- ツールロジック（既存のJSをここに含める） -->
+  <!-- ツールロジック
   <script>
-  // ここに元のツールのJavaScriptロジックを入れてください
-  // （adjust関数、toggleDark関数、shareTool関数など）
-  </
+const STORAGE_KEY = 'gigacheck_v4';
+const state = { plan: 50, used: 0, savedMonth: null };
+
+const donutBar    = document.getElementById('donutBar');
+const pctText     = document.getElementById('pctText');
+const badge       = document.getElementById('badge');
+const badgeEmoji  = document.getElementById('badgeEmoji');
+const badgeText   = document.getElementById('badgeText');
+const todayNum    = document.getElementById('todayNum');
+const todayUnit   = document.getElementById('todayUnit');
+const forecastEl  = document.getElementById('forecast');
+const countdownEl = document.getElementById('countdown');
+const remainMeta  = document.getElementById('remainMeta');
+const remainVal   = document.getElementById('remainVal');
+const remainUnit  = document.getElementById('remainUnit');
+const slider      = document.getElementById('slider');
+const usedInput   = document.getElementById('usedInput');
+const customPlan  = document.getElementById('customPlan');
+
+function getDateInfo() {
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth(), day = now.getDate();
+  const lastDay   = new Date(year, month + 1, 0).getDate();
+  const remaining = Math.max(1, lastDay - day + 1);
+  const monthKey  = `${year}-${String(month+1).padStart(2,'0')}`;
+  return { day, lastDay, remaining, monthKey };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    const { monthKey } = getDateInfo();
+    if (saved.savedMonth && saved.savedMonth !== monthKey) saved.used = 0;
+    saved.savedMonth = monthKey;
+    Object.assign(state, saved);
+  } catch(e) {}
+}
+
+function fmtGB(gb) {
+  if (gb >= 1) return { num: gb.toFixed(1), unit: 'GB' };
+  return { num: Math.round(gb * 1024), unit: 'MB' };
+}
+
+function update() {
+  const { day, lastDay, remaining, monthKey } = getDateInfo();
+  state.savedMonth = monthKey;
+  const plan = state.plan;
+  const used = Math.max(0, state.used);
+  const rem  = Math.max(0, plan - used);
+
+  usedInput.value = used.toFixed(1);
+  slider.value    = used;
+
+  const pct  = Math.min(100, Math.round(used / plan * 100));
+  const CIRC = 565;
+  donutBar.style.strokeDashoffset = CIRC - (CIRC * pct / 100);
+  pctText.textContent  = `${pct}%`;
+
+  const gap = (used / plan) - (day / lastDay);
+  let label, emoji, color, status;
+  if      (gap < -0.05) { label = '余裕あり!';   emoji = '✦';  color = 'var(--safe)';   status = 'safe'; }
+  else if (gap <  0.05) { label = 'いい感じ';     emoji = '◎';  color = 'var(--ok)';     status = 'ok'; }
+  else if (gap <  0.15) { label = 'ちょっと注意'; emoji = '▲';  color = 'var(--warn)';   status = 'warn'; }
+  else                  { label = '使いすぎ!';   emoji = '!!'; color = 'var(--danger)'; status = 'danger'; }
+
+  badge.style.background = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--yellow)' : color;
+  badge.style.color      = color === 'var(--safe)' || color === 'var(--ok)' ? 'var(--ink)' : '#fff';
+  badgeEmoji.textContent = emoji;
+  badgeText.textContent  = label;
+  pctText.style.color    = color;
+  donutBar.style.stroke  = color;
+
+  const f = fmtGB(rem / remaining);
+  todayNum.textContent  = f.num;
+  todayUnit.textContent = f.unit;
+  todayNum.style.color  = color;
+
+  forecastEl.textContent  = day > 0 ? `${((used/day)*lastDay).toFixed(1)} GB` : '—';
+  countdownEl.textContent = `${lastDay - day} 日`;
+
+  const rf = fmtGB(rem);
+  remainMeta.textContent = `${rf.num}${rf.unit}`;
+  remainVal.textContent  = rf.num;
+  remainUnit.textContent = rf.unit;
+
+  const bars = document.querySelectorAll('.signal i');
+  const activeBars = Math.max(0, 4 - Math.floor(pct / 26));
+  bars.forEach((b, i) => b.classList.toggle('active', i < activeBars));
+
+  // 診断結果に応じた記事を表示
+  renderTips(status);
+
+  saveState();
+}
+
+function adjust(delta) {
+  state.used = Math.round(Math.max(0, Math.min(state.plan, state.used + delta)) * 10) / 10;
+  update();
+}
+
+slider.addEventListener('input', () => { state.used = parseFloat(slider.value); update(); });
+
+usedInput.addEventListener('change', () => {
+  const v = parseFloat(usedInput.value);
+  if (isNaN(v) || v < 0) { usedInput.value = state.used.toFixed(1); return; }
+  state.used = Math.min(v, state.plan);
+  update();
+});
+
+document.getElementById('planTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.plan-tab');
+  if (!btn) return;
+  state.plan = parseFloat(btn.dataset.gb);
+  customPlan.value = '';
+  setActivePlanTab(btn);
+  slider.max = state.plan;
+  update();
+});
+
+function setActivePlanTab(activeBtn) {
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+customPlan.addEventListener('change', () => {
+  const v = parseFloat(customPlan.value);
+  if (isNaN(v) || v <= 0) { customPlan.value = ''; return; }
+  state.plan = v; setActivePlanTab(null); slider.max = v; update();
+});
+
+function restorePlanTab() {
+  let matched = null;
+  document.querySelectorAll('.plan-tab').forEach(b => {
+    if (parseFloat(b.dataset.gb) === state.plan) matched = b;
+  });
+  setActivePlanTab(matched);
+  slider.max = state.plan; slider.value = state.used;
+}
+
+// 診断結果に応じた記事を表示
+function renderTips(status) {
+  const container = document.getElementById('tipsContainer');
+  const title = document.getElementById('tipsTitle');
+  
+  let articles = [];
+  let titleText = '';
+  
+  if (status === 'safe') {
+    // 余裕あり
+    titleText = '🎯 もっと快適に使うための記事';
+    articles = [
+      { icon:'📱', title:'Androidで通信量を確認する方法', desc:'設定アプリから今月の使用量をチェック →', url:'../../articles/how-to-check-data-android.html' },
+      { icon:'🍎', title:'iPhoneで通信量を確認する方法', desc:'設定から簡単にデータ使用量を確認 →', url:'../../articles/iphone-check-data.html' },
+      { icon:'🗺️', title:'Googleマップをオフラインで使う方法', desc:'事前ダウンロードで通信量ゼロでナビ →', url:'../../articles/offline-maps.html' }
+    ];
+  } else if (status === 'ok') {
+    // いい感じ
+    titleText = '🎯 このペースを維持するための記事';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質変更・自動再生OFFで無理なく節約 →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'Instagram・X・TikTokの自動再生を止める →', url:'../../articles/save-data-sns.html' },
+      { icon:'🔄', title:'アプリ更新をWi-Fiのみに設定', desc:'バックグラウンドの大量通信を防ぐ →', url:'../../articles/wifi-only-update.html' }
+    ];
+  } else if (status === 'warn') {
+    // ちょっと注意
+    titleText = '⚠️ 今すぐチェックすべき節約記事';
+    articles = [
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を480pに下げるだけで半分に →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画の自動再生をOFFにして大幅節約 →', url:'../../articles/save-data-sns.html' },
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を一括制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を自動削減 →', url:'../../articles/iphone-low-data-mode.html' }
+    ];
+  } else {
+    // 使いすぎ
+    titleText = '🚨 緊急!今すぐ実践すべき節約術';
+    articles = [
+      { icon:'🛡️', title:'Androidのデータセーバー機能', desc:'バックグラウンド通信を今すぐ制限 →', url:'../../articles/android-data-saver.html' },
+      { icon:'🍎', title:'iPhoneの低データモード', desc:'iOS標準機能で通信量を強制削減 →', url:'../../articles/iphone-low-data-mode.html' },
+      { icon:'▶️', title:'YouTubeの通信量を減らす設定', desc:'画質を最低にして通信量を75%カット →', url:'../../articles/save-data-youtube.html' },
+      { icon:'📲', title:'SNSアプリの通信量を抑える設定', desc:'動画・画像の自動読み込みを全てOFF →', url:'../../articles/save-data-sns.html' },
+      { icon:'⚙️', title:'Androidのデータ使用警告設定', desc:'上限前に自動でアラートを出す方法 →', url:'../../articles/android-data-warning.html' }
+    ];
+  }
+  
+  title.textContent = titleText;
+  
+  container.innerHTML = articles.map(a => `
+    <a href="${a.url}" class="tips-card">
+      <span class="tips-icon">${a.icon}</span>
+      <div class="tips-body">
+        <div class="tips-title">${a.title}</div>
+        <div class="tips-desc">${a.desc}</div>
+      </div>
+      <span class="tips-arrow">›</span>
+    </a>
+  `).join('');
+}
+
+function shareTool() {
+  const url = location.href;
+  if (navigator.share) {
+    navigator.share({ title:'ギガペース診断ツール', text:'スマホのギガ消費ペースをすぐ確認!', url }).catch(()=>{});
+  } else {
+    try { navigator.clipboard.writeText(url); showToast('URLをコピーしました'); }
+    catch(e) { showToast('コピーできませんでした'); }
+  }
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
+}
+function loadDark() {
+  try {
+    if (localStorage.getItem('gigacheck_dark') === 'true') {
+      document.body.classList.add('dark');
+      document.getElementById('darkBtn').textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadDark(); loadState(); restorePlanTab(); update();
+</script>
+  
