@@ -40,7 +40,14 @@ const breadcrumbConfig = {
   'iphone-low-data-mode': {
     category: '設定方法',
     title: 'iPhoneの低データモードの使い方'
-  }
+  },
+  
+  // blog/ （ブログ記事用）
+  // 例: ブログ記事を追加する場合はここに追加
+  // 'development-story': {
+  //   category: 'ブログ',
+  //   title: 'このサイトを作ったきっかけ'
+  // }
 };
 
 function renderBreadcrumb() {
@@ -53,12 +60,16 @@ function renderBreadcrumb() {
   const depth = (path.match(/\//g) || []).length;
   const prefix = depth === 2 ? '../' : depth === 3 ? '../../' : '';
   
+  // articlesかblogか判定
+  const isBlog = path.includes('/blog/');
+  const categoryUrl = isBlog ? `${prefix}blog/blog.html` : `${prefix}articles/`;
+  
   const breadcrumbHTML = `
     <nav aria-label="パンくずリスト" class="container" style="margin-top: 1.5rem;">
       <ol style="display: flex; gap: 0.5rem; list-style: none; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap;">
         <li><a href="${prefix}index.html">ホーム</a></li>
         <li>›</li>
-        <li><a href="${prefix}articles/">${config.category}</a></li>
+        <li><a href="${categoryUrl}">${config.category}</a></li>
         <li>›</li>
         <li aria-current="page">${config.title}</li>
       </ol>
