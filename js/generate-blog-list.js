@@ -1,56 +1,60 @@
 const fs = require('fs');
 const path = require('path');
 
-// フォルダのパス設定（blogディレクトリを指定）
-const blogDir = path.join(__dirname, 'blog');
-// 出力ファイルの設定（blog.jsonに出力）
-const outputFile = path.join(__dirname, 'blog.json');
+// ブログディレクトリのパス（jsディレクトリから見た相対パス）
+const blogDir = path.join(__dirname, '..', 'blog');
+const blogJsonPath = path.join(__dirname, '..', 'blog.json');
 
-// blogフォルダ内のファイルを読み込む
-const files = fs.readdirSync(blogDir);
-const blogList = [];
+console.log('📂 Scanning blog directory...');
 
-files.forEach(file => {
-    // HTMLファイルのみを対象にする（index.htmlは一覧自身なので除外）
-    if (path.extname(file) === '.html' && file !== 'index.html') {
-        const filePath = path.join(blogDir, file);
-        const content = fs.readFileSync(filePath, 'utf-8');
-        
-        // タイトルの抽出
-        const titleMatch = content.match(/<title>([\s\S]*?)<\/title>/i);
-        let title = "タイトルなし";
-        if (titleMatch && titleMatch[1]) {
-            title = titleMatch[1].trim();
-            // 一覧をスッキリさせるため、サイト名を削る
-            title = title.replace('｜ギガ使用ペースチェッカー', '');
-        }
-        
-        // ディスクリプション（説明文）の抽出
-        const descMatch = content.match(/<meta\s+name=["']description["']\s+content=["']([\s\S]*?)["']/i);
-        let description = descMatch ? descMatch[1].trim() : "記事の説明がありません。";
+// blogディレクトリが存在しない場合のエラーハンドリング
+if (!fs.existsSync(blogDir)) {
+  console.warn(`⚠️ Blog directory not found: ${blogDir}`);
+  console.log('Creating empty blog.json...');
+  fs.writeFileSync(blogJsonPath, JSON.stringify([], null, 2), 'utf-8');
+  console.log('✅ Empty blog.json created');
+  process.exit(0);
+}
 
-        // 公開日（<time datetime="...">）の抽出
-        const timeMatch = content.match(/<time[^>]*datetime=["']([^"']+)["'][^>]*>/i);
-        let date = timeMatch ? timeMatch[1].trim() : "";
+// ブログファイルを取得
+const files = fs.readdirSync(blogDir)
+  .filter(file => file.endsWith('.html') && file !== 'index.html' && file !== 'blog.html');
 
-        // リストに追加
-        blogList.push({
-            filename: file,
-            title: title,
-            description: description,
-            date: date
-        });
-    }
+const blogPosts = files.map(file => {
+  const filePath = path.join(blogDir, file);
+  const content = fs.readFileSync(filePath, 'utf-8');
+  
+  // タイトルを抽出
+  const titleMatch = content.match(/<title>(.*?)<\/title>/);
+  const title = titleMatch 
+    ? titleMatch[1].replace(/\s*[|｜].*$/, '').trim() 
+    : file.replace('.html', '');
+  
+  // descriptionを抽出
+  const descMatch = content.match(/<meta name="description" content="(.*?)"/);
+  const description = descMatch ? descMatch[1] : '';
+  
+  // 公開日を抽出
+  const dateMatch = content.match(/"datePublished":\s*"(\d{4}-\d{2}-\d{2})"/);
+  const date = dateMatch ? dateMatch[1] : null;
+  
+  return {
+    filename: file,
+    title,
+    description,
+    date,
+    type: 'blog'
+  };
+})
+.sort((a, b) => {
+  // 日付が新しい順にソート
+  if (!a.date) return 1;
+  if (!b.date) return -1;
+  return new Date(b.date) - new Date(a.date);
 });
 
-// 日付が新しい順に並び替える（降順ソート）
-// ※もし日付（<time>タグ）が書かれていない記事があってもエラーにならないよう処理しています
-blogList.sort((a, b) => {
-    const dateA = a.date ? new Date(a.date) : new Date(0);
-    const dateB = b.date ? new Date(b.date) : new Date(0);
-    return dateB - dateA;
-});
+// JSONファイルに書き出し
+fs.writeFileSync(blogJsonPath, JSON.stringify(blogPosts, null, 2), 'utf-8');
 
-// blog.json というファイル名で保存する
-fs.writeFileSync(outputFile, JSON.stringify(blogList, null, 2));
-console.log('✅ blog.json に説明文と日付を追加し、最新順にソートしました！');
+console.log('✅ blog.json generated successfully!');
+console.log(`   Found ${blogPosts.length} blog posts`);
