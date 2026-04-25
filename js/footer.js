@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <a href="/contact.html">問合せ</a>
           <a href="/privacy.html">プライバシーポリシー</a>
           <a href="/terms.html">利用規約</a>
-          <a href="/sitemap.xml">サイトマップ</a>
+          <a href="/sitemap.html">サイトマップ</a>
         </nav>
 
         <div style="color: #6b7280; font-size: 0.875rem;">
