@@ -3,208 +3,140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO基本設定 -->
-  <title>ギガ使用ペースチェッカー｜あなたに最適なデータプランを診断</title>
-  <meta name="description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。格安SIMユーザー必見。">
-  <meta name="keywords" content="ギガ,データ通信量,診断,格安SIM,通信量節約,スマホプラン">
+
+  <!-- SEO -->
+  <title>ギガ使用ペースチェッカー｜今月のデータ使用ペースをチェック</title>
+  <meta name="description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通し、節約のヒントもわかります。">
+  <meta name="keywords" content="ギガ,データ通信量,使用量,通信量チェック,スマホ通信量,格安SIM">
   <link rel="canonical" href="https://gigapace-checker.vercel.app/">
-  
+
+  <!-- AI向けメタ -->
+  <meta name="ai-readable" content="true">
+  <meta name="ai-content-type" content="tool,calculator">
+  <meta name="ai-summary" content="スマホのデータ通信量の使用ペースをチェックするツール">
+
   <!-- OGP -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="ギガ使用ペースチェッカー">
-  <meta property="og:description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。">
+  <meta property="og:description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通しがわかります。">
   <meta property="og:url" content="https://gigapace-checker.vercel.app/">
   <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
   <meta property="og:site_name" content="ギガ使用ペースチェッカー">
   <meta property="og:locale" content="ja_JP">
-  
-  <!-- Twitter Card -->
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ギガ使用ペースチェッカー">
-  <meta name="twitter:description" content="月のデータ通信量を診断して、本当に必要なギガ数を把握。">
+  <meta name="twitter:description" content="今月の通信量の使い方をチェック">
   <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
-  
+
   <!-- Robots -->
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
   <!-- CSS -->
   <link rel="stylesheet" href="/style.css">
-  
-  <!-- 構造化データ - WebSite -->
+
+  <!-- WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "ギガ使用ペースチェッカー",
-    "url": "https://gigapace-checker.vercel.app/",
-    "description": "月のデータ通信量を診断して、本当に必要なギガ数を把握。3GB・7GB・20GBプランの選び方や節約術も紹介。",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://gigapace-checker.vercel.app/articles/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "url": "https://gigapace-checker.vercel.app/"
   }
   </script>
-  
-  <!-- 構造化データ - Organization -->
+
+  <!-- Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "ギガ使用ペースチェッカー",
     "url": "https://gigapace-checker.vercel.app/",
-    "logo": "https://gigapace-checker.vercel.app/images/logo.png",
-    "founder": {
-      "@type": "Person",
-      "name": "kyon"
-    }
+    "logo": "https://gigapace-checker.vercel.app/images/logo.png"
   }
   </script>
+
+  <!-- ★追加：ツール定義 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ギガ使用ペースチェッカー",
+    "applicationCategory": "Utility",
+    "operatingSystem": "Web",
+    "url": "https://gigapace-checker.vercel.app/tools/data-checker/index.html",
+    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できるツール"
+  }
+  </script>
+
 </head>
+
 <body>
-  <!-- header.js がここにヘッダーを挿入 -->
 
-  <!-- ヒーローセクション -->
-  <section class="hero-bg">
-    <div class="container" style="text-align: center; padding: 4rem 1.5rem;">
-      <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--teal);">
-        あなたに最適な<br>データプランを診断
-      </h1>
-      <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.75;">
-        月に本当に必要なギガ数を30秒で診断。<br>
-        3GB・7GB・20GB、どのプランがベスト？
-      </p>
-      <a href="/tools/data-checker/index.html" class="btn btn-primary" style="font-size: 1.25rem; padding: 1.25rem 3rem;">
-        無料で診断する
-      </a>
-    </div>
-  </section>
+<!-- ヘッダー -->
 
-  <!-- 特徴セクション -->
-  <section class="container" style="margin-top: 4rem;">
-    <h2 style="text-align: center; margin-bottom: 3rem;">ギガペースチェッカーの特徴</h2>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-      <!-- カード1 -->
-      <div class="card">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
-        <h3 style="color: var(--teal); margin-bottom: 1rem;">30秒で診断完了</h3>
-        <p style="color: var(--text-muted); line-height: 1.65;">
-          簡単な質問に答えるだけで、あなたに必要なデータ通信量がわかります。
-        </p>
-      </div>
+<section class="hero-bg">
+  <div class="container" style="text-align:center; padding:4rem 1.5rem;">
+    <h1 style="font-size:2.5rem; margin-bottom:1.5rem; color:var(--teal);">
+      今月のギガ使用ペースをチェック
+    </h1>
 
-      <!-- カード2 -->
-      <div class="card">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
-        <h3 style="color: var(--teal); margin-bottom: 1rem;">プラン選びの失敗を防ぐ</h3>
-        <p style="color: var(--text-muted); line-height: 1.65;">
-          大容量プランで無駄な出費をしたり、低容量で速度制限に悩むことがなくなります。
-        </p>
-      </div>
+    <p style="font-size:1.25rem; color:var(--text-muted); margin-bottom:2.5rem; line-height:1.75;">
+      今の使い方で足りるか、使いすぎかを30秒で確認。<br>
+      残りギガの見通しもわかります。
+    </p>
 
-      <!-- カード3 -->
-      <div class="card">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
-        <h3 style="color: var(--teal); margin-bottom: 1rem;">節約術も紹介</h3>
-        <p style="color: var(--text-muted); line-height: 1.65;">
-          診断結果に合わせて、データ通信量を節約する具体的な方法も提案します。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <<!-- 人気記事セクション → 最新記事セクション -->
-<section class="container" style="margin-top: 5rem;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-    <h2 style="margin: 0;">最新の節約記事</h2>
-    <a href="/articles/" style="color: var(--teal-light); font-weight: 600; font-size: 1rem;">
-      記事一覧を見る →
+    <a href="/tools/data-checker/index.html" class="btn btn-primary" style="font-size:1.25rem; padding:1.25rem 3rem;">
+      無料でチェックする
     </a>
   </div>
-  
-  <!-- 記事一覧（自動生成） -->
-  <div id="popular-articles" style="display: grid; gap: 1.5rem;">
-    <p style="text-align: center; color: var(--text-muted);">記事を読み込み中...</p>
+</section>
+
+<!-- 特徴 -->
+<section class="container" style="margin-top:4rem;">
+  <h2 style="text-align:center; margin-bottom:3rem;">特徴</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;">
+
+    <div class="card">
+      <div style="font-size:3rem;">📊</div>
+      <h3>30秒で使用ペースを確認</h3>
+      <p>簡単な質問で、今の通信量の使い方が適正か分かります。</p>
+    </div>
+
+    <div class="card">
+      <div style="font-size:3rem;">⚠️</div>
+      <h3>使いすぎを早期発見</h3>
+      <p>月末のギガ不足リスクを事前に把握できます。</p>
+    </div>
+
+    <div class="card">
+      <div style="font-size:3rem;">💡</div>
+      <h3>節約ヒントも提示</h3>
+      <p>結果に応じて通信量を減らす方法も案内します。</p>
+    </div>
+
   </div>
 </section>
-  <!-- CTAセクション -->
-  <div id="cta-container"></div>
 
-  <!-- footer.js がここにフッターを挿入 -->
+<!-- 最新記事 -->
+<section class="container" style="margin-top:5rem;">
+  <h2>最新の節約記事</h2>
 
-  <!-- JavaScript -->
-  <script src="/analytics.js" defer></script>
-  <script src="/header.js" defer></script>
-  <script src="/footer.js" defer></script>
-  <script src="/js/cta.js" defer></script>
-  <script src="/js/main.js" defer></script>
+  <div id="popular-articles">
+    <p>読み込み中...</p>
+  </div>
+</section>
 
-  <!-- 人気記事表示スクリプト -->
-  <script>
-  document.addEventListener("DOMContentLoaded", async function() {
-    const container = document.getElementById('popular-articles');
-    
-    try {
-      const response = await fetch('/articles.json');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const articles = await response.json();
-      
-      container.innerHTML = '';
-      
-      if (articles.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">現在公開されている記事はありません。</p>';
-        return;
-      }
+<div id="cta-container"></div>
 
-      // 最新3件を表示
-      const recentArticles = articles.slice(0, 3);
-      
-      recentArticles.forEach(article => {
-        const articleUrl = `/articles/${article.filename}`;
-        const dateHtml = article.date 
-          ? `<span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">${article.date}</span>` 
-          : '';
+<!-- JS（統一済み） -->
+<script src="/js/analytics.js" defer></script>
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+<script src="/js/cta.js" defer></script>
+<script src="/js/main.js" defer></script>
 
-        const cardHTML = `
-          <a href="${articleUrl}" style="text-decoration: none; color: inherit; display: block;">
-            <div class="card" style="padding: 1.75rem;">
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                  <span style="background: var(--gradient-primary); color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;">節約ガイド</span>
-                  ${dateHtml}
-                </div>
-                <h3 style="margin: 0; font-size: 1.25rem; color: var(--teal); line-height: 1.4;">${article.title}</h3>
-                <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0; line-height: 1.65;">${article.description}</p>
-              </div>
-            </div>
-          </a>
-        `;
-        container.insertAdjacentHTML('beforeend', cardHTML);
-      });
-
-      // カードにフェードインアニメーション
-      const cards = container.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          card.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 100);
-      });
-
-    } catch (error) {
-      console.error('記事一覧の読み込みに失敗しました:', error);
-      container.innerHTML = '<p style="text-align: center; color: #ef4444;">記事の読み込みに失敗しました。</p>';
-    }
-  });
-  </script>
 </body>
-</html>
+      </html>
