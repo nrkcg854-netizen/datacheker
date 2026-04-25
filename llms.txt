@@ -1,0 +1,16 @@
+# Site: ギガ使用ペースチェッカー
+# URL: https://gigapace-checker.vercel.app/
+
+## Purpose
+スマホのデータ通信量の使用ペースを確認し、月内の不足リスクを可視化するツール。
+
+## Main Tool
+/tools/data-checker/index.html
+
+## Articles
+/articles/
+
+## Notes
+- 日本の格安SIMユーザー向け
+- 使用量の「ペース」に特化
+- 節約記事あり
