@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gigapace-checker.vercel.app/sitemap.xml
+
+# AIクローラー明示許可
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
