@@ -22,11 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </footer>
   `;
 
-  const container = document.getElementById("footer-container");
-
-  if (container) {
-    container.innerHTML = footerHTML;
-  } else {
-    console.error("footer-container が見つかりません");
-  }
+  // ★ bodyタグ内の「一番最後」に直接挿入する
+  document.body.insertAdjacentHTML('beforeend', footerHTML);
 });
