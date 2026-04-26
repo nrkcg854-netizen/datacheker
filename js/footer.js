@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <a href="/sitemap.html">サイトマップ</a>
         </nav>
 
-        <div style="color: #6b7280; font-size: 0.875rem;">
+        <div style="color: #6b7280; font-size: 0.875rem; text-align: center;">
           <p>&copy; 2026 ギガ使用ペースチェッカー by <a href="/profile.html">kyon</a></p>
           <p style="margin-top: 8px;">所在地: 鳥取県米子市</p>
         </div>
@@ -22,6 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </footer>
   `;
 
-  // ★ bodyタグ内の「一番最後」に直接挿入する
+  // bodyタグの一番最後に直接挿入
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 });
