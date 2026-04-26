@@ -1,4 +1,3 @@
-```javascript
 document.addEventListener("DOMContentLoaded", function() {
   const headerHTML = `
     <header style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 1rem 0; position: sticky; top: 0; z-index: 100;">
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
       </div>
     </header>
   `;
+  
+  // bodyタグの一番最初に直接挿入（コンテナ不要）
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 });
-
-```
