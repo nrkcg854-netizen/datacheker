@@ -47,7 +47,7 @@
       "url": "https://gigapace-checker.vercel.app"
     },
     "inLanguage": "ja",
-    "featureList": [
+    "featureList":[
       "月末までの通信量ペース診断",
       "今日使える通信量の自動計算",
       "月末使用量の予測表示",
@@ -62,7 +62,7 @@
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
+    "itemListElement":[
       {
         "@type": "ListItem",
         "position": 1,
@@ -210,6 +210,8 @@
     font-weight: 700;
     line-height: 1;
     transition: color .3s;
+    padding-right: 4px;
+    display: inline-block;
   }
   .donut-lbl {
     font-size: 12px;
@@ -762,7 +764,7 @@ function setupEventListeners() {
       state.plan = parseFloat(this.dataset.gb);
       document.getElementById('customPlan').value = '';
       updateSliderMax();
-    saveState();
+      saveState();
       calculate();
     });
   });
@@ -901,17 +903,17 @@ function calculate() {
 function updateTips(type, pct) {
   const container = document.getElementById('tipsContainer');
   const tips = {
-    safe: [
+    safe:[
       { icon: '✨', title: '快適に使えています', desc: 'このペースなら月末まで安心です' }
     ],
-    ok: [
+    ok:[
       { icon: '👀', title: '使用量をチェック', desc: '定期的に確認して計画的に使いましょう' }
     ],
-    warn: [
+    warn:[
       { icon: '📱', title: 'データセーバーをON', desc: 'バックグラウンド通信を制限しましょう' },
       { icon: '📶', title: 'Wi-Fiを活用', desc: '自宅やカフェのWi-Fiを積極的に使いましょう' }
     ],
-    danger: [
+    danger:[
       { icon: '🚨', title: '緊急対策が必要', desc: '動画視聴を控え、Wi-Fi環境を探しましょう' },
       { icon: '⚙️', title: '自動再生をOFF', desc: 'SNSの動画自動再生を今すぐ停止しましょう' }
     ]
