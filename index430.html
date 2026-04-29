@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ギガ使用ペースチェッカー - スマホのデータ通信量を診断</title>
+    <meta name="description" content="あなたに最適なギガ数を5秒で診断。iPhone・Android対応のデータ使用ペースチェッカーで、無駄なく快適なスマホライフを。">
+    <link rel="canonical" href="https://gigapace-checker.vercel.app/">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    
+    <!-- OGP -->
+    <meta property="og:title" content="ギガ使用ペースチェッカー">
+    <meta property="og:description" content="あなたに最適なギガ数を5秒で診断">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gigapace-checker.vercel.app/">
+    <meta property="og:image" content="https://gigapace-checker.vercel.app/images/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ギガ使用ペースチェッカー">
+    <meta name="twitter:description" content="あなたに最適なギガ数を5秒で診断">
+    <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/og-image.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ギガ使用ペースチェッカー",
+      "url": "https://gigapace-checker.vercel.app/",
+      "description": "スマホのデータ通信量を診断し、最適なギガ数を提案するツール",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://gigapace-checker.vercel.app/tools/data-checker/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "kyon",
+      "url": "https://gigapace-checker.vercel.app/profile.html",
+      "image": "https://gigapace-checker.vercel.app/images/logo.png",
+      "description": "ギガ使用ペースチェッカーの開発者・運営者"
+    }
+    </script>
+    
+    <style>
+        :root {
+            --neon-yellow: #ffe600;
+            --charcoal: #2d2d2d;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --border-width: 4px;
+            --shadow-offset: 6px;
+        }
+
+        [data-theme="dark"] {
+            --white: #1a1a1a;
+            --light-gray: #2d2d2d;
+            --charcoal: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--white);
+            color: var(--charcoal);
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, var(--charcoal) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: var(--border-width) solid var(--charcoal);
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--charcoal);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            background: var(--neon-yellow);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--charcoal);
+            font-size: 1.2rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--neon-yellow);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--charcoal);
+            color: var(--white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--neon-yellow);
+            color: var(--charcoal);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            background: var(--neon-yellow);
+            padding: 0 12px;
+            display: inline-block;
+            transform: rotate(-1deg);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--charcoal);
+            opacity: 0.8;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: var(--light-gray);
+            border: var(--border-width) solid var(--charcoal);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto 80px;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--charcoal);
+            position: relative;
+        }
+
+        .cta-box h2 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-box p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: var(--neon-yellow);
+            color: var(--charcoal);
+            border: var(--border-width) solid var(--charcoal);
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 4px 4px 0 var(--charcoal);
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-primary:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--charcoal);
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 0;
+        }
+
+        .features h2 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: var(--border-width) solid var(--charcoal);
+            padding: 30px;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--charcoal);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Articles */
+        .articles {
+            padding: 60px 0;
+            background: var(--light-gray);
+        }
+
+        .articles h2 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .article-card {
+            background: var(--white);
+            border: var(--border-width) solid var(--charcoal);
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--charcoal);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--charcoal);
+        }
+
+        .article-card:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 3px 3px 0 var(--charcoal);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: var(--neon-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: var(--border-width) solid var(--charcoal);
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-card h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .article-card p {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: var(--white);
+            padding: 40px 0 20px;
+            border-top: var(--border-width) solid var(--charcoal);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 15px;
+            color: var(--neon-yellow);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--neon-yellow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: var(--charcoal);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: var(--border-width) solid var(--charcoal);
+                padding: 20px;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-box {
+                padding: 30px 20px;
+            }
+
+            .feature-grid,
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <span class="logo-icon">📊</span>
+                    ギガペースチェッカー
+                </a>
+                <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="/tools/data-checker/">診断ツール</a></li>
+                        <li><a href="#articles">記事</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>
+                    <span class="highlight">ギガ、足りてる?</span><br>
+                    使いすぎ診断で最適プランを発見
+                </h1>
+                <p class="hero-description">
+                    iPhone・Android対応。あなたの使い方に合ったデータプランを5秒で診断します。
+                </p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="cta-box">
+                <h2>あなたは何GB必要?</h2>
+                <p>5秒で診断できます</p>
+                <a href="/tools/data-checker/" class="btn-primary">無料で診断する</a>
+            </div>
+        </div>
+
+        <section class="features">
+            <div class="container">
+                <h2>このツールでできること</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>5秒で診断</h3>
+                        <p>簡単な質問に答えるだけで、あなたに最適なデータ容量がわかります</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>iPhone・Android対応</h3>
+                        <p>どちらの端末でも使える節約テクニックを提供します</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>プラン最適化</h3>
+                        <p>無駄なギガを削減して、スマホ代を節約しましょう</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="articles" id="articles">
+            <div class="container">
+                <h2>データ節約のヒント</h2>
+                <div class="article-grid">
+                    <a href="/articles/save-data-youtube.html" class="article-card">
+                        <div class="article-image">📺</div>
+                        <div class="article-content">
+                            <h3>YouTubeのギガ消費を抑える方法</h3>
+                            <p>動画視聴で最もギガを消費するYouTube。画質設定や賢い視聴方法を解説</p>
+                        </div>
+                    </a>
+                    <a href="/articles/save-data-sns.html" class="article-card">
+                        <div class="article-image">💬</div>
+                        <div class="article-content">
+                            <h3>SNSの自動再生をオフにする</h3>
+                            <p>Instagram、TikTok、Twitterの自動再生を止めてギガを節約</p>
+                        </div>
+                    </a>
+                    <a href="/articles/how-to-check-data-android.html" class="article-card">
+                        <div class="article-image">🤖</div>
+                        <div class="article-content">
+                            <h3>Androidでデータ使用量を確認する方法</h3>
+                            <p>設定アプリから簡単にチェック。アプリごとの消費量も一目瞭然</p>
+                        </div>
+                    </a>
+                    <a href="/articles/android-data-saver.html" class="article-card">
+                        <div class="article-image">🛡️</div>
+                        <div class="article-content">
+                            <h3>Androidのデータセーバー機能を使う</h3>
+                            <p>バックグラウンド通信を制限して、知らないうちのギガ消費を防ぐ</p>
+                        </div>
+                    </a>
+                    <a href="/articles/android-data-warning.html" class="article-card">
+                        <div class="article-image">⚠️</div>
+                        <div class="article-content">
+                            <h3>Androidでデータ使用警告を設定する</h3>
+                            <p>上限に達する前に通知してくれる便利機能の使い方</p>
+                        </div>
+                    </a>
+                    <a href="/articles/wifi-only-update.html" class="article-card">
+                        <div class="article-image">🔄</div>
+                        <div class="article-content">
+                            <h3>アプリ更新をWi-Fi時のみにする</h3>
+                            <p>自動更新で数百MBが消える前に。Android・iPhone両対応</p>
+                        </div>
+                    </a>
+                    <a href="/articles/offline-maps.html" class="article-card">
+                        <div class="article-image">🗺️</div>
+                        <div class="article-content">
+                            <h3>オフライン地図でギガを節約</h3>
+                            <p>Googleマップの事前ダウンロードで、移動中もギガ消費ゼロ</p>
+                        </div>
+                    </a>
+                    <a href="/articles/iphone-check-data.html" class="article-card">
+                        <div class="article-image">🍎</div>
+                        <div class="article-content">
+                            <h3>iPhoneでデータ使用量を確認する方法</h3>
+                            <p>設定から簡単チェック。期間リセットの方法も解説</p>
+                        </div>
+                    </a>
+                    <a href="/articles/iphone-low-data-mode.html" class="article-card">
+                        <div class="article-image">🔋</div>
+                        <div class="article-content">
+                            <h3>iPhoneの省データモードを活用</h3>
+                            <p>バックグラウンド通信を自動制限。ギガ節約の強い味方</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ギガペースチェッカー</h3>
+                    <p>スマホのデータ使用量を診断し、最適なプランを提案するツールです。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>ツール</h3>
+                    <ul class="footer-links">
+                        <li><a href="/tools/data-checker/">ギガペース診断</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>記事</h3>
+                    <ul class="footer-links">
+                        <li><a href="/articles/save-data-youtube.html">YouTube節約術</a></li>
+                        <li><a href="/articles/save-data-sns.html">SNS節約術</a></li>
+                        <li><a href="/articles/how-to-check-data-android.html">Android使用量確認</a></li>
+                        <li><a href="/articles/iphone-check-data.html">iPhone使用量確認</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>サイト情報</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ギガペースチェッカー by kyon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        }
+
+        function toggleTheme() {
+            const html = document.document
