@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>通信量節約記事一覧 | ギガ使用ペースチェッカー</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<!-- header -->
+
+<nav class="breadcrumb container" aria-label="パンくずリスト">
+  <ol>
+    <li><a href="/">ホーム</a></li>
+    <li class="separator">›</li>
+    <li aria-current="page">節約記事一覧</li>
+  </ol>
+</nav>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero-bg">
+    <h1 class="hero-title">節約記事一覧</h1>
+    <p class="hero-desc">
+      通信量の仕組みを理解し、無駄なギガ消費を防ぐ
+    </p>
+  </section>
+
+  <!-- 🔥 CV CTA（最重要） -->
+  <section class="cta-box">
+    <p class="cta-text">まずは今月のギガ、足りてるか確認</p>
+    <a href="/tools/data-checker/" class="btn-primary">
+      5秒で診断する →
+    </a>
+  </section>
+
+  <!-- 記事一覧 -->
+  <section id="article-list-container" class="article-list">
+    <p class="loading">記事を読み込み中...</p>
+  </section>
+
+</main>
+
+<!-- footer -->
+
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+  const container = document.getElementById('article-list-container');
+
+  try {
+    const res = await fetch('/articles.json');
+    let articles = await res.json();
+
+    // ✔ 新着順（date降順）
+    articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    container.innerHTML = '';
+
+    articles.forEach(article => {
+      const html = `
+        <a href="/articles/${article.filename}" class="article-card-link">
+          <div class="card article-card">
+            <div class="article-meta">
+              <span class="badge">節約ガイド</span>
+              <span class="article-date">${article.date || ''}</span>
+            </div>
+            <h2 class="article-title">${article.title}</h2>
+            <p class="article-desc">${article.description}</p>
+          </div>
+        </a>
+      `;
+      container.insertAdjacentHTML('beforeend', html);
+    });
+
+  } catch (e) {
+    container.innerHTML = '<p class="error">読み込みに失敗しました</p>';
+  }
+});
+</script>
+
+</body>
+</html>
