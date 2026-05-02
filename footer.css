@@ -1,45 +1,60 @@
-/* ===== Footer ===== */
+/* =============================================
+   footer.css - Teal単色版（CV/可読性最適化）
+============================================= */
+
 .footer {
-  background: var(--card);
-  border-top: 2px solid var(--border);
-  padding: 2rem 1rem 1.5rem;
+  background: var(--teal);
+  color: #ffffff;
+  border-top: 2px solid var(--teal-light);
+  padding: 1.75rem 1rem 1.25rem;
   margin-top: 3rem;
   text-align: center;
 }
 
+/* コンテナ */
 .footer-content {
   max-width: 1000px;
   margin: 0 auto;
 }
 
-/* グループ */
+/* グループ（余白中間設計） */
 .footer-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem 1rem;
-  margin-bottom: 0.75rem;
+  gap: 0.4rem 0.9rem;
+  margin-bottom: 0.6rem;
 }
 
-/* 強調 */
+/* リンク共通 */
 .footer-link {
-  font-size: 0.85rem;
-  color: var(--text);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
+/* メイン導線（強調） */
 .footer-link.strong {
   font-weight: 700;
   font-size: 0.9rem;
+  color: #ffffff;
 }
 
+/* ホバー */
 .footer-link:hover {
-  color: var(--teal-light);
+  color: var(--amber-light);
 }
 
-/* コピー */
+/* コピーライト */
 .footer-copy {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 1rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.8rem;
+}
+
+/* ダークモード（変化を最小化） */
+[data-theme="dark"] .footer {
+  background: #0f766e; /* 少しだけ落とす */
+  border-top: 2px solid var(--teal-light);
 }
