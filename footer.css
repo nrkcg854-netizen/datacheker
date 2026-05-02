@@ -1,0 +1,45 @@
+/* ===== Footer ===== */
+.footer {
+  background: var(--card);
+  border-top: 2px solid var(--border);
+  padding: 2rem 1rem 1.5rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* グループ */
+.footer-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+/* 強調 */
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.footer-link.strong {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  color: var(--teal-light);
+}
+
+/* コピー */
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+}
