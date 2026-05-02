@@ -1,45 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
   const footer = document.createElement("footer");
-  footer.className = "site-footer";
+  footer.className = "footer";
 
   footer.innerHTML = `
-    <div class="footer-container">
+    <div class="footer-content">
 
-      <div class="footer-content">
-
-        <!-- サイト説明 -->
-        <div class="footer-section">
-          <h3>ギガ使用ペースチェッカー</h3>
-          <p>
-            今月のデータ通信量の使用ペースを診断し、
-            使いすぎ・余裕ありをシンプルに判断できるツールです。
-          </p>
-        </div>
-
-        <!-- ナビ -->
-        <div class="footer-section">
-          <h3>コンテンツ</h3>
-          <ul class="footer-links">
-            <li><a href="/tools/data-checker/">診断ツール</a></li>
-            <li><a href="/articles/">節約記事</a></li>
-            <li><a href="/blog/">ブログ</a></li>
-          </ul>
-        </div>
-
-        <!-- 補助 -->
-        <div class="footer-section">
-          <h3>情報</h3>
-          <ul class="footer-links">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/sitemap.html">サイトマップ</a></li>
-          </ul>
-        </div>
-
+      <!-- メイン導線 -->
+      <div class="footer-group main-links">
+        <a href="/" class="footer-link strong">Top</a>
+        <a href="/tools/data-checker/" class="footer-link strong">診断ツール</a>
+        <a href="/articles/" class="footer-link strong">節約記事</a>
       </div>
 
-      <div class="footer-bottom">
-        <p>© 2026 kyon</p>
+      <!-- サイト情報 -->
+      <div class="footer-group sub-links">
+        <a href="/about.html" class="footer-link">このサイトについて</a>
+        <a href="/blog/" class="footer-link">開発ブログ</a>
+        <a href="/contact.html" class="footer-link">お問い合わせ</a>
       </div>
+
+      <!-- 法務 -->
+      <div class="footer-group legal-links">
+        <a href="/privacy.html" class="footer-link">プライバシーポリシー</a>
+        <a href="/terms.html" class="footer-link">利用規約</a>
+        <a href="/sitemap.html" class="footer-link">サイトマップ</a>
+      </div>
+
+      <p class="footer-copy">
+        &copy; 2026 ギガ使用ペースチェッカー by kyon
+      </p>
 
     </div>
   `;
