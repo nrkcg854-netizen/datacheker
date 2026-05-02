@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>ギガ使用ペースチェッカー｜今月のデータ使用ペースを30秒で診断</title>
+  <meta name="description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通し、節約のヒントもわかります。無料・登録不要で30秒診断。">
+  <meta name="keywords" content="ギガ,データ通信量,使用量,通信量チェック,スマホ通信量,格安SIM">
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/">
+
+  <!-- AI向けメタ -->
+  <meta name="ai-readable" content="true">
+  <meta name="ai-content-type" content="tool,calculator">
+  <meta name="ai-summary" content="スマホのデータ通信量の使用ペースをチェックするツール">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ギガ使用ペースチェッカー">
+  <meta property="og:description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通しがわかります。">
+  <meta property="og:url" content="https://gigapace-checker.vercel.app/">
+  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
+  <meta property="og:site_name" content="ギガ使用ペースチェッカー">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ギガ使用ペースチェッカー">
+  <meta name="twitter:description" content="今月の通信量の使い方をチェック">
+  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/footer.css">
+
+  <!-- 構造化データ：WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app/",
+    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できるツール"
+  }
+  </script>
+
+  <!-- 構造化データ：Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ギガ使用ペースチェッカー",
+    "url": "https://gigapace-checker.vercel.app/",
+    "logo": "https://gigapace-checker.vercel.app/images/logo.png"
+  }
+  </script>
+
+  <!-- 構造化データ：SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ギガ使用ペースチェッカー",
+    "applicationCategory": "Utility",
+    "operatingSystem": "Web",
+    "url": "https://gigapace-checker.vercel.app/tools/data-checker/",
+    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できるツール",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY"
+    }
+  }
+  </script>
+
+  <style>
+    /* ===== ヒーローセクション ===== */
+    .hero-section {
+      background: linear-gradient(135deg, var(--teal-light) 0%, var(--amber) 100%);
+      padding: 4rem 1.5rem;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: #ffffff;
+      color: var(--teal);
+      font-size: 1.25rem;
+      padding: 1.25rem 3rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      color: var(--teal);
+    }
+
+    /* ===== セクション ===== */
+    .section {
+      margin-top: 4rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2rem;
+      color: var(--text);
+    }
+
+    /* ===== 特徴カード ===== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== 記事一覧プレースホルダー ===== */
+    #popular-articles {
+      margin-top: 2rem;
+    }
+
+    /* ===== モバイル対応 ===== */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .hero-cta {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!-- ヘッダーはJS自動挿入 -->
+
+<!-- ヒーローセクション -->
+<section class="hero-section">
+  <div class="container">
+    <h1 class="hero-title">
+      今月のギガ使用ペースを30秒でチェック
+    </h1>
+
+    <p class="hero-description">
+      今の使い方で足りるか、使いすぎかを30秒で確認。<br>
+      残りギガの見通しもわかります。
+    </p>
+
+    <a href="/tools/data-checker/" class="hero-cta">
+      無料で診断する
+    </a>
+  </div>
+</section>
+
+<!-- 特徴セクション -->
+<section class="container section">
+  <h2 class="section-title">3つの特徴</h2>
+
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>30秒で使用ペースを確認</h3>
+      <p>簡単な質問で、今の通信量の使い方が適正か分かります。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⚠️</div>
+      <h3>使いすぎを早期発見</h3>
+      <p>月末のギガ不足リスクを事前に把握できます。</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💡</div>
+      <h3>節約ヒントも提示</h3>
+      <p>結果に応じて通信量を減らす方法も案内します。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 最新記事セクション -->
+<section class="container section">
+  <h2 class="section-title">最新の節約記事</h2>
+
+  <div id="popular-articles">
+    <p style="text-align:center; color:var(--text-muted);">読み込み中...</p>
+  </div>
+</section>
+
+<!-- CTA自動挿入エリア -->
+<div id="cta-container"></div>
+
+<!-- フッターはJS自動挿入 -->
+
+<!-- JavaScript -->
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+<script src="/js/cta.js" defer></script>
+<script src="/js/main.js" defer></script>
+
+</body>
+</html>
