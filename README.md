@@ -1,6 +1,9 @@
+✔ 更新版 README.md（2026年5月）
+
 # ギガ使用ペースチェッカー
 
-スマホの通信量消費ペースを診断する無料Webツールと、通信量節約の設定方法を解説する記事サイトです。
+スマホの通信量消費ペースを診断する無料Webツールと、
+通信量節約の実践ノウハウを提供する記事サイト。
 
 ---
 
@@ -10,121 +13,314 @@
 |---|---|
 | サイト名 | ギガ使用ペースチェッカー |
 | URL | https://gigapace-checker.vercel.app |
-| 運営者 | きょん（kyon） |
-| ホスティング | Vercel（GitHubと連携） |
+| 運営者 | kyon |
+| ホスティング | Vercel（GitHub連携） |
 
 ---
 
-## ファイル構成
+## プロジェクト構造
 
-```
-/
-├── index.html                        # TOPページ
-├── about.html                        # 運営者情報
-├── contact.html                      # お問い合わせ（Googleフォーム埋め込み）
-├── sitemap.xml                       # サイトマップ
-├── google655ae524b1f665cf.html       # Search Console認証ファイル
-│
-├── tools/
-│   └── data-checker/
-│       └── index.html                # ギガペース診断ツール
-│
-└── articles/
-    ├── save-data-youtube.html        # YouTubeの通信量を減らす設定方法
-    ├── save-data-sns.html            # SNSアプリの通信量を抑える設定
-    ├── how-to-check-data-android.html # Androidで通信量を確認する方法
-    ├── android-data-saver.html       # Androidのデータセーバー機能とは
-    ├── android-data-warning.html     # Androidのデータ警告と制限の設定方法
-    ├── wifi-only-update.html         # アプリ更新をWi-Fiのみに制限する方法
-    ├── offline-maps.html             # Googleマップをオフライン化する方法
-    ├── iphone-check-data.html        # iPhoneで通信量を確認する方法
-    └── iphone-low-data-mode.html     # iPhoneの低データモードとは
-```
+/ ├── index.html ├── about.html ├── contact.html ├── sitemap.xml ├── sitemap.html │ ├── style.css ├── footer.css │ ├── js/ │   ├── header.js │   ├── footer.js │   ├── analytics.js │   ├── main.js │   ├── breadcrumb.js │   ├── cta.js │   ├── generate-list.js │   ├── generate-blog-list.js │   └── generate-sitemap.js │ ├── tools/ │   └── data-checker/ │       └── index.html │ ├── articles/ │   ├── index.html（記事一覧・自動生成） │   └── *.html │ ├── blog/ │   ├── index.html │   └── *.html │ ├── articles.json ├── blog.json
 
 ---
 
-## デザインシステム
+## 設計思想（重要）
 
-### カラー
-| 変数 | カラーコード | 用途 |
-|---|---|---|
-| `--yellow` | `#ffe600` | メインアクセント・ヘッダー背景 |
-| `--ink` | `#1a1a1a` | テキスト・ボーダー |
-| `--bg` | `#f5f5f0` | ページ背景（ドット柄） |
-| `--surface` | `#ffffff` | カード背景 |
-| `--safe` | `#00e096` | 余裕あり（緑） |
-| `--warn` | `#ff9500` | 注意（オレンジ） |
-| `--danger` | `#ff3b5c` | 使いすぎ（赤） |
-
-### フォント
-- **見出し**：Nunito（900）
-- **本文**：Noto Sans JP（400・700・900）
-
-### スタイルの特徴
-- 太ボーダー（2.5〜3px）＋ オフセットシャドウ
-- ドット背景（24px間隔）
-- ダークモード対応（`localStorage` でサイト横断共有）
-- ポップ×ニュートラル（10〜20代男女向け）
+### ① UI設計
+- Teal & Amber Haze デザイン
+- 丸みカード + グラデーション
+- モバイルファースト
+- ダークモード（全ページ共通）
 
 ---
 
-## ターゲットユーザー
+### ② コンポーネント設計
 
-- 10〜20代前半（男女）
-- iPhoneユーザー・Androidユーザー両方
-- 格安SIM・低容量プランを使っている層
+| 要素 | 管理方法 |
+|---|---|
+| Header | `header.js` |
+| Footer | `footer.js` |
+| CTA | `cta.js` |
+| パンくず | `breadcrumb.js` |
+| 記事一覧 | JSON + JS自動生成 |
 
----
-
-## コンテンツ方針
-
-- AndroidとiPhoneは**対等に扱う**。どちらが優れているという書き方はしない
-- ツール内のTipsや節約情報は**見出し程度に留め**、詳細は記事ページへ誘導する
-- 各記事のCTAは必ずツール（`../../tools/data-checker/`）へ誘導する
-- 記事は `articles/` フォルダに格納する
+👉 **HTMLは構造だけ持つ**
 
 ---
 
-## SEO・AIO対策
+### ③ パス設計（重要ルール）
 
-全ページ共通で実施済み。
+```text
+CSS: /style.css
+JS: /js/*.js
+リンク: /articles/, /tools/
 
-- `<meta name="description">` キーワード最適化済み
-- `<meta name="robots" content="index, follow">`
-- `<link rel="canonical">` 正規URL指定
-- JSON-LD 構造化データ
-  - ツールページ：`WebApplication` スキーマ
-  - 手順系記事：`HowTo` スキーマ（ステップ付き）
-  - 解説系記事：`Article` スキーマ
-- Google Search Console 登録・サイトマップ送信済み
+👉 必ず絶対パス
+
 
 ---
 
-## 収益化
+導線設計（最重要）
 
-- Google AdSense 申請予定（記事10本達成）
-- 目標：広告収益でパソコン購入
+ユーザーの基本動線：
+
+TOP → 診断ツール → 節約記事
+
+各ページの役割
+
+ページ	役割
+
+TOP	診断へ誘導
+ツール	判定・興味喚起
+記事	解決・深掘り
+記事	再度ツールへ戻す
+
+
+👉 往復導線でCVを最大化
+
 
 ---
 
-## 記事テンプレートの使い方
+記事設計ルール
 
-`article-template.html` をコピーして以下を書き換えるだけで新しい記事を作成できる。
+必須構造
 
-1. `<title>` タグ
-2. `<meta name="description">`
-3. JSON-LDの `name` / `description` / `url`
-4. `article-hero` のタイトル・カテゴリ・更新日
-5. `summary-box` の3箇条
-6. `article-body` の本文・ステップカード
-7. `related` の関連記事リンク
+1. 冒頭CTA（診断誘導）
+
+
+2. 本文
+
+
+3. 内部リンク（記事一覧 or 関連記事）
+
+
+4. 記事下CTA
+
+
+
 
 ---
 
-## 今後のTODO
+NG
 
-- [ ] AdSense申請
-- [ ] Google Analytics設置
-- [ ] 記事を継続的に追加（月2〜4本）
-- [ ] TOPページの記事一覧に新記事を追加
-- [ ] sitemap.xmlに新記事URLを追加
+情報だけで終わる記事
+
+ツールに繋がらない記事
+
+
+
+---
+
+デザインシステム
+
+カラー
+
+変数	値
+
+--teal	#0f766e
+--teal-light	#14b8a6
+--amber	#d97706
+--amber-light	#fbbf24
+
+
+
+---
+
+特徴
+
+グラデーションUI
+
+柔らかいシャドウ
+
+高可読性タイポグラフィ
+
+適度な余白設計（詰めすぎない）
+
+
+
+---
+
+SEO / AIO
+
+実装済み
+
+canonical
+
+robots
+
+OGP
+
+JSON-LD
+
+Article
+
+FAQ
+
+HowTo
+
+WebApplication
+
+
+sitemap.xml
+
+Search Console登録済
+
+
+
+---
+
+内部SEO
+
+記事 → 診断リンク
+
+記事 → 記事一覧リンク
+
+TOP → 記事導線あり
+
+
+
+---
+
+自動化
+
+項目	方法
+
+記事一覧	articles.json
+ブログ一覧	blog.json
+サイトマップ	自動生成
+
+
+
+---
+
+収益化
+
+Google AdSense（申請予定）
+
+記事 → ツール導線でCV最大化
+
+将来的にアフィリエイト導入可能
+
+
+
+---
+
+現在の進行状況
+
+完了
+
+UI統一（Teal & Amber）
+
+JSコンポーネント化
+
+記事一覧自動化
+
+ダークモード
+
+SEO基盤
+
+
+進行中
+
+index.html最適化
+
+footer統一
+
+導線強化
+
+
+
+---
+
+今後の優先タスク
+
+最優先
+
+[ ] 診断結果ページの最適化（CV改善）
+
+[ ] TOPページのCV強化
+
+
+次
+
+[ ] 記事追加（月2〜4本）
+
+[ ] AdSense申請
+
+
+任意
+
+[ ] SNS流入導線
+
+[ ] A/Bテスト
+
+
+
+---
+
+開発ルール
+
+HTMLは構造のみ
+
+UIはCSS
+
+共通要素はJS
+
+絶対パス必須
+
+勝手な改善は禁止（設計崩壊防止）
+
+
+
+---
+
+まとめ
+
+このサイトは
+
+👉「ツールサイト」ではなく
+👉「診断を中心とした導線設計サイト」
+
+
+---
+
+目的：
+
+ユーザーに行動させること（診断）
+
+---
+
+# ✔ 正直な評価
+
+2ヶ月前：
+- 「記事サイト＋ツール」
+
+現在：
+- **「導線設計されたプロダクト」**
+
+---
+
+# ✔ 重要なズレ修正
+
+昔：
+> 記事を書く
+
+今：
+> **記事でユーザーを動かす**
+
+---
+
+# ✔ 次に詰めるべき
+
+かなり重要：
+
+- 診断結果UI（ここが収益の核）
+- TOPの1スクロール目
+
+---
+
+必要なら  
+👉「READMEをチーム開発レベルまで拡張」  
+👉「運用マニュアル化」  
+
+ここまで一気に仕上げることもできる。
