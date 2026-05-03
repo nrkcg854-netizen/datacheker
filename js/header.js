@@ -1,28 +1,23 @@
-document.addEventListener("DOMContentLoaded", () => {
+// /js/header.js
 
-  const header = document.createElement("header");
-  header.className = "site-header";
+document.getElementById("header").innerHTML = `
+<header class="site-header">
+  <div class="header-container">
 
-  header.innerHTML = `
-    <div class="header-container">
+    <a href="/" class="logo">
+      <img src="/images/header.webp" alt="ギガ使用ペースチェッカー" class="logo-image">
+    </a>
 
-      <div class="logo">
-        <img src="images/header.webp" alt="ギガチェッカー" class="logo-image">
-      </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/">ホーム</a></li>
+        <li><a href="/tools/data-checker/">診断ツール</a></li>
+        <li><a href="/blog.html">節約記事</a></li>
+      </ul>
+    </nav>
 
-      <nav class="main-nav">
-        <ul>
-          <li><a href="/tools/data-checker/">ツール</a></li>
-          <li><a href="/articles/">節約記事</a></li>
-          <li><a href="/blog/">ブログ</a></li>
-        </ul>
-      </nav>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
 
-      <button class="theme-toggle" aria-label="テーマ切替">🌙</button>
-
-    </div>
-  `;
-
-  document.body.prepend(header);
-
-});
+  </div>
+</header>
+`;
