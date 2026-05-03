@@ -202,7 +202,9 @@ h3 {
 .article-content .card {
   margin:2rem 0;
 }
-
+.cta-card {
+  text-align:center;
+}
 /* ===== リンク ===== */
 a {
   color:var(--teal-light);
