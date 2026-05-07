@@ -148,6 +148,23 @@ body {
   margin-top:2rem;
 }
 
+/* ===== 記事内の画像 ===== */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+}
+
+/* アイキャッチ画像（h1直後） */
+.prose h1 + img {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
 /* ===== タイポグラフィ ===== */
 h1 {
   font-size:2rem;
