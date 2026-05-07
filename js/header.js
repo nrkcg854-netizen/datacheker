@@ -12,7 +12,7 @@ document.getElementById("header").innerHTML = `
       <ul>
         <li><a href="/">ホーム</a></li>
         <li><a href="/tools/data-checker/">診断ツール</a></li>
-        <li><a href="/blog.html">節約記事</a></li>
+        <li><a href="/articles">節約記事</a></li>
       </ul>
     </nav>
 
