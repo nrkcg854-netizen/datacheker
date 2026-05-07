@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- サイト情報 -->
       <div class="footer-group sub-links">
         <a href="/about.html" class="footer-link">このサイトについて</a>
-        <a href="/blog/blog.html/" class="footer-link">開発ブログ</a>
+        <a href="/blog/blog.html" class="footer-link">開発ブログ</a>
         <a href="/contact.html" class="footer-link">お問い合わせ</a>
       </div>
 
