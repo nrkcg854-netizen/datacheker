@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>アプリ更新をWi-Fiのみに制限する方法｜ギガ使用ペースチェッカー</title>
-<meta property="og:title" content="アプリ更新をWi-Fiのみに制限する方法">
-<meta property="og:description" content="Google Playの自動更新設定をWi-Fiのみにする手順。知らないうちにギガを消費するのを防ぐ。">
+<title>アプリ更新をWi-Fiのみに制限する方法（Android版）｜ギガ使用ペースチェッカー</title>
+<meta name="description" content="AndroidでGoogle Playのアプリ自動更新をWi-Fi接続時のみに設定する方法。モバイルデータ通信でのアプリ更新を防いで通信量を節約する手順を画像付きで解説。">
+<meta property="og:title" content="アプリ更新をWi-Fiのみに制限する方法（Android版）">
+<meta property="og:description" content="AndroidでGoogle Playのアプリ自動更新をWi-Fi接続時のみに設定する方法。モバイルデータ通信でのアプリ更新を防いで通信量を節約。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://gigapace-checker.vercel.app/articles/wifi-only-update">
 <meta property="og:image" content="https://gigapace-checker.vercel.app/ogp-article.png">
@@ -357,7 +358,7 @@ body.dark .warn-box { background: #2a1f00; }
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
-<meta name="keywords" content="アプリ 自動更新 Wi-Fi, Google Play 設定, スマホ 通信量 アプリ更新">
+<meta name="keywords" content="Android, アプリ 更新, Wi-Fi, Google Play, 通信量 節約, モバイルデータ, アプリ 自動更新">
 <meta name="robots" content="index, follow">
 <meta name="author" content="ギガ使用ペースチェッカー">
 <link rel="canonical" href="https://gigapace-checker.vercel.app/articles/wifi-only-update">
@@ -365,16 +366,38 @@ body.dark .warn-box { background: #2a1f00; }
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "アプリ更新をWi-Fiのみに制限する方法",
-  "description": "Google Playの自動更新をWi-Fi接続時のみに設定する手順。知らないうちにモバイルデータを消費するのを防ぐ方法。",
+  "name": "アプリ更新をWi-Fiのみに制限する方法（Android版）",
+  "description": "AndroidでGoogle Playのアプリ自動更新をWi-Fi接続時のみに設定する手順。モバイルデータ通信でのアプリ更新を防いで通信量を節約する方法を解説。",
   "url": "https://gigapace-checker.vercel.app/articles/wifi-only-update",
   "publisher": {
     "@type": "Organization",
     "name": "ギガ使用ペースチェッカー",
     "url": "https://gigapace-checker.vercel.app"
   },
-  "dateModified": "2025-06-01",
-  "inLanguage": "ja"
+  "dateModified": "2026-05-07",
+  "inLanguage": "ja",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Google Playストアを開く",
+      "text": "Androidスマホのアプリ一覧またはホーム画面からPlayストアを起動します。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "設定を開く",
+      "text": "右上のプロフィールアイコンをタップしてメニューを開き、「設定」を選択します。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "ネットワーク設定を開く",
+      "text": "「ネットワーク設定」→「アプリの自動更新」をタップして更新方法を選択する画面を開きます。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Wi-Fi経由のみに設定",
+      "text": "「Wi-Fi経由のみ」を選択して完了。これでWi-Fi接続時のみアプリが自動更新されます。"
+    }
+  ]
 }
 </script>
 </head>
@@ -390,13 +413,13 @@ body.dark .warn-box { background: #2a1f00; }
   <nav class="breadcrumb">
     <a href="../../">ホーム</a><span class="breadcrumb-sep">›</span>
     <a href="../../">記事一覧</a><span class="breadcrumb-sep">›</span>
-    <span>アプリ更新をWi-Fiのみに制限する方法</span>
+    <span>アプリ更新をWi-Fiのみに制限する方法（Android版）</span>
   </nav>
   <div class="article-hero">
     <span class="article-category">節約 Tips</span>
-    <h1 class="article-title">アプリ更新をWi-Fiのみに制限する方法</h1>
+    <h1 class="article-title">アプリ更新をWi-Fiのみに制限する方法（Android版）</h1>
     <div class="article-meta">
-      <span>📅 2025年6月更新</span>
+      <span>📅 2026年5月更新</span>
       <span>⏱ 読了2分</span>
       <span>📱 Android対応</span>
     </div>
@@ -404,55 +427,55 @@ body.dark .warn-box { background: #2a1f00; }
   <div class="summary-box">
     <div class="summary-label">この記事でわかること</div>
     <ul class="summary-list">
-      <li>Google Playの自動更新をWi-Fi限定にする手順</li>
-      <li>アプリのダウンロード設定も合わせて変更する方法</li>
+      <li>AndroidでGoogle Playのアプリ自動更新をWi-Fi限定にする手順</li>
+      <li>アプリのダウンロード設定も合わせてWi-Fiのみに変更する方法</li>
       <li>更新を制限した場合の注意点</li>
     </ul>
   </div>
   <div class="article-body">
 
     <section>
-      <h2 class="section-heading">アプリの自動更新はどのくらいギガを使う？</h2>
-      <p class="body-text">アプリは定期的にアップデートが配信されます。設定によっては外出中にモバイルデータを使って自動更新されてしまい、気づかないうちに数GBを消費してしまうことがあります。</p>
+      <h2 class="section-heading">Androidのアプリ自動更新はどのくらいギガを使う？</h2>
+      <p class="body-text">Androidでは、Google Playからアプリの更新が定期的に配信されます。設定によっては外出中にモバイルデータ通信を使って自動更新されてしまい、気づかないうちに数GBを消費してしまうことがあります。</p>
       <br>
       <div class="tip-box">
         <span class="tip-box-icon">💡</span>
         <div class="tip-box-body">
           <div class="tip-box-label">どのくらい消費する？</div>
-          <div class="tip-box-text">アプリ1本あたり数MB〜数百MBのアップデートが頻繁に来ます。複数アプリが同時に更新されると<strong>1回で1GB以上</strong>消費するケースもあります。</div>
+          <div class="tip-box-text">アプリ1本あたり数MB〜数百MBのアップデートが頻繁に来ます。複数のアプリが同時に更新されると<strong>1回で1GB以上</strong>消費するケースもあり、Wi-Fi以外での更新は通信量を大きく圧迫します。</div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2 class="section-heading">Google Playの自動更新をWi-Fiのみにする手順</h2>
+      <h2 class="section-heading">AndroidでGoogle Playのアプリ自動更新をWi-Fiのみにする手順</h2>
       <div class="step-list">
-        <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Google Playストアを開く</div><div class="step-desc">アプリ一覧またはホーム画面からPlayストアを起動します。</div></div></div>
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Google Playストアを開く</div><div class="step-desc">Androidスマホのアプリ一覧またはホーム画面からPlayストアを起動します。</div></div></div>
         <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">右上のアイコン →「設定」をタップ</div><div class="step-desc">プロフィールアイコンをタップするとメニューが開きます。</div></div></div>
-        <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">「ネットワーク設定」→「アプリの自動更新」をタップ</div><div class="step-desc">更新のタイミングを選択する画面が開きます。</div></div></div>
-        <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">「Wi-Fi経由のみ」を選択して完了</div><div class="step-desc">これでWi-Fi接続時のみアプリが自動更新されるようになります。</div></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">「ネットワーク設定」→「アプリの自動更新」をタップ</div><div class="step-desc">アプリ更新のタイミングを選択する画面が開きます。</div></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">「Wi-Fi経由のみ」を選択して完了</div><div class="step-desc">これでWi-Fi接続時のみアプリが自動更新されるようになります。モバイルデータでの更新が停止されます。</div></div></div>
       </div>
     </section>
 
     <section>
-      <h2 class="section-heading">アプリの自動ダウンロードもWi-Fiのみにする</h2>
-      <p class="body-text">Playストアでは、アプリの更新以外にも「自動ダウンロード」の設定があります。同じ画面で確認しておきましょう。</p>
+      <h2 class="section-heading">Androidでアプリの自動ダウンロードもWi-Fiのみにする</h2>
+      <p class="body-text">Google Playストアでは、アプリの更新以外にも「自動ダウンロード」の設定があります。同じ画面で確認しておきましょう。</p>
       <br>
       <div class="step-list">
         <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">「ネットワーク設定」内の各項目を確認</div><div class="step-desc">「動画の自動再生」「アプリのダウンロードサイズの上限」なども設定できます。</div></div></div>
-        <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">「動画の自動再生」を「Wi-Fiのみ」に変更</div><div class="step-desc">アプリのプレビュー動画がモバイルデータで自動再生されるのを防ぎます。</div></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">「動画の自動再生」を「Wi-Fiのみ」に変更</div><div class="step-desc">アプリのプレビュー動画がモバイルデータで自動再生されるのを防ぎ、Androidでの通信量を節約できます。</div></div></div>
       </div>
       <br>
       <div class="warn-box">
         <span class="warn-box-icon">⚠️</span>
-        <span>「Wi-Fi経由のみ」に設定すると、Wi-Fi未接続の状態ではアプリが更新されません。セキュリティアップデートも含まれるため、定期的にWi-Fi環境で手動更新することをおすすめします。</span>
+        <span>「Wi-Fi経由のみ」に設定すると、Wi-Fi未接続の状態ではアプリが更新されません。セキュリティアップデートも含まれるため、定期的にWi-Fi環境でAndroidスマホを接続して手動更新することをおすすめします。</span>
       </div>
     </section>
 
     <div class="cta-box">
       <div class="cta-box-title">今月のギガのペースを確認しよう</div>
       <div class="cta-box-desc">設定を変えたら、ギガの消費ペースをチェック。<br>今日あと何GB使えるか一瞬でわかります。</div>
-      <a href="../../" class="cta-btn">📶 ギガのペースを診断する →</a>
+      <a href="../../tools/data-checker/" class="cta-btn">📶 ギガのペースを診断する →</a>
     </div>
     <div class="related">
       <div class="related-title">📚 関連記事</div>
@@ -500,7 +523,4 @@ function showToast(msg) {
 loadDark();
 </script>
 </body>
-</html>
-
-</body>
-</html>
+  </html>
