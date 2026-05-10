@@ -744,4 +744,229 @@ function updateSliderMax() {
   if (state.used > state.plan) {
     state.used = state.plan;
     document.getElementById('usedInput').value = state.used.toFixed(1);
-    document.getElementById('slider').value
+    document.getElementById('slider').value = state.used;
+  }
+  calculate();
+  saveState();
+}
+
+// ========================================
+// 診断計算
+// ========================================
+function calculate() {
+  const plan = state.plan;
+  const used = state.used;
+  const remain = plan - used;
+
+  // 残り表示
+  document.getElementById('remainVal').textContent = remain.toFixed(1);
+  document.getElementById('remainMeta').textContent = remain.toFixed(1) + ' GB';
+
+  // 使用率
+  const pct = (used / plan) * 100;
+  document.getElementById('pctText').textContent = Math.round(pct) + '%';
+
+  // ドーナツチャート
+  const circumference = 565;
+  const offset = circumference - (circumference * pct) / 100;
+  const donutBar = document.getElementById('donutBar');
+  donutBar.style.strokeDashoffset = offset;
+
+  // 色変更
+  let color;
+  if (pct <= 50) {
+    color = 'var(--safe)';
+  } else if (pct <= 80) {
+    color = 'var(--warn)';
+  } else {
+    color = 'var(--danger)';
+  }
+  donutBar.style.stroke = color;
+  document.getElementById('pctText').style.color = color;
+
+  // シグナル
+  const signals = document.querySelectorAll('.signal i');
+  signals.forEach((s, i) => {
+    s.classList.toggle('active', i < Math.ceil(pct / 25));
+  });
+
+  // 今日の日付・月末までの日数
+  const now = new Date();
+  const thisMonth = now.getMonth();
+  const thisYear = now.getFullYear();
+  const lastDay = new Date(thisYear, thisMonth + 1, 0).getDate();
+  const today = now.getDate();
+  const daysLeft = lastDay - today + 1;
+
+  document.getElementById('countdown').textContent = daysLeft + ' 日';
+
+  // 今日使える量
+  const dailyAllowance = remain / daysLeft;
+  document.getElementById('todayNum').textContent = dailyAllowance >= 0 ? dailyAllowance.toFixed(2) : '0.00';
+
+  // 月末予測
+  const dailyAvg = used / today;
+  const forecast = dailyAvg * lastDay;
+  document.getElementById('forecast').textContent = forecast.toFixed(1) + ' GB';
+
+  // バッジ判定
+  let emoji, text;
+  if (pct <= 50) {
+    emoji = '🎉';
+    text = '超快適ペース';
+  } else if (pct <= 70) {
+    emoji = '✅';
+    text = '安全なペース';
+  } else if (pct <= 85) {
+    emoji = '⚠️';
+    text = 'やや注意';
+  } else if (pct <= 100) {
+    emoji = '🚨';
+    text = '要注意';
+  } else {
+    emoji = '❌';
+    text = '制限中';
+  }
+  document.getElementById('badgeEmoji').textContent = emoji;
+  document.getElementById('badgeText').textContent = text;
+
+  // Tips生成
+  generateTips(pct, dailyAllowance);
+}
+
+// ========================================
+// Tips生成
+// ========================================
+function generateTips(pct, dailyAllowance) {
+  const container = document.getElementById('tipsContainer');
+  container.innerHTML = '';
+
+  let tips = [];
+  if (pct > 80) {
+    tips.push({ icon: '📵', title: 'バックグラウンド通信をOFF', desc: '設定 → データ使用量' });
+    tips.push({ icon: '📶', title: 'Wi-Fi環境で動画視聴', desc: 'モバイルデータを節約' });
+  } else if (pct > 50) {
+    tips.push({ icon: '🎬', title: 'YouTube画質を落とす', desc: '480p以下に設定' });
+    tips.push({ icon: '📲', title: 'SNS自動再生をOFF', desc: 'Instagram・X・TikTok' });
+  } else {
+    tips.push({ icon: '🎯', title: '今日も快適なペースです', desc: 'この調子で月末まで' });
+  }
+
+  tips.forEach(tip => {
+    container.innerHTML += `
+      <div class="tips-card" style="cursor: default; transform: none;">
+        <span class="tips-icon">${tip.icon}</span>
+        <div class="tips-body">
+          <div class="tips-title">${tip.title}</div>
+          <div class="tips-desc">${tip.desc}</div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// ========================================
+// 状態保存・読み込み
+// ========================================
+function saveState() {
+  const now = new Date();
+  const month = now.getMonth();
+  const data = {
+    plan: state.plan,
+    used: state.used,
+    month: month
+  };
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      
+      if (data.month === currentMonth) {
+        state.plan = data.plan || 50;
+        state.used = data.used || 0;
+        
+        // UI反映
+        document.querySelectorAll('.plan-tab').forEach(btn => {
+          btn.classList.toggle('active', parseFloat(btn.dataset.gb) === state.plan);
+        });
+        
+        document.getElementById('usedInput').value = state.used.toFixed(1);
+        document.getElementById('slider').value = state.used;
+      }
+    }
+  } catch (e) {}
+}
+
+// ========================================
+// 初期化実行
+// ========================================
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+  </script>
+
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ギガ使用ペースチェッカー",
+    "description": "月間プランと今月の使用量を入力するだけで、今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。",
+    "url": "https://gigapace-checker.vercel.app/tools/data-checker/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Android, iOS, Windows, macOS",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ギガ使用ペースチェッカー",
+      "url": "https://gigapace-checker.vercel.app"
+    },
+    "inLanguage": "ja",
+    "datePublished": "2026-05-07",
+    "dateModified": "2026-05-07",
+    "featureList": [
+      "月末までの通信量ペース診断",
+      "今日使える通信量の自動計算",
+      "月末使用量の予測表示",
+      "3GB〜50GBまでのプラン対応",
+      "登録不要・完全無料"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "ホーム",
+        "item": "https://gigapace-checker.vercel.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "診断ツール",
+        "item": "https://gigapace-checker.vercel.app/tools/data-checker/"
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
