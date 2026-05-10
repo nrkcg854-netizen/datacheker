@@ -1,89 +1,112 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>通信量節約記事一覧 | ギガ使用ペースチェッカー</title>
-<link rel="stylesheet" href="/style.css">
+  <!-- SEO -->
+  <title>通信量節約記事一覧｜ギガ使用ペースチェッカー</title>
+  <meta name="description" content="AndroidとiPhoneの通信量節約術を紹介。アプリ別・機能別に今すぐ使える節約テクニックを網羅した記事一覧。">
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/articles/">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="通信量節約記事一覧">
+  <meta property="og:description" content="AndroidとiPhoneの通信量節約術を紹介。アプリ別・機能別に今すぐ使える節約テクニックを網羅。">
+  <meta property="og:image" content="https://gigapace-checker.vercel.app/ogp.webp">
+  <meta property="og:url" content="https://gigapace-checker.vercel.app/articles/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/footer.css">
 </head>
 
 <body>
+  <div id="header"></div>
 
-<!-- header -->
+  <main class="container">
+    <nav id="breadcrumb-outlet"></nav>
 
-<nav class="breadcrumb container" aria-label="パンくずリスト">
-  <ol>
-    <li><a href="/">ホーム</a></li>
-    <li class="separator">›</li>
-    <li aria-current="page">節約記事一覧</li>
-  </ol>
-</nav>
+    <!-- HERO -->
+    <section class="hero-bg">
+      <h1 class="hero-title">節約記事一覧</h1>
+      <p class="hero-desc">
+        通信量の仕組みを理解し、無駄なギガ消費を防ぐ
+      </p>
+    </section>
 
-<main class="container">
+    <!-- CTA -->
+    <section class="cta-box">
+      <p class="cta-text">まずは今月のギガ、足りてるか確認</p>
+      <a href="/tools/data-checker/" class="btn-primary">
+        5秒で診断する →
+      </a>
+    </section>
 
-  <!-- HERO -->
-  <section class="hero-bg">
-    <h1 class="hero-title">節約記事一覧</h1>
-    <p class="hero-desc">
-      通信量の仕組みを理解し、無駄なギガ消費を防ぐ
-    </p>
-  </section>
+    <!-- 記事一覧 -->
+    <section id="article-list-container" class="article-list">
+      <p class="loading">記事を読み込み中...</p>
+    </section>
+  </main>
 
-  <!-- 🔥 CV CTA（最重要） -->
-  <section class="cta-box">
-    <p class="cta-text">まずは今月のギガ、足りてるか確認</p>
-    <a href="/tools/data-checker/" class="btn-primary">
-      5秒で診断する →
-    </a>
-  </section>
+  <footer id="footer-outlet"></footer>
 
-  <!-- 記事一覧 -->
-  <section id="article-list-container" class="article-list">
-    <p class="loading">記事を読み込み中...</p>
-  </section>
+  <!-- JS -->
+  <script src="/js/header.js"></script>
+  <script src="/js/breadcrumb.js"></script>
+  <script src="/js/footer.js"></script>
 
-</main>
+  <script>
+  document.addEventListener("DOMContentLoaded", async function() {
+    const container = document.getElementById('article-list-container');
 
-<!-- footer -->
+    try {
+      const res = await fetch('/articles.json');
+      let articles = await res.json();
 
-<script src="/js/header.js" defer></script>
-<script src="/js/footer.js" defer></script>
+      // 新着順（date降順）
+      articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-<script>
-document.addEventListener("DOMContentLoaded", async function() {
-  const container = document.getElementById('article-list-container');
+      container.innerHTML = '';
 
-  try {
-    const res = await fetch('/articles.json');
-    let articles = await res.json();
-
-    // ✔ 新着順（date降順）
-    articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    container.innerHTML = '';
-
-    articles.forEach(article => {
-      const html = `
-        <a href="/articles/${article.filename}" class="article-card-link">
-          <div class="card article-card">
-            <div class="article-meta">
-              <span class="badge">節約ガイド</span>
-              <span class="article-date">${article.date || ''}</span>
+      articles.forEach(article => {
+        const html = `
+          <a href="/articles/${article.filename}" class="article-card-link">
+            <div class="card article-card">
+              <div class="article-meta">
+                <span class="badge">節約ガイド</span>
+                <span class="article-date">${article.date || ''}</span>
+              </div>
+              <h2 class="article-title">${article.title}</h2>
+              <p class="article-desc">${article.description}</p>
             </div>
-            <h2 class="article-title">${article.title}</h2>
-            <p class="article-desc">${article.description}</p>
-          </div>
-        </a>
-      `;
-      container.insertAdjacentHTML('beforeend', html);
-    });
+          </a>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      });
 
-  } catch (e) {
-    container.innerHTML = '<p class="error">読み込みに失敗しました</p>';
+    } catch (e) {
+      container.innerHTML = '<p class="error">読み込みに失敗しました</p>';
+    }
+  });
+  </script>
+
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "通信量節約記事一覧",
+    "description": "AndroidとiPhoneの通信量節約術を紹介。アプリ別・機能別に今すぐ使える節約テクニックを網羅した記事一覧。",
+    "url": "https://gigapace-checker.vercel.app/articles/",
+    "inLanguage": "ja",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ギガ使用ペースチェッカー",
+      "url": "https://gigapace-checker.vercel.app"
+    }
   }
-});
-</script>
-
+  </script>
 </body>
 </html>
