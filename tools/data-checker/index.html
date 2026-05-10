@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO基本設定 -->
+  <title>ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断</title>
+  <meta name="description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示する無料Webツール。登録不要・Android対応。">
+  <meta name="keywords" content="ギガ 使用量 確認, 通信量 ペース 診断, スマホ ギガ 足りるか, 月末 通信量 予測, データ使用量 チェック, ギガ残量 確認 無料">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/tools/data-checker/">
+
+  <!-- OGP -->
+  <meta property="og:title" content="ギガ使用ペースチェッカー｜スマホの通信量ペースを無料診断">
+  <meta property="og:description" content="月間プランと今月の使用量を入力するだけ。今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gigapace-checker.vercel.app/tools/data-checker/">
+  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-tool.webp">
+  <meta property="og:site_name" content="ギガ使用ペースチェッカー">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ギガ使用ペースチェッカー｜通信量ペースを無料診断">
+  <meta name="twitter:description" content="今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
+  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-tool.webp">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/footer.css">
+  
+  <!-- フォント最適化 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+  /* ツール専用スタイル */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow:  #fbbf24;
+    --yellow2: #f59e0b;
+    --ink:     #1a1a1a;
+    --ink2:    #2e2e2e;
+    --safe:    #14b8a6;
+    --ok:      #0ea5e9;
+    --warn:    #f97316;
+    --danger:  #ef4444;
+    --bg:      #f8fafc;
+    --surface: #ffffff;
+    --border:  #e2e8f0;
+    --sub:     #64748b;
+    --radius:  1rem;
+  }
+
+  body.dark {
+    --bg:      #0f172a;
+    --surface: #1e293b;
+    --border:  #334155;
+    --sub:     #94a3b8;
+    --ink:     #f1f5f9;
+    --ink2:    #e2e8f0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  /* ドット背景 */
+  .tool-container {
+    background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-color: var(--bg);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+  body.dark .tool-container {
+    background-image: radial-gradient(circle, #1e293b 1px, transparent 1px);
+  }
+
+  /* Signal */
+  .signal {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 22px;
+    margin: 1rem auto;
+  }
+  .signal i {
+    display: block;
+    width: 7px;
+    border-radius: 3px 3px 0 0;
+    background: var(--teal);
+    opacity: .15;
+    transition: opacity .3s;
+  }
+  .signal i:nth-child(1){ height: 7px; }
+  .signal i:nth-child(2){ height: 11px; }
+  .signal i:nth-child(3){ height: 16px; }
+  .signal i:nth-child(4){ height: 22px; }
+  .signal i.active { opacity: 1; }
+
+  /* Donut */
+  .donut-wrap {
+    position: relative;
+    width: 210px;
+    height: 210px;
+    margin: 2rem auto;
+  }
+  .donut-wrap svg { transform: rotate(-90deg); }
+  .donut-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 18;
+  }
+  .donut-bar {
+    fill: none;
+    stroke-width: 18;
+    stroke-linecap: butt;
+    stroke-dasharray: 565;
+    stroke-dashoffset: 565;
+    transition: stroke-dashoffset .55s cubic-bezier(.4,0,.2,1), stroke .3s;
+  }
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .donut-pct {
+    font-family: 'Inter', sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+    transition: color .3s;
+  }
+  .donut-lbl {
+    font-size: 12px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border: 2px solid var(--teal);
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--teal);
+    background: var(--yellow);
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+    transition: background .25s;
+  }
+
+  /* Panel */
+  .panel {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .panel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.08);
+  }
+
+  .sec-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--sub);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-badge {
+    background: var(--gradient-primary);
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Plan tabs */
+  .plan-tabs {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+  }
+  .plan-tab {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all .2s;
+    text-align: center;
+  }
+  .plan-tab:hover {
+    border-color: var(--teal-light);
+  }
+  .plan-tab.active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+
+  /* Custom input */
+  .custom-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .custom-row label {
+    font-size: 13px;
+    color: var(--sub);
+    font-weight: 600;
+  }
+  .custom-input {
+    width: 88px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    transition: border-color .3s;
+  }
+  .custom-input:focus {
+    border-color: var(--teal-light);
+  }
+
+  /* Usage grid */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .usage-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+  }
+  .usage-card-title {
+    font-size: 11px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom: 10px;
+  }
+  .usage-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .usage-unit {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 2px;
+  }
+
+  /* Adj buttons */
+  .adj-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .adj-btn {
+    width: 34px;
+    height: 34px;
+    border: 2px solid var(--teal);
+    border-radius: 8px;
+    background: var(--teal-light);
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+  }
+  .adj-btn:hover {
+    background: var(--teal);
+    transform: scale(1.05);
+  }
+
+  .used-direct {
+    width: 68px;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    outline: none;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* Slider */
+  .slider-wrap {
+    padding: 0 2px;
+    margin-top: 14px;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    border: 2px solid var(--teal);
+    transition: transform .2s;
+  }
+  input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+
+  /* Today block */
+  .today-block {
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.08);
+    margin: 1.5rem auto;
+    max-width: 500px;
+  }
+  .today-lbl {
+    font-size: 11px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .today-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    transition: color .3s;
+  }
+  .today-unit {
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 4px;
+  }
+
+  /* Meta row */
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .meta-card {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.06);
+  }
+  .meta-title {
+    font-size: 11px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .meta-val {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  /* Tips */
+  .tips-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all .2s;
+    margin-bottom: 10px;
+  }
+  .tips-card:hover {
+    border-color: var(--teal-light);
+    transform: translateY(-2px);
+  }
+  .tips-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .tips-body {
+    flex: 1;
+  }
+  .tips-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 2px;
+  }
+  .tips-desc {
+    font-size: 12px;
+    color: var(--sub);
+    line-height: 1.4;
+  }
+  .tips-arrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--teal);
+    color: white;
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s, transform .25s;
+    white-space: nowrap;
+    z-index: 999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <nav id="breadcrumb-outlet"></nav>
+
+  <div class="tool-container">
+    <!-- Panel：① プラン → ② 使用量 -->
+    <div class="panel">
+      <div class="panel-card">
+        <div class="sec-title"><span class="step-badge">1</span> 月間プランを選ぶ</div>
+        <div class="plan-tabs" id="planTabs">
+          <button class="plan-tab" data-gb="3">3GB</button>
+          <button class="plan-tab" data-gb="5">5GB</button>
+          <button class="plan-tab" data-gb="10">10GB</button>
+          <button class="plan-tab" data-gb="20">20GB</button>
+          <button class="plan-tab" data-gb="30">30GB</button>
+          <button class="plan-tab active" data-gb="50">50GB</button>
+        </div>
+        <div class="custom-row">
+          <label>カスタム</label>
+          <input id="customPlan" class="custom-input" type="number" min="0.1" step="0.1" placeholder="GB">
+          <span style="font-size:13px;color:var(--sub)">GB</span>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="sec-title"><span class="step-badge">2</span> 今月の使用量を入力</div>
+        <div class="usage-grid">
+          <div class="usage-card">
+            <div class="usage-card-title">使用量</div>
+            <div class="adj-row">
+              <button class="adj-btn" onclick="adjust(-0.1)">−</button>
+              <div>
+                <input id="usedInput" class="used-direct" type="number" min="0" step="0.1" value="0">
+                <span class="usage-unit">GB</span>
+              </div>
+              <button class="adj-btn" onclick="adjust(+0.1)">＋</button>
+            </div>
+          </div>
+          <div class="usage-card">
+            <div class="usage-card-title">残り</div>
+            <div style="margin-top:10px">
+              <span id="remainVal" class="usage-val">—</span>
+              <span class="usage-unit" id="remainUnit">GB</span>
+            </div>
+          </div>
+        </div>
+        <div class="slider-wrap">
+          <input id="slider" type="range" min="0" max="50" step="0.1" value="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 診断結果 -->
+    <section style="text-align: center; padding: 0 1.5rem;">
+      <div class="sec-title" style="justify-content: center; margin-bottom: 1rem;">
+        <span class="step-badge">3</span> 診断結果
+      </div>
+
+      <div class="signal">
+        <i class="active"></i><i class="active"></i><i class="active"></i><i class="active"></i>
+      </div>
+
+      <div class="donut-wrap">
+        <svg width="210" height="210" viewBox="0 0 210 210">
+          <circle class="donut-bg" cx="105" cy="105" r="90"/>
+          <circle id="donutBar" class="donut-bar" cx="105" cy="105" r="90"/>
+        </svg>
+        <div class="donut-center">
+          <span id="pctText" class="donut-pct">0%</span>
+          <span class="donut-lbl">使用率</span>
+        </div>
+      </div>
+
+      <div id="badge" class="badge">
+        <span id="badgeEmoji">✦</span>
+        <span id="badgeText">判定中</span>
+      </div>
+
+      <div class="today-block">
+        <div class="today-lbl">今日使える通信量</div>
+        <div class="today-val">
+          <span id="todayNum">—</span><span class="today-unit" id="todayUnit">GB</span>
+        </div>
+      </div>
+
+      <div class="meta-row">
+        <div class="meta-card">
+          <div class="meta-title">月末予測</div>
+          <div class="meta-val" id="forecast">—</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-title">月末まで</div>
+          <div class="meta-val" id="countdown">— 日</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-title">残り容量</div>
+          <div class="meta-val" id="remainMeta">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips -->
+    <div class="panel" style="margin-top: 2rem;">
+      <div class="panel-card">
+        <div class="sec-title" id="tipsTitle">節約 Tips</div>
+        <div id="tipsContainer"></div>
+      </div>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="panel">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--teal);">📚 関連記事</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">通信量の節約方法や設定手順を詳しく解説しています。</p>
+
+      <a href="/articles/how-to-check-data-android.html" class="tips-card">
+        <span class="tips-icon">📱</span>
+        <div class="tips-body">
+          <div class="tips-title">Androidで通信量を確認する方法</div>
+          <div class="tips-desc">設定アプリからの手順を画像つきで解説</div>
+        </div>
+        <span class="tips-arrow">›</span>
+      </a>
+
+      <a href="/articles/save-data-youtube.html" class="tips-card">
+        <span class="tips-icon">▶️</span>
+        <div class="tips-body">
+          <div class="tips-title">YouTubeの通信量を減らす設定方法</div>
+          <div class="tips-desc">画質変更・自動再生OFFの手順</div>
+        </div>
+        <span class="tips-arrow">›</span>
+      </a>
+
+      <a href="/articles/save-data-sns.html" class="tips-card">
+        <span class="tips-icon">📲</span>
+        <div class="tips-body">
+          <div class="tips-title">SNSアプリの通信量を抑える設定</div>
+          <div class="tips-desc">Instagram・X・TikTokの自動再生を止める</div>
+        </div>
+        <span class="tips-arrow">›</span>
+      </a>
+
+      <a href="/articles/android-data-saver.html" class="tips-card">
+        <span class="tips-icon">🛡️</span>
+        <div class="tips-body">
+          <div class="tips-title">Androidのデータセーバー機能とは</div>
+          <div class="tips-desc">バックグラウンド通信をまとめて制限する方法</div>
+        </div>
+        <span class="tips-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <footer id="footer-outlet"></footer>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- JavaScript -->
+  <script src="/js/analytics.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/breadcrumb.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/main.js"></script>
+
+  <!-- ツールロジック -->
+  <script>
+const STORAGE_KEY = 'gigacheck_v4';
+const state = { plan: 50, used: 0, savedMonth: null };
+
+// ========================================
+// 初期化
+// ========================================
+function init() {
+  loadState();
+  setupEventListeners();
+  updateSliderMax();
+  calculate();
+}
+
+// ========================================
+// イベントリスナー設定
+// ========================================
+function setupEventListeners() {
+  // プラン選択ボタン
+  document.querySelectorAll('.plan-tab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      state.plan = parseFloat(this.dataset.gb);
+      document.getElementById('customPlan').value = '';
+      updateSliderMax();
+      calculate();
+      saveState();
+    });
+  });
+
+  // カスタムプラン入力
+  document.getElementById('customPlan').addEventListener('input', function() {
+    const val = parseFloat(this.value);
+    if (val > 0) {
+      document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+      state.plan = val;
+      updateSliderMax();
+      calculate();
+      saveState();
+    }
+  });
+
+  // 使用量直接入力
+  document.getElementById('usedInput').addEventListener('input', function() {
+    let val = parseFloat(this.value) || 0;
+    if (val < 0) val = 0;
+    if (val > state.plan) val = state.plan;
+    state.used = val;
+    document.getElementById('slider').value = val;
+    calculate();
+    saveState();
+  });
+
+  // スライダー
+  document.getElementById('slider').addEventListener('input', function() {
+    state.used = parseFloat(this.value);
+    document.getElementById('usedInput').value = state.used.toFixed(1);
+    calculate();
+  });
+
+  document.getElementById('slider').addEventListener('change', function() {
+    saveState();
+  });
+}
+
+// ========================================
+// 調整ボタン
+// ========================================
+function adjust(delta) {
+  let newVal = state.used + delta;
+  if (newVal < 0) newVal = 0;
+  if (newVal > state.plan) newVal = state.plan;
+  state.used = parseFloat(newVal.toFixed(1));
+  document.getElementById('usedInput').value = state.used.toFixed(1);
+  document.getElementById('slider').value = state.used;
+  calculate();
+  saveState();
+}
+
+// ========================================
+// スライダー最大値更新
+// ========================================
+function updateSliderMax() {
+  document.getElementById('slider').max = state.plan;
+  if (state.used > state.plan) {
+    state.used = state.plan;
+    document.getElementById('usedInput').value = state.used.toFixed(1);
+    document.getElementById('slider').value
