@@ -1,0 +1,72 @@
+[
+  {
+    "filename": "wifi-only-update.html",
+    "title": "アプリ更新をWi-Fiのみに制限する方法（Android版）",
+    "description": "AndroidでGoogle Playのアプリ自動更新をWi-Fi接続時のみに設定する方法。モバイルデータ通信でのアプリ更新を防いで通信量を節約する手順を解説。",
+    "date": "2026-05-07",
+    "type": "article"
+  },
+  {
+    "filename": "android-data-warning.html",
+    "title": "Androidのデータ通信量の警告と制限の設定方法",
+    "description": "Androidスマホのデータ警告・データ制限の設定手順を解説。月末のギガ切れを自動で防ぐ方法がわかります。Pixel・Samsung・Xperia対応。",
+    "date": "2025-04-01",
+    "type": "article"
+  },
+  {
+    "filename": "how-to-check-data-android.html",
+    "title": "Androidで通信量を確認する方法",
+    "description": "Androidスマホで今月の通信量を確認する手順を解説。設定アプリからの操作方法とデータ警告の設定方法も詳しく紹介。docomo・au・SoftBank・楽天モバイル対応。",
+    "date": "2025-04-01",
+    "type": "article"
+  },
+  {
+    "filename": "iphone-check-data.html",
+    "title": "【2025年最新】iPhoneで通信量を確認する方法",
+    "description": "iPhone（iOS）の標準設定アプリから今月のモバイルデータ通信量を確認・リセットする手順を画像なしでもわかるよう詳細に解説。キャリアアプリとの違いや、リセット忘れを防ぐコツも紹介します。",
+    "date": "2025-04-01",
+    "type": "article"
+  },
+  {
+    "filename": "iphone-low-data-mode.html",
+    "title": "【2025年最新】iPhoneの低データモードとは",
+    "description": "iPhone（iOS）の低データモードをONにするだけでバックグラウンド通信をまとめて制限できます。iPhone15・16・17・SEでの設定手順と効果を画像なしでもわかるよう詳細に解説。ONにしたときの影響と注意点、リセット忘れを防ぐコツも紹介します。",
+    "date": "2025-04-01",
+    "type": "article"
+  },
+  {
+    "filename": "3gb-mobile-data.html",
+    "title": "月3GBで足りる人の特徴と節約術",
+    "description": "月3GBで足りる人の特徴と節約術を解説。通信量を抑える具体的な方法と、自分に合うかを判断できます。",
+    "date": null,
+    "type": "article"
+  },
+  {
+    "filename": "android-data-saver.html",
+    "title": "Androidのデータセーバーとは？設定方法と通信量を節約するコツ",
+    "description": "Androidのデータセーバーの使い方を解説。ONにするだけで通信量を削減。LINEやGmailの個別許可設定や注意点もわかる。",
+    "date": null,
+    "type": "article"
+  },
+  {
+    "filename": "offline-maps.html",
+    "title": "Googleマップをオフライン化する方法",
+    "description": "",
+    "date": null,
+    "type": "article"
+  },
+  {
+    "filename": "save-data-sns.html",
+    "title": "SNSアプリの通信量を抑える設定",
+    "description": "",
+    "date": null,
+    "type": "article"
+  },
+  {
+    "filename": "save-data-youtube.html",
+    "title": "YouTubeの通信量を減らす設定方法",
+    "description": "YouTubeの画質を変えるだけで通信量を最大70%節約できます。データ節約モードの設定手順や自動再生OFFの方法を画像つきで解説。",
+    "date": null,
+    "type": "article"
+  }
+]
