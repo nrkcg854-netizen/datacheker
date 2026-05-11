@@ -1,349 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>プライバシーポリシー｜ギガ使用ペースチェッカー</title>
-<meta name="description" content="ギガ使用ペースチェッカーのプライバシーポリシー。個人情報の取り扱い、Cookie・ローカルストレージの使用、Google AnalyticsやAdSenseについて説明しています。">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://gigapace-checker.vercel.app/privacy.html">
-
-<!-- OGP -->
-<meta property="og:title" content="プライバシーポリシー｜ギガ使用ペースチェッカー">
-<meta property="og:description" content="個人情報の取り扱いとデータ保護方針について">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://gigapace-checker.vercel.app/privacy.html">
-
-<!-- フォント最適化 -->
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --yellow:  #ffe600;
-  --yellow2: #ffd000;
-  --ink:     #1a1a1a;
-  --ink2:    #2e2e2e;
-  --bg:      #f5f5f0;
-  --surface: #ffffff;
-  --border:  #1a1a1a;
-  --sub:     #777770;
-  --radius:  20px;
-}
-
-body.dark {
-  --bg:      #111110;
-  --surface: #1e1e1c;
-  --border:  #ffe600;
-  --sub:     #888880;
-  --ink:     #f0f0e8;
-  --ink2:    #d0d0c8;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100svh;
-  transition: background .3s, color .3s;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ─── dot pattern bg ─── */
-body {
-  background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-color: var(--bg);
-}
-body.dark {
-  background-image: radial-gradient(circle, #2a2a28 1px, transparent 1px);
-}
-
-/* ─── Header ─── */
-.hdr {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: var(--yellow);
-  border-bottom: 3px solid var(--border);
-  position: sticky; top: 0; z-index: 10;
-}
-body.dark .hdr { background: var(--yellow); }
-
-.hdr-logo {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900; font-size: 16px;
-  color: var(--ink); letter-spacing: -.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-decoration: none;
-}
-
-.hdr-actions { display: flex; gap: 8px; }
-
-.icon-btn {
-  width: 40px; height: 40px;
-  border: 3px solid var(--ink);
-  border-radius: 12px;
-  background: var(--surface);
-  font-size: 17px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform .12s, box-shadow .12s;
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.icon-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
-}
-
-/* ─── Main ─── */
-main {
-  flex: 1;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 40px 20px 60px;
-}
-
-.page-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -.02em;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.page-subtitle {
-  font-size: 14px;
-  color: var(--sub);
-  margin-bottom: 32px;
-  line-height: 1.6;
-}
-
-.content-section {
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  padding: 28px 24px;
-  margin-bottom: 24px;
-  box-shadow: 5px 5px 0 var(--ink);
-}
-
-.content-section h2 {
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 16px;
-  letter-spacing: -.01em;
-}
-
-.content-section h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.content-section p {
-  font-size: 14px;
-  line-height: 1.8;
-  margin-bottom: 16px;
-  color: var(--ink);
-}
-
-.content-section ul {
-  margin: 12px 0 16px 20px;
-}
-
-.content-section li {
-  font-size: 14px;
-  line-height: 1.8;
-  margin-bottom: 8px;
-}
-
-.content-section a {
-  color: var(--ink);
-  text-decoration: underline;
-  font-weight: 700;
-}
-
-.content-section a:hover {
-  color: var(--yellow2);
-}
-
-.last-updated {
-  font-size: 13px;
-  color: var(--sub);
-  text-align: right;
-  margin-top: 8px;
-}
-
-/* ─── Footer ─── */
-.footer {
-  background: var(--surface);
-  border-top: 3px solid var(--ink);
-  padding: 32px 20px;
-  margin-top: auto;
-}
-
-.footer-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 16px;
-  margin-bottom: 20px;
-}
-
-.footer-link {
-  font-size: 13px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color .2s;
-}
-
-.footer-link:hover {
-  color: var(--yellow2);
-}
-
-.footer-copy {
-  text-align: center;
-  font-size: 12px;
-  color: var(--sub);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プライバシーポリシー｜ギガ使用ペースチェッカー</title>
+  <meta name="description" content="ギガ使用ペースチェッカーのプライバシーポリシー。個人情報の取り扱い、Cookie・ローカルストレージの使用、Google AnalyticsやAdSenseについて説明しています。">
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/privacy.html">
+  
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="プライバシーポリシー｜ギガ使用ペースチェッカー">
+  <meta property="og:description" content="個人情報の取り扱いとデータ保護方針について。Cookieやローカルストレージの使用方法を説明しています。">
+  <meta property="og:url" content="https://gigapace-checker.vercel.app/privacy.html">
+  <meta name="twitter:card" content="summary">
+  
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/footer.css">
 </head>
 <body>
-
-<!-- Header -->
-<header class="hdr">
-  <a href="./" class="hdr-logo">📶 ギガ使用ペースチェッカー</a>
-  <div class="hdr-actions">
-    <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="ダークモード">🌙</button>
-  </div>
-</header>
-
-<!-- Main -->
-<main>
-  <h1 class="page-title">🔒 プライバシーポリシー</h1>
-  <p class="page-subtitle">ギガ使用ペースチェッカー（以下「当サイト」）は、ユーザーの皆様の個人情報保護を重視し、以下の方針に基づいて適切に取り扱います。</p>
-
-  <div class="content-section">
-    <h2>1. 個人情報の収集について</h2>
-    <p>当サイトでは、お問い合わせフォームを通じて以下の個人情報を収集する場合があります。</p>
-    <ul>
-      <li>お名前</li>
-      <li>メールアドレス</li>
-      <li>お問い合わせ内容</li>
-    </ul>
-    <p>これらの情報は、お問い合わせへの回答および必要な連絡のためにのみ使用し、第三者に提供することはありません。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>2. ローカルストレージの使用について</h2>
-    <p>当サイトでは、ユーザーの利便性向上のため、ブラウザのローカルストレージ機能を使用して以下の情報を保存しています。</p>
-    <ul>
-      <li>ダークモード設定（ON/OFF）</li>
-      <li>ギガ使用ペースチェッカーツールの入力データ（月間プラン・使用量・月情報）</li>
-    </ul>
-    <p>これらの情報は<strong>お客様のブラウザ内にのみ保存</strong>され、当サイト運営者や第三者に送信されることは一切ありません。</p>
-    <p>ローカルストレージに保存されたデータは、ブラウザの設定からいつでも削除できます。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>3. Google Analyticsの使用について</h2>
-    <p>当サイトでは、サイトの利用状況を分析し、サービス向上のためにGoogle Analytics（GA4）を使用しています。</p>
-    <ul>
-      <li>トラッキングID：G-Z9ZCQB6GTL</li>
-      <li>収集される情報：ページビュー数、滞在時間、デバイス情報、地域情報など</li>
-    </ul>
-    <p>Google Analyticsは、Cookieを使用してユーザーの行動データを匿名で収集します。収集されたデータは、個人を特定するものではありません。</p>
-    <p>Google Analyticsのデータ収集を無効にしたい場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics オプトアウト アドオン</a>をご利用ください。</p>
-    <p>詳しくは、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleのプライバシーポリシー</a>をご確認ください。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>4. Google AdSenseの使用について</h2>
-    <p>当サイトでは、広告配信サービスとしてGoogle AdSenseを使用する予定です。</p>
-    <p>Google AdSenseは、Cookieを使用してユーザーの興味・関心に基づいた広告を表示します。Cookieを使用した広告配信を無効にしたい場合は、<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">広告設定ページ</a>から設定を変更できます。</p>
-    <p>詳しくは、<a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Googleの広告ポリシー</a>をご確認ください。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>5. 外部リンクについて</h2>
-    <p>当サイトには、外部サイトへのリンクが含まれる場合があります。外部サイトでの個人情報の取り扱いについては、各サイトのプライバシーポリシーをご確認ください。当サイトは、外部サイトの内容やプライバシー保護について責任を負いません。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>6. プライバシーポリシーの変更について</h2>
-    <p>当サイトは、法令の変更やサービス内容の変更に伴い、本プライバシーポリシーを予告なく変更する場合があります。変更後のプライバシーポリシーは、本ページに掲載された時点で効力を生じるものとします。</p>
-  </div>
-
-  <div class="content-section">
-    <h2>7. お問い合わせ</h2>
-    <p>本プライバシーポリシーに関するご質問やご意見は、以下のお問い合わせフォームよりご連絡ください。</p>
-    <p><a href="./contact.html">お問い合わせフォーム</a></p>
-    <p style="margin-top: 20px;">運営者：kyon<br>所在地：鳥取県</p>
-  </div>
-
-  <p class="last-updated">最終更新日：2025年4月3日</p>
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-links">
-      <a href="./tools/data-checker/" class="footer-link">🛠️ ツール</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./blog.html" class="footer-link">📚 ブログ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./about.html" class="footer-link">ℹ️ このサイトについて</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./contact.html" class="footer-link">📧 お問い合わせ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./sitemap.html" class="footer-link">🗺️ サイトマップ</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./privacy.html" class="footer-link">🔒 プライバシーポリシー</a>
-      <span style="color: var(--sub);">|</span>
-      <a href="./terms.html" class="footer-link">📜 利用規約</a>
+  <div id="header"></div>
+  
+  <main class="container">
+    <nav id="breadcrumb-outlet"></nav>
+    
+    <div class="page-header">
+      <h1>プライバシーポリシー</h1>
+      <p>ギガ使用ペースチェッカー（以下「当サイト」）は、ユーザーの皆様の個人情報保護を重視し、以下の方針に基づいて適切に取り扱います。</p>
     </div>
-    <p class="footer-copy">&copy; 2025 ギガ使用ペースチェッカー by kyon</p>
-  </div>
-</footer>
+    
+    <div class="content-wrapper">
+      <section class="policy-section">
+        <h2>1. 個人情報の収集について</h2>
+        <p>当サイトでは、お問い合わせフォームを通じて以下の個人情報を収集する場合があります。</p>
+        <ul>
+          <li>お名前</li>
+          <li>メールアドレス</li>
+          <li>お問い合わせ内容</li>
+        </ul>
+        <p>これらの情報は、お問い合わせへの回答および必要な連絡のためにのみ使用し、第三者に提供することはありません。</p>
+      </section>
 
-<script>
-function toggleDark() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
-  try { localStorage.setItem('gigacheck_dark', isDark); } catch(e) {}
-}
-function loadDark() {
-  try {
-    if (localStorage.getItem('gigacheck_dark') === 'true') {
-      document.body.classList.add('dark');
-      document.getElementById('darkBtn').textContent = '☀️';
+      <section class="policy-section">
+        <h2>2. ローカルストレージの使用について</h2>
+        <p>当サイトでは、ユーザーの利便性向上のため、ブラウザのローカルストレージ機能を使用して以下の情報を保存しています。</p>
+        <ul>
+          <li>ダークモード設定（ON/OFF）</li>
+          <li>ギガ使用ペースチェッカーツールの入力データ（月間プラン・使用量・月情報）</li>
+        </ul>
+        <p>これらの情報はお客様のブラウザ内にのみ保存され、当サイト運営者や第三者に送信されることは一切ありません。</p>
+        <p>ローカルストレージに保存されたデータは、ブラウザの設定からいつでも削除できます。</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>3. Google Analyticsの使用について</h2>
+        <p>当サイトでは、サイトの利用状況を分析し、サービス向上のためにGoogle Analytics（GA4）を使用しています。</p>
+        <ul>
+          <li>トラッキングID：G-Z9ZCQB6GTL</li>
+          <li>収集される情報：ページビュー数、滞在時間、デバイス情報、地域情報など</li>
+        </ul>
+        <p>Google Analyticsは、Cookieを使用してユーザーの行動データを匿名で収集します。収集されたデータは、個人を特定するものではありません。</p>
+        <p>Google Analyticsのデータ収集を無効にしたい場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics オプトアウト アドオン</a>をご利用ください。</p>
+        <p>詳しくは、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleのプライバシーポリシー</a>をご確認ください。</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>4. Google AdSenseの使用について</h2>
+        <p>当サイトでは、広告配信サービスとしてGoogle AdSenseを使用する予定です。</p>
+        <p>Google AdSenseは、Cookieを使用してユーザーの興味・関心に基づいた広告を表示します。Cookieを使用した広告配信を無効にしたい場合は、<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">広告設定ページ</a>から設定を変更できます。</p>
+        <p>詳しくは、<a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Googleの広告ポリシー</a>をご確認ください。</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>5. 外部リンクについて</h2>
+        <p>当サイトには、外部サイトへのリンクが含まれる場合があります。外部サイトでの個人情報の取り扱いについては、各サイトのプライバシーポリシーをご確認ください。</p>
+        <p>当サイトは、外部サイトの内容やプライバシー保護について責任を負いません。</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>6. プライバシーポリシーの変更について</h2>
+        <p>当サイトは、法令の変更やサービス内容の変更に伴い、本プライバシーポリシーを予告なく変更する場合があります。</p>
+        <p>変更後のプライバシーポリシーは、本ページに掲載された時点で効力を生じるものとします。</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>7. お問い合わせ</h2>
+        <p>本プライバシーポリシーに関するご質問やご意見は、以下のお問い合わせフォームよりご連絡ください。</p>
+        <p><a href="/contact.html">お問い合わせフォーム</a></p>
+        <dl class="info-list">
+          <dt>運営者</dt>
+          <dd>kyon</dd>
+          <dt>所在地</dt>
+          <dd>鳥取県</dd>
+        </dl>
+      </section>
+
+      <p class="last-updated">最終更新日：2026年5月12日</p>
+    </div>
+  </main>
+  
+  <footer id="footer-outlet"></footer>
+  
+  <script src="/js/header.js"></script>
+  <script src="/js/breadcrumb.js"></script>
+  <script src="/js/footer.js"></script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "プライバシーポリシー",
+    "description": "ギガ使用ペースチェッカーのプライバシーポリシー。個人情報の取り扱い、Cookie・ローカルストレージの使用について",
+    "url": "https://gigapace-checker.vercel.app/privacy.html",
+    "inLanguage": "ja",
+    "datePublished": "2026-03-01",
+    "dateModified": "2026-05-12",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "ギガ使用ペースチェッカー",
+      "url": "https://gigapace-checker.vercel.app"
     }
-  } catch(e) {}
-}
-loadDark();
-</script>
+  }
+  </script>
 </body>
 </html>
