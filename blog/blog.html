@@ -3,50 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- SEO基本設定 -->
   <title>開発ブログ | ギガ使用ペースチェッカー</title>
-  <meta name="description" content="サイト開発の裏話や技術的な話題を綴るブログ。">
-  <meta name="keywords" content="開発ブログ,技術メモ,サイト開発">
+  <meta name="description" content="ギガ使用ペースチェッカーの開発ブログ一覧ページ。サイト改善の裏話や技術メモ、運営記録を掲載しています。">
+  <meta name="keywords" content="開発ブログ,技術メモ,サイト開発,Web制作">
   <link rel="canonical" href="https://gigapace-checker.vercel.app/blog/blog.html">
-  
+
   <!-- OGP -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="開発ブログ">
-  <meta property="og:description" content="サイト開発の裏話や技術的な話題を綴るブログ。">
+  <meta property="og:title" content="開発ブログ | ギガ使用ペースチェッカー">
+  <meta property="og:description" content="サイト改善の裏話や技術メモ、運営記録を掲載しています。">
   <meta property="og:url" content="https://gigapace-checker.vercel.app/blog/blog.html">
-  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
+  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp.webp">
   <meta property="og:site_name" content="ギガ使用ペースチェッカー">
   <meta property="og:locale" content="ja_JP">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="開発ブログ">
-  <meta name="twitter:description" content="サイト開発の裏話や技術的な話題を綴るブログ。">
-  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
-  
+  <meta name="twitter:title" content="開発ブログ | ギガ使用ペースチェッカー">
+  <meta name="twitter:description" content="サイト改善の裏話や技術メモ、運営記録を掲載しています。">
+  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp.webp">
+
   <!-- Robots -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  
+
   <!-- CSS -->
   <link rel="stylesheet" href="/style.css">
-  
+  <link rel="stylesheet" href="/footer.css">
+
   <!-- 構造化データ - CollectionPage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "開発ブログ",
-    "description": "サイト開発の裏話や技術的な話題を綴るブログ。",
+    "description": "ギガ使用ペースチェッカーの開発ブログ一覧ページ。",
     "url": "https://gigapace-checker.vercel.app/blog/blog.html",
+    "inLanguage": "ja",
+    "dateModified": "2026-05-12",
     "isPartOf": {
       "@type": "WebSite",
       "name": "ギガ使用ペースチェッカー",
-      "url": "https://gigapace-checker.vercel.app/"
+      "url": "https://gigapace-checker.vercel.app/",
+      "foundingDate": "2026-03-01"
     }
   }
   </script>
-  
+
   <!-- 構造化データ - BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -69,101 +73,149 @@
   }
   </script>
 </head>
+
 <body>
-  <!-- header.js がここにヘッダーを挿入 -->
+  <div id="header"></div>
 
-  <!-- パンくずリスト -->
-  <nav aria-label="パンくずリスト" class="container" style="margin-top: 1.5rem;">
-    <ol style="display: flex; gap: 0.5rem; list-style: none; font-size: 0.875rem; color: var(--text-muted);">
-      <li><a href="/index.html">ホーム</a></li>
-      <li>›</li>
-      <li aria-current="page">開発ブログ</li>
-    </ol>
-  </nav>
-
-  <!-- メインコンテンツ -->
   <main class="container">
-    <div class="hero-bg" style="padding: 3rem 2rem; border-radius: 1.5rem; margin: 2rem 0;">
-      <h1 style="text-align: center; margin-bottom: 1rem;">開発ブログ</h1>
-      <p style="text-align: center; font-size: 1.125rem; color: var(--text-muted);">サイト開発の裏話や技術メモを書いています。</p>
-    </div>
+    <nav id="breadcrumb-outlet"></nav>
 
-    <!-- ブログ一覧コンテナ -->
-    <div id="blog-list-container" style="display: grid; gap: 1.5rem; margin-top: 2rem;">
-      <p style="text-align: center; color: var(--text-muted); font-weight: 500;">ブログを読み込み中...</p>
-    </div>
+    <section class="hero-bg">
+      <div class="article-content">
+        <div class="prose">
+          <h1>開発ブログ</h1>
+
+          <p class="last-updated">最終更新日：2026年5月12日</p>
+
+          <p>
+            ギガ使用ペースチェッカーの開発記録や、
+            サイト改善の裏話をまとめています。
+          </p>
+
+          <p>
+            UI改善、SEO調整、表示速度改善など、
+            実際に行った施策を公開しています。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ブログ一覧 -->
+    <section aria-labelledby="blog-list-heading">
+      <div class="article-content">
+        <div class="prose">
+          <h2 id="blog-list-heading">公開中の記事一覧</h2>
+
+          <p>
+            開発中に気づいた点や改善内容を、
+            ブログ形式でまとめています。
+          </p>
+
+          <div id="blog-list-container">
+            <p>ブログを読み込み中...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div id="cta-outlet"></div>
+
+    <!-- 関連リンク -->
+    <section>
+      <div class="article-content">
+        <div class="prose">
+          <h2>関連ページ</h2>
+
+          <ul>
+            <li>
+              <a href="/tools/data-checker/index.html">
+                ギガ使用ペースチェッカーを使う
+              </a>
+            </li>
+            <li>
+              <a href="/articles/index.html">
+                通信量節約記事一覧を見る
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- footer.js がここにフッターを挿入 -->
+  <footer id="footer-outlet"></footer>
 
   <!-- JavaScript -->
   <script src="/js/analytics.js" defer></script>
   <script src="/js/header.js" defer></script>
+  <script src="/js/breadcrumb.js" defer></script>
+  <script src="/js/cta.js" defer></script>
   <script src="/js/footer.js" defer></script>
   <script src="/js/main.js" defer></script>
-  
-  <!-- ブログ一覧自動生成スクリプト -->
+
+  <!-- ブログ一覧自動生成 -->
   <script>
-  document.addEventListener("DOMContentLoaded", async function() {
+  document.addEventListener('DOMContentLoaded', async function () {
     const container = document.getElementById('blog-list-container');
-    
+
     try {
-      // blog.json を読み込む
       const response = await fetch('/blog.json');
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const blogPosts = await response.json();
-      
-      // ローディング表示を消す
+
       container.innerHTML = '';
-      
-      if (blogPosts.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">現在公開されているブログ記事はありません。</p>';
+
+      if (!Array.isArray(blogPosts) || blogPosts.length === 0) {
+        container.innerHTML = `
+          <p>
+            現在公開されているブログ記事はありません。
+          </p>
+        `;
         return;
       }
 
-      // ブログ記事の数だけカードを作る
+      const list = document.createElement('div');
+      list.className = 'articles-grid';
+
       blogPosts.forEach(post => {
-        const postUrl = `/blog/${post.filename}`;
-        const dateHtml = post.date 
-          ? `<span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">${post.date}</span>` 
+        const article = document.createElement('article');
+        article.className = 'card';
+
+        const dateHtml = post.date
+          ? `<p class="card-meta">${post.date}</p>`
           : '';
 
-        const cardHTML = `
-          <a href="${postUrl}" style="text-decoration: none; color: inherit; display: block;">
-            <div class="card" style="padding: 1.75rem;">
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                  <span style="background: var(--amber); color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;">ブログ</span>
-                  ${dateHtml}
-                </div>
-                <h2 style="margin: 0; font-size: 1.35rem; color: var(--teal); line-height: 1.4;">${post.title}</h2>
-                <p style="font-size: 1rem; color: var(--text-muted); margin: 0; line-height: 1.65;">${post.description}</p>
-              </div>
-            </div>
+        article.innerHTML = `
+          <a href="/blog/${post.filename}">
+            <h2>${post.title}</h2>
           </a>
+
+          ${dateHtml}
+
+          <p>
+            ${post.description}
+          </p>
         `;
-        container.insertAdjacentHTML('beforeend', cardHTML);
+
+        list.appendChild(article);
       });
 
-      // カードにフェードインアニメーションを適用
-      const cards = container.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          card.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 100);
-      });
+      container.appendChild(list);
 
     } catch (error) {
       console.error('ブログ一覧の読み込みに失敗しました:', error);
-      container.innerHTML = '<p style="text-align: center; color: #ef4444; font-weight: 600;">ブログの読み込みに失敗しました。時間をおいて再読み込みしてください。</p>';
+
+      container.innerHTML = `
+        <p>
+          ブログの読み込みに失敗しました。
+          時間をおいて再読み込みしてください。
+        </p>
+      `;
     }
   });
   </script>
