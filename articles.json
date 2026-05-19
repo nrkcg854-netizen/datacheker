@@ -1,5 +1,12 @@
 [
   {
+    "filename": "offline-maps.html",
+    "title": "Googleマップをオフライン化する方法",
+    "description": "Googleマップをオフライン化して通信量を節約する方法を解説。地図ダウンロード手順、容量目安、有効期限、ナビ利用時の注意点も紹介します。",
+    "date": "2026-05-20",
+    "type": "article"
+  },
+  {
     "filename": "commute-1hour-data-saving.html",
     "title": "【2026年最新】通勤1時間でギガが足りない人向け",
     "description": "通勤1時間で毎月ギガ不足になる人向けに、YouTube・SNS・音楽アプリの通信量を抑える方法を解説。実際に私が試して効果を感じた節約術も紹介します。",
@@ -52,13 +59,6 @@
     "filename": "android-data-saver.html",
     "title": "Androidのデータセーバーとは？設定方法と通信量を節約するコツ",
     "description": "Androidのデータセーバーの使い方を解説。ONにするだけで通信量を削減。LINEやGmailの個別許可設定や注意点もわかる。",
-    "date": null,
-    "type": "article"
-  },
-  {
-    "filename": "offline-maps.html",
-    "title": "Googleマップをオフライン化する方法",
-    "description": "",
     "date": null,
     "type": "article"
   },
