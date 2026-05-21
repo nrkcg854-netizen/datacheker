@@ -1,5 +1,12 @@
 [
   {
+    "filename": "iphone-check-data.html",
+    "title": "【2026年最新】iPhoneで通信量を確認する方法",
+    "description": "iPhoneの設定アプリから今月のモバイルデータ通信量を簡単に確認する方法を解説。統計情報のリセット忘れを防ぐコツや、キャリアアプリでより正確に確認する方法もご紹介します。",
+    "date": "2026-05-20",
+    "type": "article"
+  },
+  {
     "filename": "offline-maps.html",
     "title": "Googleマップをオフライン化する方法",
     "description": "Googleマップをオフライン化して通信量を節約する方法を解説。地図ダウンロード手順、容量目安、有効期限、ナビ利用時の注意点も紹介します。",
@@ -32,13 +39,6 @@
     "title": "Androidで通信量を確認する方法",
     "description": "Androidスマホで今月の通信量を確認する手順を解説。設定アプリからの操作方法とデータ警告の設定方法も詳しく紹介。docomo・au・SoftBank・楽天モバイル対応。",
     "date": "2026-03-01",
-    "type": "article"
-  },
-  {
-    "filename": "iphone-check-data.html",
-    "title": "【2025年最新】iPhoneで通信量を確認する方法",
-    "description": "iPhone（iOS）の標準設定アプリから今月のモバイルデータ通信量を確認・リセットする手順を画像なしでもわかるよう詳細に解説。キャリアアプリとの違いや、リセット忘れを防ぐコツも紹介します。",
-    "date": "2025-04-01",
     "type": "article"
   },
   {
