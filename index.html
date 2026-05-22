@@ -5,20 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <title>ギガ使用ペースチェッカー｜今月のデータ使用ペースを30秒で診断</title>
-  <meta name="description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通し、節約のヒントもわかります。無料・登録不要で30秒診断。">
-  <meta name="keywords" content="ギガ,データ通信量,使用量,通信量チェック,スマホ通信量,格安SIM">
-  <link rel="canonical" href="https://gigapace-checker.vercel.app/">
+  <title>ギガ使用ペースチェッカー｜今のペースで月末までギガ足りる？</title>
 
-  <!-- AI向けメタ -->
-  <meta name="ai-readable" content="true">
-  <meta name="ai-content-type" content="tool,calculator">
-  <meta name="ai-summary" content="スマホのデータ通信量の使用ペースをチェックするツール">
+  <meta
+    name="description"
+    content="今の通信量ペースで月末までギガが足りるか5秒でチェック。登録不要・無料で、使いすぎや速度制限リスクもすぐ分かります。"
+  >
+
+  <link rel="canonical" href="https://gigapace-checker.vercel.app/">
 
   <!-- OGP -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="ギガ使用ペースチェッカー">
-  <meta property="og:description" content="今月のデータ通信量の使い方をチェック。使いすぎの目安や残りギガの見通しがわかります。">
+  <meta
+    property="og:description"
+    content="今の通信量ペースで月末までギガが足りるか5秒でチェック。登録不要・無料。"
+  >
   <meta property="og:url" content="https://gigapace-checker.vercel.app/">
   <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
   <meta property="og:site_name" content="ギガ使用ペースチェッカー">
@@ -27,11 +29,17 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ギガ使用ペースチェッカー">
-  <meta name="twitter:description" content="今月の通信量の使い方をチェック">
+  <meta
+    name="twitter:description"
+    content="今の通信量ペースで月末までギガが足りるか5秒でチェック"
+  >
   <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp-default.webp">
 
   <!-- Robots -->
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta
+    name="robots"
+    content="index, follow, max-snippet:-1, max-image-preview:large"
+  >
 
   <!-- CSS -->
   <link rel="stylesheet" href="/style.css">
@@ -44,7 +52,8 @@
     "@type": "WebSite",
     "name": "ギガ使用ペースチェッカー",
     "url": "https://gigapace-checker.vercel.app/",
-    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できるツール"
+    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できる無料ツール",
+    "inLanguage": "ja"
   }
   </script>
 
@@ -55,7 +64,10 @@
     "@type": "Organization",
     "name": "ギガ使用ペースチェッカー",
     "url": "https://gigapace-checker.vercel.app/",
-    "logo": "https://gigapace-checker.vercel.app/images/logo.png"
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gigapace-checker.vercel.app/images/header.webp"
+    }
   }
   </script>
 
@@ -68,7 +80,7 @@
     "applicationCategory": "Utility",
     "operatingSystem": "Web",
     "url": "https://gigapace-checker.vercel.app/tools/data-checker/",
-    "description": "スマホのデータ通信量の使用ペースを確認し、月内のギガ不足リスクを把握できるツール",
+    "description": "今の通信量ペースで月末までギガが足りるか確認できる無料ツール",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -79,46 +91,67 @@
 
   <style>
     /* ===== ヒーローセクション ===== */
+
     .hero-section {
-      background: linear-gradient(135deg, var(--teal-light) 0%, var(--amber) 100%);
-      padding: 4rem 1.5rem;
+      background:
+        linear-gradient(
+          135deg,
+          var(--teal) 0%,
+          #0f766e 100%
+        );
+
+      padding: 5rem 1.5rem;
       text-align: center;
       margin-bottom: 4rem;
     }
 
     .hero-title {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.3;
       margin-bottom: 1.5rem;
       color: #ffffff;
-      font-weight: 700;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .hero-description {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       color: rgba(255, 255, 255, 0.95);
       margin-bottom: 2.5rem;
-      line-height: 1.75;
+      line-height: 1.8;
     }
 
     .hero-cta {
       display: inline-block;
       background: #ffffff;
       color: var(--teal);
-      font-size: 1.25rem;
-      padding: 1.25rem 3rem;
+      font-size: 1.15rem;
+      padding: 1.1rem 2.6rem;
       border-radius: 9999px;
       font-weight: 700;
-      transition: transform 0.25s, box-shadow 0.25s;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .hero-cta:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+      box-shadow:
+        0 14px 36px rgba(0, 0, 0, 0.2);
       color: var(--teal);
     }
 
+    .hero-note {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
     /* ===== セクション ===== */
+
     .section {
       margin-top: 4rem;
     }
@@ -131,9 +164,11 @@
     }
 
     /* ===== 特徴カード ===== */
+
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
 
@@ -143,38 +178,52 @@
       border-radius: 1.5rem;
       padding: 2rem;
       box-shadow: var(--shadow-md);
-      transition: transform 0.25s;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .feature-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
     }
 
     .feature-icon {
-      font-size: 3rem;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
     }
 
     .feature-card h3 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       margin-bottom: 1rem;
       color: var(--text);
     }
 
     .feature-card p {
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    /* ===== 記事一覧プレースホルダー ===== */
+    /* ===== 最新記事 ===== */
+
     #popular-articles {
       margin-top: 2rem;
     }
 
-    /* ===== モバイル対応 ===== */
+    .articles-description {
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: -1.5rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    /* ===== モバイル ===== */
+
     @media (max-width: 768px) {
-      .hero-title {
-        font-size: 1.8rem;
+
+      .hero-section {
+        padding: 4rem 1.25rem;
       }
 
       .hero-description {
@@ -182,13 +231,14 @@
       }
 
       .hero-cta {
-        font-size: 1rem;
-        padding: 1rem 2rem;
+        width: 100%;
+        max-width: 320px;
       }
 
       .section-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
+
     }
   </style>
 
@@ -196,75 +246,121 @@
 
 <body>
 
-<!-- ヘッダーはJS自動挿入 -->
+  <!-- Header -->
+  <div id="header-outlet"></div>
 
-<!-- ヒーローセクション -->
-<section class="hero-section">
-  <div class="container">
-    <h1 class="hero-title">
-      今月のギガ使用ペースを30秒でチェック
-    </h1>
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="container">
 
-    <p class="hero-description">
-      今の使い方で足りるか、使いすぎかを30秒で確認。<br>
-      残りギガの見通しもわかります。
+      <h1 class="hero-title">
+        今のペースで<br>
+        月末までギガ足りる？
+      </h1>
+
+      <p class="hero-description">
+        使いすぎかどうかを5秒でチェック。<br>
+        登録不要・無料ですぐ確認できます。
+      </p>
+
+      <a
+        href="/tools/data-checker/"
+        class="hero-cta"
+      >
+        5秒でチェックする
+      </a>
+
+      <p class="hero-note">
+        アプリ不要・会員登録不要
+      </p>
+
+    </div>
+  </section>
+
+  <!-- 特徴 -->
+  <section class="container section">
+
+    <h2 class="section-title">
+      ギガ使用ペースチェッカーの特徴
+    </h2>
+
+    <div class="features-grid">
+
+      <article class="feature-card">
+        <div class="feature-icon">📊</div>
+
+        <h3>5秒で確認できる</h3>
+
+        <p>
+          今使っている通信量を入力するだけ。
+          面倒な登録なしですぐ確認できます。
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">⚠️</div>
+
+        <h3>ギガ不足を早めに把握</h3>
+
+        <p>
+          今のペースで月末まで足りそうか、
+          速度制限リスクがあるかを確認できます。
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">💡</div>
+
+        <h3>節約方法も分かる</h3>
+
+        <p>
+          通信量を減らす設定方法や、
+          動画・SNSの節約方法も紹介しています。
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- 最新記事 -->
+  <section class="container section">
+
+    <h2 class="section-title">
+      ギガ不足を防ぐ節約記事
+    </h2>
+
+    <p class="articles-description">
+      Android・iPhoneの通信量確認方法や、
+      動画アプリの節約設定を解説しています。
     </p>
 
-    <a href="/tools/data-checker/" class="hero-cta">
-      無料で診断する
-    </a>
-  </div>
-</section>
-
-<!-- 特徴セクション -->
-<section class="container section">
-  <h2 class="section-title">3つの特徴</h2>
-
-  <div class="features-grid">
-
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>30秒で使用ペースを確認</h3>
-      <p>簡単な質問で、今の通信量の使い方が適正か分かります。</p>
+    <div id="popular-articles">
+      <p
+        style="
+          text-align:center;
+          color:var(--text-muted);
+        "
+      >
+        読み込み中...
+      </p>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">⚠️</div>
-      <h3>使いすぎを早期発見</h3>
-      <p>月末のギガ不足リスクを事前に把握できます。</p>
-    </div>
+  </section>
 
-    <div class="feature-card">
-      <div class="feature-icon">💡</div>
-      <h3>節約ヒントも提示</h3>
-      <p>結果に応じて通信量を減らす方法も案内します。</p>
-    </div>
+  <!-- CTA -->
+  <div id="cta-container"></div>
 
-  </div>
-</section>
+  <!-- Footer -->
+  <footer id="footer-outlet"></footer>
 
-<!-- 最新記事セクション -->
-<section class="container section">
-  <h2 class="section-title">最新の節約記事</h2>
-
-  <div id="popular-articles">
-    <p style="text-align:center; color:var(--text-muted);">読み込み中...</p>
-  </div>
-</section>
-
-<!-- CTA自動挿入エリア -->
-<div id="cta-container"></div>
-
-<!-- フッターはJS自動挿入 -->
-
-<!-- JavaScript -->
-<script src="/js/header.js" defer></script>
-<script src="/js/footer.js" defer></script>
-<script src="/js/cta.js" defer></script>
-<script src="/js/main.js" defer></script>
-
-<!-- 最新記事表示 -->
-<script src="/js/latest-articles.js" defer></script>
+  <!-- JavaScript -->
+  <script src="/js/header.js" defer></script>
+  <script src="/js/footer.js" defer></script>
+  <script src="/js/cta.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/js/latest-articles.js" defer></script>
 
 </body>
 </html>
