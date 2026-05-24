@@ -28,6 +28,13 @@
     "type": "article"
   },
   {
+    "filename": "iphone-low-data-mode.html",
+    "title": "【2026年最新】iPhoneの低データモードとは",
+    "description": "iPhoneの低データモードをONにするだけでバックグラウンド通信をまとめて制限できます。iPhone15・16・17・SEでの設定手順と効果を詳細に解説。ONにしたときの影響と注意点、使い分けのコツも紹介します。",
+    "date": "2026-04-01",
+    "type": "article"
+  },
+  {
     "filename": "android-data-warning.html",
     "title": "【2026年最新】Androidで通信量の警告を設定する方法",
     "description": "Androidで通信量の警告を設定する手順を5ステップで解説。月末のギガ切れを未然に防ぎ、速度制限を回避する方法がわかります。Pixel・Galaxy・Xperia対応。",
@@ -39,13 +46,6 @@
     "title": "Androidで通信量を確認する方法",
     "description": "Androidスマホで今月の通信量を確認する手順を解説。設定アプリからの操作方法とデータ警告の設定方法も詳しく紹介。docomo・au・SoftBank・楽天モバイル対応。",
     "date": "2026-03-01",
-    "type": "article"
-  },
-  {
-    "filename": "iphone-low-data-mode.html",
-    "title": "【2025年最新】iPhoneの低データモードとは",
-    "description": "iPhone（iOS）の低データモードをONにするだけでバックグラウンド通信をまとめて制限できます。iPhone15・16・17・SEでの設定手順と効果を画像なしでもわかるよう詳細に解説。ONにしたときの影響と注意点、リセット忘れを防ぐコツも紹介します。",
-    "date": "2025-04-01",
     "type": "article"
   },
   {
