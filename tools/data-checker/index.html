@@ -310,6 +310,7 @@
     border-radius: 50%;
     background: var(--teal);
     cursor: pointer;
+    border: none;
     box-shadow: 0 2px 6px rgba(15, 118, 110, 0.4);
     transition: transform .2s;
   }
@@ -317,105 +318,167 @@
     transform: scale(1.15);
   }
 
-  /* Tips */
-  .tips-grid {
-    display: grid;
-    gap: 10px;
+  /* Result section styles */
+  .result-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
   }
-  .tips-card {
+
+  .result-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .metric-card {
     background: var(--bg);
     border: 2px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    padding: 1.25rem;
+    text-align: center;
   }
-  .tips-icon {
-    font-size: 26px;
-    flex-shrink: 0;
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
   }
-  .tips-body {
-    flex: 1;
-  }
-  .tips-title {
+
+  .metric-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
     font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 4px;
     color: var(--ink);
+    line-height: 1;
   }
-  .tips-desc {
-    font-size: 13px;
+
+  .metric-unit {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 4px;
     color: var(--sub);
   }
 
-  /* Related */
-  .related-grid {
-    display: grid;
-    gap: 10px;
-    margin-top: 1.5rem;
-  }
-  .related-card {
-    background: var(--bg);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
-    transition: all .25s;
-  }
-  .related-card:hover {
-    border-color: var(--teal-light);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
-  }
-  .related-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-  }
-  .related-text {
-    flex: 1;
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--ink);
+  .metric-meta {
+    font-size: 13px;
+    color: var(--sub);
+    margin-top: 6px;
   }
 
-  /* Responsive */
-  @media (max-width: 500px) {
-    .usage-grid {
-      grid-template-columns: 1fr;
-    }
-    .plan-tabs {
-      grid-template-columns: 1fr;
-    }
+  /* Tips */
+  .tips-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+
+  .tips-card {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 1rem;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    transition: all .25s;
+  }
+
+  .tips-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .tips-body {
+    flex: 1;
+  }
+
+  .tips-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .tips-desc {
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.4;
+  }
+
+  /* Related articles */
+  .related-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+  }
+
+  .related-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .related-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .related-link {
+    display: block;
+    padding: 1rem;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all .25s;
+  }
+
+  .related-link:hover {
+    background: var(--teal);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .panel { padding: 1rem; }
+    .donut-wrap { width: 180px; height: 180px; }
+    .donut-pct { font-size: 42px; }
   }
   </style>
 </head>
 <body>
-  <div id="header-outlet"></div>
-  <nav id="breadcrumb-outlet"></nav>
+  <div id="header"></div>
 
   <div class="tool-container">
     <div class="panel">
+      <!-- ページタイトル（非表示） -->
       <h1 class="page-title-hidden">ギガ使用ペースチェッカー</h1>
 
       <!-- STEP 1: プラン選択 -->
       <div class="panel-card">
         <div class="sec-title">
           <span class="step-badge">1</span>
-          月間プラン
+          月間プランを選択
         </div>
         <div class="plan-tabs">
-          <button class="plan-tab" data-gb="3">3GB</button>
-          <button class="plan-tab" data-gb="20">20GB</button>
-          <button class="plan-tab active" data-gb="50">50GB</button>
+          <button class="plan-tab" data-gb="3">3 GB</button>
+          <button class="plan-tab" data-gb="10">10 GB</button>
+          <button class="plan-tab" data-gb="20">20 GB</button>
+          <button class="plan-tab" data-gb="30">30 GB</button>
+          <button class="plan-tab active" data-gb="50">50 GB</button>
+          <button class="plan-tab" data-gb="100">100 GB</button>
         </div>
         <div class="custom-row">
           <label for="customPlan">カスタム:</label>
-          <input type="number" id="customPlan" class="custom-input" placeholder="0" min="1" max="999" step="1">
+          <input type="number" id="customPlan" class="custom-input" placeholder="50" min="1" max="999">
           <span style="font-size:13px; color:var(--sub); font-weight:600;">GB</span>
         </div>
       </div>
@@ -424,18 +487,21 @@
       <div class="panel-card">
         <div class="sec-title">
           <span class="step-badge">2</span>
-          今月の使用量
+          今月の使用量を入力
         </div>
         <div class="usage-grid">
           <div class="usage-card">
-            <div class="usage-card-title">使用済み</div>
-            <input type="number" id="usedInput" class="custom-input" value="0.0" min="0" step="0.1" style="width:100%; font-size:24px; padding:8px;">
+            <div class="usage-card-title">今月の使用量</div>
+            <div>
+              <input type="number" id="usedInput" class="custom-input" value="0.0" step="0.1" min="0" style="width:110px; font-size:20px;">
+              <span class="usage-unit">GB</span>
+            </div>
           </div>
           <div class="usage-card">
             <div class="usage-card-title">残り</div>
             <div>
-              <span id="remainVal" class="usage-val" style="color:var(--teal);">50.0</span>
-              <span class="usage-unit" style="color:var(--teal);">GB</span>
+              <span id="remainVal" class="usage-val">50.0</span>
+              <span class="usage-unit">GB</span>
             </div>
           </div>
         </div>
@@ -444,11 +510,15 @@
         </div>
       </div>
 
-      <!-- 診断結果 -->
+      <!-- STEP 3: 診断結果（白い枠に入れる） -->
       <div class="panel-card">
-        <div class="sec-title">診断結果</div>
+        <div class="result-header">
+          <div class="badge">
+            <span id="badgeEmoji">🎉</span>
+            <span id="badgeText">超快適ペース</span>
+          </div>
+        </div>
 
-        <!-- ドーナツチャート -->
         <div class="donut-wrap">
           <svg width="210" height="210">
             <circle class="donut-bg" cx="105" cy="105" r="90"></circle>
@@ -460,54 +530,40 @@
           </div>
         </div>
 
-        <!-- バッジ -->
-        <div style="text-align:center; margin-bottom:1.5rem;">
-          <div class="badge">
-            <span id="badgeEmoji">🎉</span>
-            <span id="badgeText">超快適ペース</span>
+        <div class="result-grid">
+          <div class="metric-card">
+            <div class="metric-label">今日使える量</div>
+            <div>
+              <span id="todayNum" class="metric-value">0.00</span>
+              <span class="metric-unit">GB</span>
+            </div>
+            <div class="metric-meta">月末まで<span id="countdown">30</span></div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">月末予測</div>
+            <div id="forecast" class="metric-value">0.0 GB</div>
+            <div class="metric-meta">残り<span id="remainMeta">50.0 GB</span></div>
           </div>
         </div>
 
-        <!-- メタ情報 -->
-        <div style="background:var(--bg); border-radius:var(--radius); padding:1rem; margin-bottom:1rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <span style="font-size:13px; color:var(--sub); font-weight:600;">月末まで</span>
-            <span id="countdown" style="font-size:13px; font-weight:700; color:var(--ink);">30 日</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <span style="font-size:13px; color:var(--sub); font-weight:600;">今日使える量</span>
-            <span style="font-size:13px; font-weight:700; color:var(--safe);"><span id="todayNum">0.00</span> GB</span>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span style="font-size:13px; color:var(--sub); font-weight:600;">月末予測</span>
-            <span id="forecast" style="font-size:13px; font-weight:700; color:var(--ink);">0.0 GB</span>
-          </div>
+        <div class="tips-grid" id="tipsContainer">
+          <!-- JavaScript で生成 -->
         </div>
-
-        <!-- Tips -->
-        <div class="sec-title" style="margin-top:1.5rem;">節約のヒント</div>
-        <div id="tipsContainer" class="tips-grid"></div>
       </div>
 
       <!-- 関連記事 -->
-      <div class="panel-card">
-        <div class="sec-title">関連記事</div>
+      <div class="related-section">
+        <h2 class="related-title">関連記事</h2>
         <div class="related-grid">
-          <a href="/articles/how-to-check-data-android.html" class="related-card">
-            <span class="related-icon">📱</span>
-            <span class="related-text">Androidで通信量を確認する方法</span>
+          <a href="/articles/how-to-check-data-android.html" class="related-link">
+            📱 Androidで通信量を確認する方法
           </a>
-          <a href="/articles/iphone-check-data.html" class="related-card">
-            <span class="related-icon">📱</span>
-            <span class="related-text">iPhoneで通信量を確認する方法</span>
+          <a href="/articles/iphone-check-data.html" class="related-link">
+            🍎 iPhoneで通信量を確認する方法
           </a>
-          <a href="/articles/save-data-youtube.html" class="related-card">
-            <span class="related-icon">🎬</span>
-            <span class="related-text">YouTubeで通信量を節約する方法</span>
-          </a>
-          <a href="/articles/3gb-mobile-data.html" class="related-card">
-            <span class="related-icon">📊</span>
-            <span class="related-text">月3GBで足りる人の特徴と節約術</span>
+          <a href="/articles/save-data-youtube.html" class="related-link">
+            🎬 YouTubeで通信量を節約する方法
           </a>
         </div>
       </div>
@@ -518,10 +574,7 @@
 
   <!-- JavaScript -->
   <script src="/js/header.js"></script>
-  <script src="/js/breadcrumb.js"></script>
   <script src="/js/footer.js"></script>
-  <script src="/js/main.js"></script>
-  <script src="/js/analytics.js"></script>
 
   <script>
 // ========================================
@@ -790,7 +843,7 @@ if (document.readyState === 'loading') {
     },
     "inLanguage": "ja",
     "datePublished": "2026-03-01",
-    "dateModified": "2026-05-26",
+    "dateModified": "2026-05-13",
     "featureList": [
       "月末までの通信量ペース診断",
       "今日使える通信量の自動計算",
