@@ -2,37 +2,67 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <title>ギガ使用ペースチェッカー｜スマホ通信量を5秒で無料診断</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <meta name="description" content="今月の通信量を入力するだけで、今日あと何GB使えるか・月末予測・使いすぎ危険度を5秒で確認できる無料ツール。登録不要・iPhone/Android対応。">
+  <title>
+    ギガ使用ペースチェッカー｜スマホ通信量を5秒で無料診断
+  </title>
 
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="description"
+        content="今月の通信量を入力するだけで、今日あと何GB使えるか・月末予測・使いすぎ危険度を5秒で確認できる無料ツール。登録不要・iPhone/Android対応。">
+
+  <meta name="robots"
+        content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 
   <meta name="theme-color" content="#0f766e">
+
   <meta name="color-scheme" content="light dark">
 
-  <link rel="canonical" href="https://gigapace-checker.vercel.app/tools/data-checker/">
+  <link rel="canonical"
+        href="https://gigapace-checker.vercel.app/tools/data-checker/">
 
   <!-- OGP -->
   <meta property="og:type" content="website">
+
   <meta property="og:locale" content="ja_JP">
-  <meta property="og:site_name" content="ギガ使用ペースチェッカー">
-  <meta property="og:title" content="ギガ使用ペースチェッカー｜スマホ通信量を5秒で無料診断">
-  <meta property="og:description" content="今日あと何GB使える？月末まで足りる？を即診断。">
-  <meta property="og:url" content="https://gigapace-checker.vercel.app/tools/data-checker/">
-  <meta property="og:image" content="https://gigapace-checker.vercel.app/images/ogp.webp">
+
+  <meta property="og:site_name"
+        content="ギガ使用ペースチェッカー">
+
+  <meta property="og:title"
+        content="ギガ使用ペースチェッカー｜スマホ通信量を5秒で無料診断">
+
+  <meta property="og:description"
+        content="今日あと何GB使える？月末まで足りる？を即診断。">
+
+  <meta property="og:url"
+        content="https://gigapace-checker.vercel.app/tools/data-checker/">
+
+  <meta property="og:image"
+        content="https://gigapace-checker.vercel.app/images/ogp.webp">
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ギガ使用ペースチェッカー">
-  <meta name="twitter:description" content="今日あと何GB使えるかを即診断。">
-  <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp.webp">
+  <meta name="twitter:card"
+        content="summary_large_image">
+
+  <meta name="twitter:title"
+        content="ギガ使用ペースチェッカー">
+
+  <meta name="twitter:description"
+        content="今日あと何GB使えるかを即診断。">
+
+  <meta name="twitter:image"
+        content="https://gigapace-checker.vercel.app/images/ogp.webp">
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
   <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
@@ -49,40 +79,32 @@
   <link rel="stylesheet" href="/footer.css">
 
   <!-- ツール専用CSS -->
-  <link rel="stylesheet" href="/tools/data-checker/toolstyle.css">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  gtag('js', new Date());
-
-  gtag('config', 'G-XXXXXXXXXX', {
-    anonymize_ip: true,
-    transport_type: 'beacon'
-  });
-  </script>
+  <link rel="stylesheet"
+        href="/tools/data-checker/toolstyle.css">
 
   <!-- ダークモードFOUC対策 -->
   <script>
   (() => {
-    const saved = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (saved === 'dark' || (!saved && systemDark)) {
+    const saved = localStorage.getItem('theme');
+
+    const systemDark =
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (
+      saved === 'dark' ||
+      (!saved && systemDark)
+    ) {
       document.documentElement.classList.add('dark');
     }
+
   })();
   </script>
 </head>
 
 <body>
 
-<header>
-  <!-- 共通header -->
-</header>
+<header id="site-header"></header>
 
 <main class="tool-container">
 
@@ -90,12 +112,16 @@
 
     <!-- Hero -->
     <section class="hero">
-      <h1>ギガ使用ペースチェッカー</h1>
+
+      <h1>
+        ギガ使用ペースチェッカー
+      </h1>
 
       <p>
         今日あと何GB使える？
         月末まで足りる？を5秒で診断
       </p>
+
     </section>
 
     <!-- STEP1 -->
@@ -107,16 +133,44 @@
       </div>
 
       <div class="plan-tabs">
-        <button class="plan-tab" data-gb="3">3GB</button>
-        <button class="plan-tab" data-gb="10">10GB</button>
-        <button class="plan-tab" data-gb="20">20GB</button>
-        <button class="plan-tab" data-gb="30">30GB</button>
-        <button class="plan-tab active" data-gb="50">50GB</button>
-        <button class="plan-tab" data-gb="100">100GB</button>
+
+        <button class="plan-tab"
+                data-gb="3">
+          3GB
+        </button>
+
+        <button class="plan-tab"
+                data-gb="10">
+          10GB
+        </button>
+
+        <button class="plan-tab"
+                data-gb="20">
+          20GB
+        </button>
+
+        <button class="plan-tab"
+                data-gb="30">
+          30GB
+        </button>
+
+        <button class="plan-tab active"
+                data-gb="50">
+          50GB
+        </button>
+
+        <button class="plan-tab"
+                data-gb="100">
+          100GB
+        </button>
+
       </div>
 
       <div class="custom-row">
-        <label for="customPlan">カスタム</label>
+
+        <label for="customPlan">
+          カスタム
+        </label>
 
         <input type="number"
                id="customPlan"
@@ -124,6 +178,7 @@
                placeholder="50">
 
         <span>GB</span>
+
       </div>
 
     </section>
@@ -139,6 +194,7 @@
       <div class="usage-grid">
 
         <div class="usage-card">
+
           <div class="usage-card-title">
             今月の使用量
           </div>
@@ -149,24 +205,29 @@
                  value="0.0"
                  step="0.1"
                  min="0">
+
         </div>
 
         <div class="usage-card">
+
           <div class="usage-card-title">
             残り
           </div>
 
           <div>
-            <span id="remainVal" class="usage-val">
+            <span id="remainVal"
+                  class="usage-val">
               50.0
             </span>
             GB
           </div>
+
         </div>
 
       </div>
 
       <div class="slider-row">
+
         <input type="range"
                id="slider"
                class="slider"
@@ -174,6 +235,7 @@
                max="50"
                step="0.1"
                value="0">
+
       </div>
 
     </section>
@@ -182,15 +244,26 @@
     <section class="panel-card">
 
       <div class="result-header">
+
         <div class="badge">
-          <span id="badgeEmoji">🎉</span>
-          <span id="badgeText">超快適ペース</span>
+
+          <span id="badgeEmoji">
+            🎉
+          </span>
+
+          <span id="badgeText">
+            超快適ペース
+          </span>
+
         </div>
+
       </div>
 
       <div class="donut-wrap">
 
-        <svg width="210" height="210">
+        <svg width="210"
+             height="210">
+
           <circle class="donut-bg"
                   cx="105"
                   cy="105"
@@ -201,16 +274,20 @@
                   cx="105"
                   cy="105"
                   r="90"></circle>
+
         </svg>
 
         <div class="donut-center">
-          <div id="pctText" class="donut-pct">
+
+          <div id="pctText"
+               class="donut-pct">
             0%
           </div>
 
           <div class="donut-lbl">
             使用率
           </div>
+
         </div>
 
       </div>
@@ -224,12 +301,17 @@
           </div>
 
           <div class="metric-value">
-            <span id="todayNum">0.00</span>GB
+            <span id="todayNum">
+              0.00
+            </span>
+            GB
           </div>
 
           <div class="metric-meta">
             月末まで残り
-            <span id="countdown">30日</span>
+            <span id="countdown">
+              30日
+            </span>
           </div>
 
         </div>
@@ -240,20 +322,24 @@
             月末予測
           </div>
 
-          <div id="forecast" class="metric-value">
+          <div id="forecast"
+               class="metric-value">
             0GB
           </div>
 
           <div class="metric-meta">
             残り
-            <span id="remainMeta">50GB</span>
+            <span id="remainMeta">
+              50GB
+            </span>
           </div>
 
         </div>
 
       </div>
 
-      <div class="tips-grid" id="tipsContainer"></div>
+      <div class="tips-grid"
+           id="tipsContainer"></div>
 
     </section>
 
@@ -291,8 +377,6 @@
 
 <footer id="site-footer"></footer>
 
-<script src="/js/footer.js" defer></script>
-
 <!-- ダークモード -->
 <button id="themeToggle"
         class="theme-toggle"
@@ -300,392 +384,16 @@
   🌙
 </button>
 
-<script>
-const STORAGE_KEY = 'gigapace_state_v3';
+<!-- 共通JS -->
+<script src="/js/header.js" defer></script>
 
-const state = {
-  plan: 50,
-  used: 0
-};
+<script src="/js/footer.js" defer></script>
 
-function init() {
+<script src="/js/analytics.js" defer></script>
 
-  loadState();
-
-  updateSliderMax();
-
-  setupEventListeners();
-
-  calculate();
-
-  window.addEventListener('load', () => {
-    document.getElementById('usedInput')?.focus();
-  });
-}
-
-function setupEventListeners() {
-
-  document.querySelectorAll('.plan-tab').forEach(btn => {
-
-    btn.addEventListener('click', function() {
-
-      document.querySelectorAll('.plan-tab')
-        .forEach(b => b.classList.remove('active'));
-
-      this.classList.add('active');
-
-      state.plan = parseFloat(this.dataset.gb);
-
-      document.getElementById('customPlan').value = '';
-
-      updateSliderMax();
-
-      calculate();
-
-      saveState();
-
-      trackPlan(state.plan);
-    });
-  });
-
-  document.getElementById('customPlan')
-    .addEventListener('input', function() {
-
-      const val = parseFloat(this.value);
-
-      if (val > 0) {
-
-        state.plan = val;
-
-        document.querySelectorAll('.plan-tab')
-          .forEach(b => b.classList.remove('active'));
-
-        updateSliderMax();
-
-        calculate();
-
-        saveState();
-      }
-  });
-
-  document.getElementById('usedInput')
-    .addEventListener('input', function() {
-
-      let val = parseFloat(this.value) || 0;
-
-      if (val < 0) val = 0;
-
-      if (val > state.plan) val = state.plan;
-
-      state.used = val;
-
-      document.getElementById('slider').value = val;
-
-      calculate();
-
-      saveState();
-  });
-
-  document.getElementById('slider')
-    .addEventListener('input', function() {
-
-      state.used = parseFloat(this.value);
-
-      document.getElementById('usedInput').value =
-        state.used.toFixed(1);
-
-      calculate();
-  });
-
-  // ダークモード
-  const themeToggle = document.getElementById('themeToggle');
-
-  function applyTheme(theme) {
-
-    document.documentElement.classList.toggle(
-      'dark',
-      theme === 'dark'
-    );
-
-    localStorage.setItem('theme', theme);
-  }
-
-  themeToggle.addEventListener('click', () => {
-
-    const isDark =
-      document.documentElement.classList.contains('dark');
-
-    applyTheme(isDark ? 'light' : 'dark');
-  });
-
-  // 関連記事CTR計測
-  document.querySelectorAll('.related-link').forEach(link => {
-
-    link.addEventListener('click', () => {
-
-      if (typeof gtag !== 'undefined') {
-
-        gtag('event', 'related_article_click', {
-          article: link.href
-        });
-      }
-    });
-  });
-}
-
-function updateSliderMax() {
-
-  document.getElementById('slider').max = state.plan;
-
-  if (state.used > state.plan) {
-    state.used = state.plan;
-  }
-
-  document.getElementById('slider').value = state.used;
-}
-
-function calculate() {
-
-  const plan = state.plan;
-  const used = state.used;
-
-  const remain = plan - used;
-
-  document.getElementById('remainVal').textContent =
-    remain.toFixed(1);
-
-  document.getElementById('remainMeta').textContent =
-    remain.toFixed(1) + 'GB';
-
-  const pct = (used / plan) * 100;
-
-  document.getElementById('pctText').textContent =
-    Math.round(pct) + '%';
-
-  const circumference = 565;
-
-  const offset =
-    circumference - (circumference * pct) / 100;
-
-  const donutBar =
-    document.getElementById('donutBar');
-
-  requestAnimationFrame(() => {
-    donutBar.style.strokeDashoffset = offset;
-  });
-
-  let color;
-
-  if (pct <= 50) {
-    color = 'var(--safe)';
-  } else if (pct <= 80) {
-    color = 'var(--warn)';
-  } else {
-    color = 'var(--danger)';
-  }
-
-  donutBar.style.stroke = color;
-
-  document.getElementById('pctText').style.color = color;
-
-  const now = new Date();
-
-  const lastDay = new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0
-  ).getDate();
-
-  const today = now.getDate();
-
-  const daysLeft = lastDay - today + 1;
-
-  document.getElementById('countdown').textContent =
-    daysLeft + '日';
-
-  const dailyAllowance = remain / daysLeft;
-
-  document.getElementById('todayNum').textContent =
-    dailyAllowance.toFixed(2);
-
-  const dailyAvg = used / today;
-
-  const forecast = dailyAvg * lastDay;
-
-  document.getElementById('forecast').textContent =
-    forecast.toFixed(1) + 'GB';
-
-  let emoji;
-  let text;
-
-  if (pct <= 50) {
-
-    emoji = '🎉';
-    text = '超快適ペース';
-
-  } else if (pct <= 70) {
-
-    emoji = '✅';
-    text = '安全なペース';
-
-  } else if (pct <= 85) {
-
-    emoji = '⚠️';
-    text = 'やや注意';
-
-  } else {
-
-    emoji = '🚨';
-    text = '要注意';
-
-    if (typeof gtag !== 'undefined') {
-
-      gtag('event', 'danger_zone', {
-        percent: pct
-      });
-    }
-  }
-
-  document.getElementById('badgeEmoji').textContent = emoji;
-  document.getElementById('badgeText').textContent = text;
-
-  generateTips(pct);
-}
-
-function generateTips(pct) {
-
-  const container =
-    document.getElementById('tipsContainer');
-
-  container.innerHTML = '';
-
-  let tips = [];
-
-  if (pct > 80) {
-
-    tips.push({
-      icon: '📵',
-      title: 'バックグラウンド通信をOFF',
-      desc: '設定 → データ使用量から制御'
-    });
-
-    tips.push({
-      icon: '📶',
-      title: 'Wi-Fi環境で動画視聴',
-      desc: '動画通信量を大幅節約'
-    });
-
-  } else if (pct > 50) {
-
-    tips.push({
-      icon: '🎬',
-      title: 'YouTube画質を480pへ',
-      desc: '通信量をかなり削減できます'
-    });
-
-    tips.push({
-      icon: '📲',
-      title: 'SNS動画自動再生をOFF',
-      desc: 'Instagram・TikTok対策'
-    });
-
-  } else {
-
-    tips.push({
-      icon: '🎯',
-      title: 'かなり良いペースです',
-      desc: '今の使い方なら安心です'
-    });
-  }
-
-  tips.forEach(tip => {
-
-    container.innerHTML += `
-      <div class="tips-card">
-        <div class="tips-icon">${tip.icon}</div>
-
-        <div>
-          <div class="tips-title">${tip.title}</div>
-          <div class="tips-desc">${tip.desc}</div>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function saveState() {
-
-  try {
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        plan: state.plan,
-        used: state.used,
-        month: new Date().getMonth()
-      })
-    );
-
-  } catch(e) {}
-}
-
-function loadState() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(STORAGE_KEY);
-
-    if (!saved) return;
-
-    const data = JSON.parse(saved);
-
-    if (data.month !== new Date().getMonth()) {
-      return;
-    }
-
-    state.plan = data.plan || 50;
-    state.used = data.used || 0;
-
-    document.getElementById('usedInput').value =
-      state.used.toFixed(1);
-
-    document.getElementById('slider').value =
-      state.used;
-
-    document.querySelectorAll('.plan-tab').forEach(btn => {
-
-      btn.classList.toggle(
-        'active',
-        parseFloat(btn.dataset.gb) === state.plan
-      );
-    });
-
-  } catch(e) {}
-}
-
-function trackPlan(plan) {
-
-  if (typeof gtag !== 'undefined') {
-
-    gtag('event', 'select_plan', {
-      plan_size: plan
-    });
-  }
-}
-
-if (document.readyState === 'loading') {
-
-  document.addEventListener(
-    'DOMContentLoaded',
-    init
-  );
-
-} else {
-
-  init();
-}
-</script>
+<!-- ツール専用JS -->
+<script src="/tools/data-checker/tool.js"
+        defer></script>
 
 <!-- 構造化データ -->
 <script type="application/ld+json">
@@ -731,4 +439,4 @@ if (document.readyState === 'loading') {
 </script>
 
 </body>
-</html>
+  </html>
