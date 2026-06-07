@@ -1,4 +1,4 @@
-* {
+く* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -426,6 +426,12 @@ button {
   cursor: pointer;
 
   z-index: 999;
+}
+
+@media (min-width: 641px) {
+  .result-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 640px) {
