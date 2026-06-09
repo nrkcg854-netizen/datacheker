@@ -49,6 +49,13 @@
     "type": "article"
   },
   {
+    "filename": "save-data-youtube.html",
+    "title": "【2026年最新】YouTubeの通信量を減らす設定方法",
+    "description": "YouTubeの画質をデータ節約モードに変えるだけで通信量を最大70%節約できます。自動再生OFFやバックグラウンド再生の制限など、Android向けに手順をわかりやすく解説します。",
+    "date": "2025-06-01",
+    "type": "article"
+  },
+  {
     "filename": "3gb-mobile-data.html",
     "title": "月3GBで足りる人の特徴と節約術",
     "description": "月3GBで足りる人の特徴と節約術を解説。通信量を抑える具体的な方法と、自分に合うかを判断できます。",
@@ -66,13 +73,6 @@
     "filename": "save-data-sns.html",
     "title": "SNSアプリの通信量を抑える設定",
     "description": "",
-    "date": null,
-    "type": "article"
-  },
-  {
-    "filename": "save-data-youtube.html",
-    "title": "YouTubeの通信量を減らす設定方法",
-    "description": "YouTubeの画質を変えるだけで通信量を最大70%節約できます。データ節約モードの設定手順や自動再生OFFの方法を画像つきで解説。",
     "date": null,
     "type": "article"
   }
