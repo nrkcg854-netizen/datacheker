@@ -24,16 +24,31 @@
   <meta name="twitter:description" content="今日使える通信量・月末予測・ペース判定を瞬時に表示。登録不要・無料。">
   <meta name="twitter:image" content="https://gigapace-checker.vercel.app/images/ogp.webp">
 
-  <!-- CSS（toolstyle.cssに一本化） -->
+  <!-- CSS -->
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/footer.css">
   <link rel="stylesheet" href="/tools/data-checker/toolstyle.css">
 
-  <!-- result-grid: PC表示のみ2×2グリッド（toolstyle.cssへの追記と同内容） -->
   <style>
+  /* ドーナツグラフ中央揃え（toolstyle.cssのinset:0をオーバーライド） */
+  .donut-center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* result-grid: PC表示のみ3列（カードが3つのため） */
   @media (min-width: 641px) {
     .result-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
   </style>
@@ -59,8 +74,12 @@
           <span class="step-badge">1</span>
           月間プランを選択
         </div>
+        <!-- 6プラン: 3列×2行 -->
         <div class="plan-tabs">
           <button class="plan-tab" data-gb="3">3GB</button>
+          <button class="plan-tab" data-gb="5">5GB</button>
+          <button class="plan-tab" data-gb="7">7GB</button>
+          <button class="plan-tab" data-gb="10">10GB</button>
           <button class="plan-tab" data-gb="20">20GB</button>
           <button class="plan-tab active" data-gb="50">50GB</button>
         </div>
@@ -75,7 +94,7 @@
       <div class="panel-card">
         <div class="sec-title">
           <span class="step-badge">2</span>
-          今月の使用量
+          今月の使用量をキーボードまたはスライダーで入力
         </div>
 
         <!-- 使用済み入力 -->
@@ -130,7 +149,8 @@
           </div>
         </div>
 
-        <!-- メトリクス（tool.jsが参照するIDをすべて配置） -->
+        <!-- メトリクス（残りは削除、tool.js参照用にremainMetaは非表示で残す） -->
+        <span id="remainMeta" style="display:none;"></span>
         <div class="result-grid">
           <div class="metric-card">
             <div class="metric-label">月末まで</div>
@@ -143,13 +163,6 @@
               <span id="todayNum">0.00</span>
             </div>
             <div class="metric-meta">GB / 日</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">残り</div>
-            <div class="metric-value" style="color:var(--teal);">
-              <!-- tool.jsが参照するremainMeta -->
-              <span id="remainMeta">50.0GB</span>
-            </div>
           </div>
           <div class="metric-card">
             <div class="metric-label">月末予測</div>
@@ -186,7 +199,7 @@
 
   <footer id="footer-outlet"></footer>
 
-  <!-- JS（インラインJS廃止・tool.jsに一本化） -->
+  <!-- JS -->
   <script src="/js/header.js"></script>
   <script src="/js/breadcrumb.js"></script>
   <script src="/js/footer.js"></script>
@@ -215,7 +228,7 @@
     },
     "inLanguage": "ja",
     "datePublished": "2026-03-01",
-    "dateModified": "2026-06-06",
+    "dateModified": "2026-06-09",
     "featureList": [
       "月末までの通信量ペース診断",
       "今日使える通信量の自動計算",
