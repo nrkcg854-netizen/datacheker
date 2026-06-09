@@ -83,6 +83,7 @@ function setupEventListeners() {
       saveState();
   });
 
+  // ① saveState()を追加
   document.getElementById('slider')
     .addEventListener('input', function() {
 
@@ -92,6 +93,8 @@ function setupEventListeners() {
         state.used.toFixed(1);
 
       calculate();
+
+      saveState();
   });
 
   // ダークモード
@@ -151,8 +154,7 @@ function calculate() {
   document.getElementById('remainVal').textContent =
     remain.toFixed(1);
 
-  document.getElementById('remainMeta').textContent =
-    remain.toFixed(1) + 'GB';
+  // ② remainMetaの更新コードを削除
 
   const pct = (used / plan) * 100;
 
