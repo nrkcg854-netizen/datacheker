@@ -59,33 +59,30 @@ body {
 
 /* ===== ヘッダー ===== */
 .site-header {
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  z-index:100;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-container {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:1.25rem 1rem;
+  display: block;
+  padding: 0;
+  margin: 0;
 }
 
 /* ロゴ */
 .logo {
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
-  font-weight:700;
-  font-size:1.1rem;
+  display: block;
+  width: 100%;
 }
 
 .logo-image {
-  height:56px;
-  width:auto;
-  object-fit:contain;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
 /* ナビゲーション */
@@ -253,10 +250,6 @@ a:hover {
 
   .logo {
     font-size:1rem;
-  }
-
-  .logo-image {
-    height:48px;
   }
 }
 /* ===== 定義リスト（運営者情報など） ===== */
