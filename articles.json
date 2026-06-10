@@ -1,5 +1,12 @@
 [
   {
+    "filename": "save-data-youtube.html",
+    "title": "【2026年最新】YouTubeの通信量を減らす設定方法",
+    "description": "YouTubeの通信量を減らすにはデータ節約モードONと自動再生OFFが最も効果的です。月3GBプランユーザーにも役立つ画質別の通信量目安と節約設定をAndroid向けに解説します。",
+    "date": "2026-05-24",
+    "type": "article"
+  },
+  {
     "filename": "iphone-check-data.html",
     "title": "【2026年最新】iPhoneで通信量を確認する方法",
     "description": "iPhoneの設定アプリから今月のモバイルデータ通信量を簡単に確認する方法を解説。統計情報のリセット忘れを防ぐコツや、キャリアアプリでより正確に確認する方法もご紹介します。",
@@ -46,13 +53,6 @@
     "title": "Androidで通信量を確認する方法",
     "description": "Androidスマホで今月の通信量を確認する手順を解説。設定アプリからの操作方法とデータ警告の設定方法も詳しく紹介。docomo・au・SoftBank・楽天モバイル対応。",
     "date": "2026-03-01",
-    "type": "article"
-  },
-  {
-    "filename": "save-data-youtube.html",
-    "title": "【2026年最新】YouTubeの通信量を減らす設定方法",
-    "description": "YouTubeの画質をデータ節約モードに変えるだけで通信量を最大70%節約できます。自動再生OFFやバックグラウンド再生の制限など、Android向けに手順をわかりやすく解説します。",
-    "date": "2025-06-01",
     "type": "article"
   },
   {
