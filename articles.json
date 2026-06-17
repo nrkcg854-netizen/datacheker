@@ -1,5 +1,12 @@
 [
   {
+    "filename": "save-data-sns.html",
+    "title": "SNSの通信量を抑える設定まとめ",
+    "description": "Instagram・TikTok・X（旧Twitter）の動画自動再生をOFFにする設定手順と、SNSの通信量をさらに抑える3つのコツを解説。アプリごとの通信量の目安や、月末のギガ不足を防ぐためのポイントもまとめました。",
+    "date": "2026-06-18",
+    "type": "article"
+  },
+  {
     "filename": "save-data-youtube.html",
     "title": "【2026年最新】YouTubeの通信量を減らす設定方法",
     "description": "YouTubeの通信量を減らすにはデータ節約モードONと自動再生OFFが最も効果的です。月3GBプランユーザーにも役立つ画質別の通信量目安と節約設定をAndroid向けに解説します。",
@@ -66,13 +73,6 @@
     "filename": "android-data-saver.html",
     "title": "Androidのデータセーバーとは？設定方法と通信量を節約するコツ",
     "description": "Androidのデータセーバーの使い方を解説。ONにするだけで通信量を削減。LINEやGmailの個別許可設定や注意点もわかる。",
-    "date": null,
-    "type": "article"
-  },
-  {
-    "filename": "save-data-sns.html",
-    "title": "SNSアプリの通信量を抑える設定",
-    "description": "",
     "date": null,
     "type": "article"
   }
