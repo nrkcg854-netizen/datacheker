@@ -1,17 +1,52 @@
+# ==========================================
+# 1. 基本設定と一般検索（SEOに必須）
+# ==========================================
 User-agent: *
 Allow: /
 
+# サイトマップ（VercelのURLに最適化）
 Sitemap: https://gigapace-checker.vercel.app/sitemap.xml
 
-# AIクローラー明示許可
-User-agent: GPTBot
+# ==========================================
+# 2. AI検索・引用の許可（アクセス流入を増やす）
+# ==========================================
+# ChatGPTの検索機能
+User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: Google-Extended
+# Claudeの検索機能
+User-agent: Claude-SearchBot
 Allow: /
 
-User-agent: ClaudeBot
-Allow: /
-
+# Perplexityの検索機能
 User-agent: PerplexityBot
 Allow: /
+
+# ==========================================
+# 3. AI学習・無断スクレイピングのブロック（権利を守る）
+# ==========================================
+# OpenAIの学習モデル
+User-agent: GPTBot
+Disallow: /
+
+# Anthropicの学習モデル
+User-agent: ClaudeBot
+Disallow: /
+
+# Perplexityのデータ収集
+User-agent: Perplexity-User
+Disallow: /
+
+# 大手AIが裏で使う巨大データソース
+User-agent: CCBot
+Disallow: /
+
+# TikTok系・Meta系のAIクローラー
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
