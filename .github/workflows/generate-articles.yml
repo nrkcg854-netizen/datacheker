@@ -5,6 +5,7 @@ on:
     paths:
       - 'articles/**'
       - 'js/generate-list.js'
+      - 'js/generate-sitemap.js'
 
 permissions:
   contents: write
@@ -25,13 +26,16 @@ jobs:
       - name: articles.json生成
         run: node js/generate-list.js
 
+      - name: sitemap.xml生成
+        run: node js/generate-sitemap.js
+
       - name: 変更をcommit
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add articles.json
+          git add articles.json sitemap.xml
 
-          git diff --cached --quiet || git commit -m "Auto generate articles.json"
+          git diff --cached --quiet || git commit -m "Auto generate articles.json and sitemap"
 
           git push
